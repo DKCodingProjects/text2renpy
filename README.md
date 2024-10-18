@@ -2,7 +2,15 @@
 ## Introduction
 A basic python program that transforms screenplays into Ren'Py game code to promote a better visual novel development workflow.
 
-When developing any Ren'Py game, independent developers are often tasked with juggling their game's narrative alongside their code, sound, and music. While some independent developers eventually find their preferred workflow, the worflow itself is incredibly tedious and draining to many developers. To help these struggling devs, I decided to create _Text2RenPy_ which gives developers the ability to turn already written stories into Ren'Py code. This not only formats all narration/dialogue into the expected syntax, it also: automatically handels Character Object creation, creates scene/show statements when necessary, defines character sprite images, generates practical image names, grants the user the ability to control how the resulting code is generated using *Command Statements*, and reports on the resources needed to finish the novel game.
+When developing any Ren'Py game, independent developers are often tasked with juggling their game's narrative alongside their code, sound, and music. While some independent developers eventually find their preferred workflow, the worflow itself is incredibly tedious and draining to many developers. To help these struggling devs, I decided to create _Text2RenPy_ which gives developers the ability to turn already written stories into Ren'Py code. While still in development, I aim to implement the following features:
+* Generate all narration/dialogue in the expected Ren'Py syntax.
+* Define all Character Objects in a project's "characters.rpy" file.
+* Generate all image statements in the expected Ren'Py syntax.
+* Define all background/misc images in a project's "images.rpy" file.
+* Define all character sprite images in a project's "sprites.rpy" file.
+* Generate all audio statements in the expected Ren'Py syntax.
+* Define all audio in a project's "audio.rpy" file.
+defines character sprite images, generates practical image names, grants the user the ability to control how the resulting code is generated using *Command Statements*, and reports on the resources needed to finish the novel game.
 
 ## Important Notes
 ### Why Screenplays?
