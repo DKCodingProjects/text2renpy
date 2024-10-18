@@ -1295,7 +1295,7 @@ class File_Validator:
         
     def is_valid_file(file: str, extension: str, mode: str) -> None:
         if (file == ''):
-            raise Exception('INVALID FILE: file \"' + file + '\" cannot be an empty string')
+            raise Exception('INVALID FILE: file cannot be an empty string')
         if not os.path.exists(file) and mode not in ['a', 'w']:
             raise Exception('INVALID FILE: file \"' + file + '\" does not exist')
         File_Validator.is_valid_mode(file, mode)
