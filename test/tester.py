@@ -2,6 +2,18 @@ from src.read import *
 import os, sys
 
 class Tester():
+
+    def test_template() -> list[str, bool, str]:
+        name = ''
+        status = False
+        msg = ''
+        try:
+            pass
+        except Exception as err:
+            msg = f"{type(err).__name__}: {err}"
+        else:
+            pass
+        return name, status, msg
     
     def test_raw_txt() -> list[str, bool, str]:
         name = 'Reading Screenplay TXT file using Raw_Reader'
