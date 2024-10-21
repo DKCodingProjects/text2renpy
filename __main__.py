@@ -1,6 +1,6 @@
 from src.args import *
 from src.read import *
-from tests.tester import Tester
+from test.tester import Tester
 
 def main():
     '''
