@@ -5,6 +5,14 @@ import sys
 import os
 import re
 
+##################################################################
+##################################################################
+##################### WARNING: OUTDATED CODE #####################
+##################################################################
+##################################################################
+# This file contains my first attempt at coding this program. It
+# is only here to help guide current development.
+
 '''
 ******************************************************************
 Regular_Expressions class is the class that stores all regular
