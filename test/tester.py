@@ -1,30 +1,53 @@
 from src.read import *
-import os
+import os, sys
 
 class Tester():
     
-    def test_raw_txt() -> list[bool, str]:
+    def test_raw_txt() -> list[str, bool, str]:
+        name = 'Reading Screenplay TXT file using Raw_Reader'
+        status = False
+        msg = ''
         try:
-            txt_file = os.path.join('tests', 'test_screenplays', 'test_script.txt')
+            txt_file = os.path.join('test', 'test_screenplays', 'test_script.txt')
             read_txt = raw_reader.Raw_Reader(txt_file)
             read_txt.open()
             curr_line = read_txt.read()
             while curr_line:
                 curr_line = read_txt.read()
-        except:
-            return False, 'Something went wrong with test_txt in Tester!'
+        except Exception as err:
+            msg = f"{type(err).__name__}: {err}"
         else:
-            return True, 'Test \'test_raw_txt\' succeded!'
-        
-    def fail_raw_txt() -> list[bool, str]:
+            status = True 
+            msg = 'Successfully read \'test_script.txt\' without issue.'
+        return name, status, msg
+    
+    def test_xml_fdx() -> list[str, bool, str]:
+        name = 'Reading Screenplay FDX file using FDX_Reader'
+        status = False
+        msg = ''
         try:
-            txt_file = os.path.join('tests', 'test_screenplays', 'no_such_thing.txt')
-            read_txt = raw_reader.Raw_Reader(txt_file)
-            read_txt.open()
-            curr_line = read_txt.read()
-            while curr_line:
-                curr_line = read_txt.read()
-        except:
-            return True, 'Test \'fail_raw_txt\' succeded!'
+            fdx_file = os.path.join('test', 'test_screenplays', 'test_script.fdx')
+            read_fdx = fdx_reader.FDX_Reader(fdx_file)
+            read_fdx.open()
+            inital_root = read_fdx.root
+            # curr_line = read_txt.read()
+        except Exception as err:
+            msg = f"{type(err).__name__}: {err}"
         else:
-            return False, 'Something went wrong with test_txt in Tester!'
+            if inital_root.tag == 'FinalDraft':
+                status = True 
+                msg = 'Successfully read \'test_script.fdx\' without issue.'
+            else:
+                msg = '\'test_script.fdx\' is not a FinalDraft XML Document!'
+        return name, status, msg
+    
+    def print_test(name: str, status: bool, msg: str):
+        status_cond = 'SUCCESS!' if status else 'Failure...'
+        print_str = name+':\n  Status = '+status_cond+'\n  Message = \"'+msg+'\"'
+        print(print_str)
+
+    def test_all():
+        name, value, msg = Tester.test_raw_txt()
+        Tester.print_test(name, value, msg)
+        name, value, msg = Tester.test_xml_fdx()
+        Tester.print_test(name, value, msg)

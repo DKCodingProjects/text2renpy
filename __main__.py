@@ -11,12 +11,7 @@ def main():
     arg_obj.argparse_populate(args)
     arg_obj.print()
     '''
-    value, msg = Tester.test_raw_txt()
-    print('Test Value = \'' + str(value) + '\' : ' + msg)
-    value, msg = Tester.fail_raw_txt()
-    print('Test Value = \'' + str(value) + '\' : ' + msg)
-
-    print('I ran!')
+    Tester.test_all()
 
 if __name__ == '__main__':
     main()
