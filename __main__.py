@@ -1,5 +1,6 @@
 from src.args import *
 from src.read import *
+from tests.tester import Tester
 
 def main():
     '''
@@ -10,6 +11,11 @@ def main():
     arg_obj.argparse_populate(args)
     arg_obj.print()
     '''
+    value, msg = Tester.test_raw_txt()
+    print('Test Value = \'' + str(value) + '\' : ' + msg)
+    value, msg = Tester.fail_raw_txt()
+    print('Test Value = \'' + str(value) + '\' : ' + msg)
+
     print('I ran!')
 
 if __name__ == '__main__':
