@@ -1,4 +1,4 @@
-# DEVELOPER RESOURCES
+# DEVELOPER RESOURCES (IN DEVELOPMENT!)
 
 To those interested in developing this program further, I have provided you with resources to help you understand my code and approach.
 
