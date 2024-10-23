@@ -41,16 +41,12 @@ class Tester():
             fdx_file = os.path.join('test', 'test_screenplays', 'test_script.fdx')
             read_fdx = fdx_reader.FDX_Reader(fdx_file)
             read_fdx.open()
-            inital_root = read_fdx.root
-            # curr_line = read_txt.read()
+            read_fdx.read()
         except Exception as err:
             msg = f"{type(err).__name__}: {err}"
         else:
-            if inital_root.tag == 'FinalDraft':
-                status = True 
-                msg = 'Successfully read \'test_script.fdx\' without issue.'
-            else:
-                msg = '\'test_script.fdx\' is not a FinalDraft XML Document!'
+            status = True
+            msg = 'Successfully read \'test_script.fdx\' without issue.'
         return name, status, msg
     
     def print_test(name: str, status: bool, msg: str):

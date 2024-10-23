@@ -8,13 +8,19 @@ class FDX_Reader(Reader):
     def open(self):
         try:
             self.open_file = et.parse(self.file_name)
-            self.root = self.open_file.getroot()
-        except:
-            print('An error ocuured while parsing file \"'+self.file_name+'\"')
+            self.content = self.open_file.getroot()[0]
+        except Exception as err:
+            print('An error ocuured while parsing file \"'+self.file_name+'\"', err)
+            exit()
 
     def read(self):
         try:
+            '''
+            for child in self.content:
+                print(child.tag, child.attrib)
+            '''
             pass
-        except Exception as e:
-            print('Something went wrong with FDX_reader: ', e)
+        except Exception as err:
+            print('Something went wrong with FDX_reader: ', err)
+            exit()
         return ''
