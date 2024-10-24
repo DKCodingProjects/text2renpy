@@ -39,7 +39,7 @@ class Tester():
         msg = ''
         try:
             fdx_file = os.path.join('test', 'test_screenplays', 'test_script.fdx')
-            read_fdx = Fdx_Reader.Fdx_Reader(fdx_file)
+            read_fdx = fdx_reader.Fdx_Reader(fdx_file)
             read_fdx.open()
             curr_line, curr_attrib = read_fdx.readline()
             while curr_line or curr_attrib:
