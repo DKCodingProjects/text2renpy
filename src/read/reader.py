@@ -12,4 +12,4 @@ class Reader(ABC):
 
     @abstractmethod
     def readline(self) -> tuple[str, dict]:
-        pass
+        return '', None

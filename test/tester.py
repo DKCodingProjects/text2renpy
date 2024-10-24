@@ -27,28 +27,44 @@ class Tester():
             while curr_line or curr_attrib:
                 curr_line, curr_attrib = read_txt.readline()
         except Exception as err:
-            msg = f"{type(err).__name__}: {err}"
+            msg = f"{err}"
         else:
             status = True 
             msg = 'Successfully read \'test_script.txt\' without issue.'
         return name, status, msg
     
     def test_xml_fdx() -> list[str, bool, str]:
-        name = 'Reading Screenplay FDX file using FDX_Reader'
+        name = 'Reading Screenplay FDX file using Fdx_Reader'
         status = False
         msg = ''
         try:
             fdx_file = os.path.join('test', 'test_screenplays', 'test_script.fdx')
-            read_fdx = fdx_reader.FDX_Reader(fdx_file)
+            read_fdx = Fdx_Reader.Fdx_Reader(fdx_file)
             read_fdx.open()
             curr_line, curr_attrib = read_fdx.readline()
             while curr_line or curr_attrib:
                 curr_line, curr_attrib = read_fdx.readline()
         except Exception as err:
-            msg = f"{type(err).__name__}: {err}"
+            msg = f"{err}"
         else:
             status = True
             msg = 'Successfully read \'test_script.fdx\' without issue.'
+        return name, status, msg
+    
+    def test_docx() -> list[str, bool, str]:
+        name = 'Reading Screenplay DOCX file using Docx_Reader'
+        status = False
+        msg = ''
+        try:
+            docx_file = os.path.join('test', 'test_screenplays', 'test_script.docx')
+            read_docx = docx_reader.Docx_Reader(docx_file)
+            read_docx.open()
+            curr_line, curr_attrib = read_docx.readline()
+        except Exception as err:
+            msg = f"{err}"
+        else:
+            status = True 
+            msg = 'Successfully read \'test_script.docx\' without issue.'
         return name, status, msg
     
     def print_test(name: str, status: bool, msg: str):
@@ -60,4 +76,6 @@ class Tester():
         name, value, msg = Tester.test_raw_txt()
         Tester.print_test(name, value, msg)
         name, value, msg = Tester.test_xml_fdx()
+        Tester.print_test(name, value, msg)
+        name, value, msg = Tester.test_docx()
         Tester.print_test(name, value, msg)
