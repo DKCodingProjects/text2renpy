@@ -13,7 +13,6 @@ class Raw_Reader(Reader):
     def readchunk(self) -> tuple[str, dict]:
         try:
             curr_text = self.open_file.readline()
-            curr_attribs = None
         except Exception as err:
             raise Exception('Something went wrong with Raw_Reader ('+f"{type(err).__name__}: {err}"+')')
-        return curr_text, curr_attribs
+        return curr_text, None
