@@ -11,5 +11,5 @@ class Reader(ABC):
         pass
 
     @abstractmethod
-    def read(self):
+    def readline(self) -> tuple[str, dict]:
         pass

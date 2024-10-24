@@ -23,9 +23,9 @@ class Tester():
             txt_file = os.path.join('test', 'test_screenplays', 'test_script.txt')
             read_txt = raw_reader.Raw_Reader(txt_file)
             read_txt.open()
-            curr_line = read_txt.read()
-            while curr_line:
-                curr_line = read_txt.read()
+            curr_line, curr_attrib = read_txt.readline()
+            while curr_line or curr_attrib:
+                curr_line, curr_attrib = read_txt.readline()
         except Exception as err:
             msg = f"{type(err).__name__}: {err}"
         else:
@@ -41,7 +41,9 @@ class Tester():
             fdx_file = os.path.join('test', 'test_screenplays', 'test_script.fdx')
             read_fdx = fdx_reader.FDX_Reader(fdx_file)
             read_fdx.open()
-            read_fdx.read()
+            curr_line, curr_attrib = read_fdx.readline()
+            while curr_line or curr_attrib:
+                curr_line, curr_attrib = read_fdx.readline()
         except Exception as err:
             msg = f"{type(err).__name__}: {err}"
         else:
