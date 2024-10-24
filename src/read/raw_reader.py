@@ -10,7 +10,7 @@ class Raw_Reader(Reader):
         except Exception as err:
             raise Exception('An error occured while opening file \''+self.file_name+'\' ('+f"{type(err).__name__}: {err}"+')')
 
-    def readline(self) -> tuple[str, dict]:
+    def readchunk(self) -> tuple[str, dict]:
         try:
             curr_text = self.open_file.readline()
             curr_attribs = None

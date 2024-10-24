@@ -17,7 +17,7 @@ class Fdx_Reader(Reader):
     def processxml(self):
         pass
 
-    def readline(self) -> tuple[str, dict]:
+    def readchunk(self) -> tuple[str, dict]:
         try:
             curr_text = ''
             curr_attribs = None

@@ -11,5 +11,5 @@ class Reader(ABC):
         pass
 
     @abstractmethod
-    def readline(self) -> tuple[str, dict]:
+    def readchunk(self) -> tuple[str, dict]:
         return '', None
