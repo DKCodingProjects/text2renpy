@@ -1,5 +1,4 @@
 from .reader import Reader
-import sys
 
 class Raw_Reader(Reader):
     def __init__(self, read_file: str):
