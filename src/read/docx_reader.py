@@ -7,15 +7,15 @@ class Docx_Reader(Reader):
 
     def open(self):
         try:
-            raise Exception('Docx_Reader is still in development! Download latest version or wait for update.')
+            self.open_file = Document(self.file_name)
         except Exception as err:
-            raise Exception('An error ocuured while opening file \''+self.file_name+'\'('+f"{type(err).__name__}: {err}"+')')
+            raise Exception('An error ocuured while opening file \''+self.file_name+'\' ('+f"{type(err).__name__}: {err}"+')')
 
     def readline(self) -> tuple[str, dict]:
         try:
-            raise Exception('Docx_Reader is still in development! Download latest version or wait for update.')
+            raise Exception('Docx_Reader \'readline\' is still in development! Download latest version or wait for update.')
             curr_text = ''
             curr_attribs = None
         except Exception as err:
-            raise Exception('Something went wrong with Docx_Reader('+f"{type(err).__name__}: {err}"+')')
+            raise Exception('Something went wrong with Docx_Reader ('+f"{type(err).__name__}: {err}"+')')
         return curr_text, curr_attribs

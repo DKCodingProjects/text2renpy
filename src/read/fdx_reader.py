@@ -12,7 +12,7 @@ class Fdx_Reader(Reader):
             self.curr_index = 0
             self.max_index = len(self.content)
         except Exception as err:
-            raise Exception('An error ocuured while parsing file \''+self.file_name+'\'('+f"{type(err).__name__}: {err}"+')')
+            raise Exception('An error ocuured while parsing file \''+self.file_name+'\' ('+f"{type(err).__name__}: {err}"+')')
     
     def processxml(self):
         pass
@@ -29,5 +29,5 @@ class Fdx_Reader(Reader):
                         curr_text = curr_paragraph.find('Text').text
                 self.curr_index += 1
         except Exception as err:
-            raise Exception('Something went wrong with Fdx_Reader('+f"{type(err).__name__}: {err}"+')')
+            raise Exception('Something went wrong with Fdx_Reader ('+f"{type(err).__name__}: {err}"+')')
         return curr_text, curr_attribs
