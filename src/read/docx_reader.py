@@ -13,9 +13,9 @@ class Docx_Reader(Reader):
 
     def readline(self) -> tuple[str, dict]:
         try:
+            raise Exception('Docx_Reader is still in development! Download latest version or wait for update.')
             curr_text = ''
             curr_attribs = None
-            raise Exception('Docx_Reader is still in development! Download latest version or wait for update.')
         except Exception as err:
             raise Exception('Something went wrong with Docx_Reader('+f"{type(err).__name__}: {err}"+')')
         return curr_text, curr_attribs
