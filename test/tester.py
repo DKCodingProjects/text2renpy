@@ -24,7 +24,7 @@ class Tester():
             read_txt = raw_reader.Raw_Reader(txt_file)
             read_txt.open()
             curr_line, curr_attrib = read_txt.readchunk()
-            while curr_line or curr_attrib:
+            while not read_txt.is_eof:
                 curr_line, curr_attrib = read_txt.readchunk()
         except Exception as err:
             msg = f"{err}"
@@ -42,7 +42,7 @@ class Tester():
             read_fountain = raw_reader.Raw_Reader(fountain_file)
             read_fountain.open()
             curr_line, curr_attrib = read_fountain.readchunk()
-            while curr_line or curr_attrib:
+            while not read_fountain.is_eof:
                 curr_line, curr_attrib = read_fountain.readchunk()
         except Exception as err:
             msg = f"{err}"
@@ -60,7 +60,7 @@ class Tester():
             read_fdx = fdx_reader.Fdx_Reader(fdx_file)
             read_fdx.open()
             curr_line, curr_attrib = read_fdx.readchunk()
-            while curr_line or curr_attrib:
+            while not read_fdx.is_eof:
                 curr_line, curr_attrib = read_fdx.readchunk()
         except Exception as err:
             msg = f"{err}"

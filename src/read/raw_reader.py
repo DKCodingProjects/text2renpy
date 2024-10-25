@@ -6,13 +6,16 @@ class Raw_Reader(Reader):
 
     def open(self):
         try:
-            self.open_file = open(self.file_name, 'rb+')
+            self.open_file = open(self.file_name, 'r')
         except Exception as err:
             raise Exception('An error occured while opening file \''+self.file_name+'\' ('+f"{type(err).__name__}: {err}"+')')
 
     def readchunk(self) -> tuple[str, dict]:
         try:
             curr_text = self.open_file.readline()
+            print(curr_text)
+            if curr_text == '':
+                self.is_eof = True
         except Exception as err:
             raise Exception('Something went wrong with Raw_Reader ('+f"{type(err).__name__}: {err}"+')')
         return curr_text, None
