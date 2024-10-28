@@ -8,12 +8,16 @@ class Docx_Reader(Reader):
     def open(self):
         try:
             self.open_file = Document(self.file_name)
+            self.content = self.open_file.paragraphs
         except Exception as err:
             raise Exception('An error ocuured while opening file \''+self.file_name+'\' ('+f"{type(err).__name__}: {err}"+')')
 
     def readchunk(self) -> tuple[str, dict]:
         try:
             raise Exception('Docx_Reader \'readchunk\' is still in development! Download latest version or wait for update.')
+            print(type(self.content))
+            for paragraph in self.content:
+                print(paragraph.text)
             curr_text = ''
             curr_attribs = None
             self.is_eof = True
