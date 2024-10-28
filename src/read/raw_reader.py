@@ -1,4 +1,5 @@
 from .reader import Reader
+from src.misc.text_data import Text_Data
 
 class Raw_Reader(Reader):
     def __init__(self, read_file: str):
@@ -10,11 +11,10 @@ class Raw_Reader(Reader):
         except Exception as err:
             raise Exception('An error occured while opening file \''+self.file_name+'\' ('+f"{type(err).__name__}: {err}"+')')
 
-    def readchunk(self) -> tuple[str, dict]:
+    def readchunk(self) -> tuple[list[Text_Data], dict]:
         try:
-            curr_text = self.open_file.readline()
-            print(curr_text)
-            if curr_text == '':
+            curr_text = Text_Data(self.open_file.readline(), None)
+            if curr_text.get_text() == '':
                 self.is_eof = True
         except Exception as err:
             raise Exception('Something went wrong with Raw_Reader ('+f"{type(err).__name__}: {err}"+')')

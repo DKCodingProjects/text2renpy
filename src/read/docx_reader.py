@@ -1,9 +1,13 @@
 from .reader import Reader
 from docx import Document
+from src.misc.text_data import Text_Data
 
 class Docx_Reader(Reader):
     def __init__(self, read_file):
         super().__init__(read_file)
+    
+    def lowercase_dict(self, dict):
+        return super().lowercase_dict(dict)
 
     def open(self):
         try:
@@ -12,7 +16,7 @@ class Docx_Reader(Reader):
         except Exception as err:
             raise Exception('An error ocuured while opening file \''+self.file_name+'\' ('+f"{type(err).__name__}: {err}"+')')
 
-    def readchunk(self) -> tuple[str, dict]:
+    def readchunk(self) -> tuple[list[Text_Data], dict]:
         try:
             raise Exception('Docx_Reader \'readchunk\' is still in development! Download latest version or wait for update.')
             print(type(self.content))
