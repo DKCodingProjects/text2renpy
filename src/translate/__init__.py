@@ -1,1 +1,1 @@
-__all__ = ['translator']
+__all__ = ['translator', 'screenplay_to_renpy']
