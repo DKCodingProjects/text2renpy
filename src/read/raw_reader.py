@@ -17,5 +17,5 @@ class Raw_Reader(Reader):
             if curr_text.get_text() == '':
                 self.is_eof = True
         except Exception as err:
-            raise Exception('Something went wrong with Raw_Reader ('+f"{type(err).__name__}: {err}"+')')
+            raise Exception('Something went wrong with Raw_Reader in method \'readchunk\'('+f"{type(err).__name__}: {err}"+')')
         return curr_text, None

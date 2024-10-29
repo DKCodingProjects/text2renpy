@@ -38,5 +38,5 @@ class Fdx_Reader(Reader):
             else:
                 self.is_eof = True
         except Exception as err:
-            raise Exception('Something went wrong with Fdx_Reader ('+f"{type(err).__name__}: {err}"+')')
+            raise Exception('Something went wrong with Fdx_Reader in method \'readchunk\'('+f"{type(err).__name__}: {err}"+')')
         return curr_text, curr_attribs
