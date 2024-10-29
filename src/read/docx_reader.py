@@ -23,8 +23,8 @@ class Docx_Reader(Reader):
             for paragraph in self.content:
                 print(paragraph.text)
             curr_text = ''
-            curr_attribs = None
+            curr_attrib = None
             self.is_eof = True
         except Exception as err:
             raise Exception('Something went wrong with Docx_Reader in method \'readchunk\'('+f"{type(err).__name__}: {err}"+')')
-        return curr_text, curr_attribs
+        return curr_text, curr_attrib

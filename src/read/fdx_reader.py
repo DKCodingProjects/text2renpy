@@ -21,11 +21,11 @@ class Fdx_Reader(Reader):
     def readchunk(self) -> tuple[list[Text_Data], dict]:
         try:
             curr_text = []
-            curr_attribs = None
+            curr_attrib = None
             if self.curr_index < self.max_index:
                 if self.content[self.curr_index].tag == 'Paragraph':
                     curr_paragraph = self.content[self.curr_index]
-                    curr_attribs = self.lowercase_dict(curr_paragraph.attrib)
+                    curr_attrib = self.lowercase_dict(curr_paragraph.attrib)
                     if self.content[self.curr_index].find('Text') is not None:
                         para_len = len(curr_paragraph)
                         para_index = 0
@@ -39,4 +39,4 @@ class Fdx_Reader(Reader):
                 self.is_eof = True
         except Exception as err:
             raise Exception('Something went wrong with Fdx_Reader in method \'readchunk\'('+f"{type(err).__name__}: {err}"+')')
-        return curr_text, curr_attribs
+        return curr_text, curr_attrib
