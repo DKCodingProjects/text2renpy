@@ -18,10 +18,22 @@ class Docx_Reader(Reader):
 
     def readchunk(self) -> tuple[list[Text_Data], dict]:
         try:
-            raise Exception('Docx_Reader \'readchunk\' is still in development! Download latest version or wait for update.')
-            print(type(self.content))
+            # raise Exception('Docx_Reader \'readchunk\' is still in development! Download latest version or wait for update.')
             for paragraph in self.content:
-                print(paragraph.text)
+                for run in paragraph.runs:
+                    print(run.text)
+                    print('has_bold = ',run.bold)
+                    if run.bold:
+                        print('  bold line = ', "{{b}}{0}{{/b}}".format(run.text))
+                    print('has_italics = ',run.italic)
+                    print('has_underlines = ',run.underline)
+                    print('has_strikethrough = ',run.font.strike)
+                    print('has_subscript = ',run.font.subscript)
+                    print('has_superscript = ',run.font.superscript)
+                    print('color = ',run.font.color.rgb)
+                    print('has_size = ',run.font.size)
+                    if run.font.size:
+                        print('  size = ',run.font.size.pt)
             curr_text = ''
             curr_attrib = None
             self.is_eof = True
