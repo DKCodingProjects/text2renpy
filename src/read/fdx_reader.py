@@ -1,5 +1,5 @@
 from .reader import Reader
-from src.misc.text_data import Text_Data
+from src.misc.text_chunk_data import Text_Chunk_Data
 import xml.etree.ElementTree as et
 
 class Fdx_Reader(Reader):
@@ -18,7 +18,7 @@ class Fdx_Reader(Reader):
         except Exception as err:
             raise Exception('An error ocuured while parsing file \''+self.file_name+'\' ('+f"{type(err).__name__}: {err}"+')')
 
-    def readchunk(self) -> tuple[list[Text_Data], dict]:
+    def readpart(self) -> tuple[list[Text_Chunk_Data], dict]:
         try:
             curr_text = []
             curr_attrib = None
@@ -32,11 +32,12 @@ class Fdx_Reader(Reader):
                         while para_index < para_len:
                             if curr_paragraph[para_index].tag == 'Text':
                                 para_text = curr_paragraph[para_index]
-                                curr_text.append(Text_Data(para_text.text, self.lowercase_dict(para_text.attrib)))
+                                # pass styling to the Text_Chunk_Data object!
+                                curr_text.append(Text_Chunk_Data(para_text.text))
                             para_index += 1
                 self.curr_index += 1
             else:
                 self.is_eof = True
         except Exception as err:
-            raise Exception('Something went wrong with Fdx_Reader in method \'readchunk\'('+f"{type(err).__name__}: {err}"+')')
+            raise Exception('Something went wrong with Fdx_Reader in method \'readpart\'('+f"{type(err).__name__}: {err}"+')')
         return curr_text, curr_attrib

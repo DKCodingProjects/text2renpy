@@ -1,5 +1,5 @@
 from src.read import *
-from src.misc.text_data import Text_Data
+from src.misc.text_chunk_data import Text_Chunk_Data
 import os, sys
 
 class Tester():
@@ -24,9 +24,9 @@ class Tester():
             txt_file = os.path.join('test', 'test_screenplays', 'test_script.txt')
             read_txt = raw_reader.Raw_Reader(txt_file)
             read_txt.open()
-            curr_line, curr_attrib = read_txt.readchunk()
+            curr_line, curr_attrib = read_txt.readpart()
             while not read_txt.is_eof:
-                curr_line, curr_attrib = read_txt.readchunk()
+                curr_line, curr_attrib = read_txt.readpart()
         except Exception as err:
             msg = f"{err}"
         else:
@@ -42,9 +42,9 @@ class Tester():
             fountain_file = os.path.join('test', 'test_screenplays', 'test_script.fountain')
             read_fountain = raw_reader.Raw_Reader(fountain_file)
             read_fountain.open()
-            curr_line, curr_attrib = read_fountain.readchunk()
+            curr_line, curr_attrib = read_fountain.readpart()
             while not read_fountain.is_eof:
-                curr_line, curr_attrib = read_fountain.readchunk()
+                curr_line, curr_attrib = read_fountain.readpart()
         except Exception as err:
             msg = f"{err}"
         else:
@@ -60,9 +60,9 @@ class Tester():
             fdx_file = os.path.join('test', 'test_screenplays', 'test_script.fdx')
             read_fdx = fdx_reader.Fdx_Reader(fdx_file)
             read_fdx.open()
-            curr_line, curr_attrib = read_fdx.readchunk()
+            curr_line, curr_attrib = read_fdx.readpart()
             while not read_fdx.is_eof:
-                curr_line, curr_attrib = read_fdx.readchunk()
+                curr_line, curr_attrib = read_fdx.readpart()
         except Exception as err:
             msg = f"{err}"
         else:
@@ -78,9 +78,9 @@ class Tester():
             docx_file = os.path.join('test', 'test_screenplays', 'test_script.docx')
             read_docx = docx_reader.Docx_Reader(docx_file)
             read_docx.open()
-            curr_line, curr_attrib = read_docx.readchunk()
+            curr_line, curr_attrib = read_docx.readpart()
             while curr_line or curr_attrib:
-                curr_line, curr_attrib = read_docx.readchunk()
+                curr_line, curr_attrib = read_docx.readpart()
         except Exception as err:
             msg = f"{err}"
         else:

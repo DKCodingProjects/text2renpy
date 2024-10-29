@@ -1,5 +1,5 @@
-class Text_Data():
-    def __init__(self, text: str, attrib: dict):
+class Text_Chunk_Data():
+    def __init__(self, text: str):
         self.text = text
         self.attrib = attrib
 

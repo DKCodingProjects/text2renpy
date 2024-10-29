@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-from src.misc.text_data import Text_Data
+from src.misc.text_chunk_data import Text_Chunk_Data
 
 class Reader(ABC):
     def __init__(self, read_file: str):
@@ -15,5 +15,5 @@ class Reader(ABC):
         pass
 
     @abstractmethod
-    def readchunk(self) -> tuple[list[Text_Data], dict]:
+    def readpart(self) -> tuple[list[Text_Chunk_Data], dict]:
         pass
