@@ -13,9 +13,9 @@ class Raw_Reader(Reader):
 
     def readpart(self) -> tuple[list[Text_Chunk_Data], dict]:
         try:
-            curr_text = Text_Chunk_Data(self.open_file.readline(), None)
-            if curr_text.get_text() == '':
+            text_chunks = Text_Chunk_Data(self.open_file.readline(), None)
+            if text_chunks.get_text() == '':
                 self.is_eof = True
         except Exception as err:
             raise Exception('Something went wrong with Raw_Reader in method \'readpart\'('+f"{type(err).__name__}: {err}"+')')
-        return curr_text, None
+        return text_chunks, None
