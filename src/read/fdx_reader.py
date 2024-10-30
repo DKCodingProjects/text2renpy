@@ -1,5 +1,5 @@
 from .reader import Reader
-from src.misc.text_chunk_data import Text_Chunk_Data
+from src.misc.text_chunk import Text_Chunk
 import xml.etree.ElementTree as et
 
 class Fdx_Reader(Reader):
@@ -18,8 +18,8 @@ class Fdx_Reader(Reader):
         except Exception as err:
             raise Exception('An error ocuured while parsing file \''+self.file_name+'\' ('+f"{type(err).__name__}: {err}"+')')
         
-    def build_chunk(chunk) -> Text_Chunk_Data:
-        chunk_data = Text_Chunk_Data(chunk.text)
+    def build_chunk(chunk) -> Text_Chunk:
+        chunk_data = Text_Chunk(chunk.text)
         chunk_attribs = chunk.attrib
         if 'Style' in chunk_attribs:
             chunk_styles = chunk_attribs['Style'].split('+')
@@ -28,7 +28,7 @@ class Fdx_Reader(Reader):
             chunk_data.set_underline(True if ('Underline' in chunk_styles) else False)
         return chunk_data
     
-    def find_chunks(paragraph) -> list[Text_Chunk_Data]:
+    def find_chunks(paragraph) -> list[Text_Chunk]:
         text_chunks = []
         para_len = len(paragraph)
         para_index = 0
@@ -39,7 +39,7 @@ class Fdx_Reader(Reader):
             para_index += 1
         return text_chunks
 
-    def readpart(self) -> tuple[list[Text_Chunk_Data], dict]:
+    def readpart(self) -> tuple[list[Text_Chunk], dict]:
         try:
             text_chunks = []
             curr_attrib = None

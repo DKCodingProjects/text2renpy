@@ -1,6 +1,6 @@
 from .reader import Reader
 from docx import Document
-from src.misc.text_chunk_data import Text_Chunk_Data
+from src.misc.text_chunk import Text_Chunk
 
 class Docx_Reader(Reader):
     def __init__(self, read_file):
@@ -16,7 +16,7 @@ class Docx_Reader(Reader):
         except Exception as err:
             raise Exception('An error ocuured while opening document \''+self.file_name+'\' ('+f"{type(err).__name__}: {err}"+')')
 
-    def readpart(self) -> tuple[list[Text_Chunk_Data], dict]:
+    def readpart(self) -> tuple[list[Text_Chunk], dict]:
         try:
             raise Exception('Docx_Reader \'readpart\' is still in development! Download latest version or wait for update.')
             for paragraph in self.content:
