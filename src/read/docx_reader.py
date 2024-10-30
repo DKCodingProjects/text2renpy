@@ -18,9 +18,7 @@ class Docx_Reader(Reader):
 
     def readpart(self) -> tuple[list[Text_Chunk_Data], dict]:
         try:
-            docx_record = open('output.txt', 'w')
-            style = self.open_file.styles['normal']
-            # raise Exception('Docx_Reader \'readpart\' is still in development! Download latest version or wait for update.')
+            raise Exception('Docx_Reader \'readpart\' is still in development! Download latest version or wait for update.')
             for paragraph in self.content:
                 for run in paragraph.runs:
                     pass

@@ -17,11 +17,6 @@ def main():
     arg_obj.print()
     '''
     Tester.test_all()
-    nonetype = None
-    if nonetype is None:
-        print('True!')
-    else:
-        print('False')
 
 if __name__ == '__main__':
     main()

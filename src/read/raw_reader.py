@@ -13,7 +13,7 @@ class Raw_Reader(Reader):
 
     def readpart(self) -> tuple[list[Text_Chunk_Data], dict]:
         try:
-            text_chunks = Text_Chunk_Data(self.open_file.readline(), None)
+            text_chunks = Text_Chunk_Data(self.open_file.readline())
             if text_chunks.get_text() == '':
                 self.is_eof = True
         except Exception as err:

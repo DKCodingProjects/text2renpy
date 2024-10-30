@@ -50,9 +50,6 @@ class Fdx_Reader(Reader):
                     if self.content[self.curr_index].find('Text') is not None:
                         text_chunks = Fdx_Reader.find_chunks(curr_paragraph)
                 self.curr_index += 1
-                for chunk in text_chunks:
-                    if chunk.is_bold():
-                        print(chunk.text)
             else:
                 self.is_eof = True
         except Exception as err:
