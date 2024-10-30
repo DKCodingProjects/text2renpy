@@ -4,8 +4,6 @@ from src.translate import *
 from test.tester import Tester
 ###############################
 import dev.sandbox as dev
-import docx
-import os
 
 def main():
     '''
@@ -16,6 +14,7 @@ def main():
     arg_obj.argparse_populate(args)
     arg_obj.print()
     '''
+    # print(type(reader_proxy.Reader_Proxy.get_reader('somefile.fdx')))
     Tester.test_all()
 
 if __name__ == '__main__':

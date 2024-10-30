@@ -9,6 +9,14 @@ class Reader(ABC):
 
     def lowercase_dict(self, dict: dict):
         return {k.lower(): v.lower() for k, v in dict.items()}
+    
+    @abstractmethod
+    def build_chunk(chunk) -> Text_Chunk:
+        return None
+    
+    @abstractmethod
+    def find_chunks(paragraph) -> list[Text_Chunk]:
+        return None
 
     @abstractmethod
     def open(self):

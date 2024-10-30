@@ -32,7 +32,7 @@ class Text_Chunk():
         if value: self.set_style(True)
         self.bold = value
     
-    def is_bold(self):
+    def is_bold(self) -> bool:
         return self.bold
     
     def set_italic(self, value: bool):
@@ -40,7 +40,7 @@ class Text_Chunk():
         if value: self.set_style(True)
         self.italic = value
     
-    def is_italic(self):
+    def is_italic(self) -> bool:
         return self.italic
     
     def set_underline(self, value: bool):
@@ -48,7 +48,7 @@ class Text_Chunk():
         if value: self.set_style(True)
         self.underline = value
     
-    def is_underline(self):
+    def is_underline(self) -> bool:
         return self.underline
     
     def set_strike(self, value: bool):
@@ -56,41 +56,34 @@ class Text_Chunk():
         if value: self.set_style(True)
         self.strike = value
     
-    def is_strike(self):
+    def is_strike(self) -> bool:
         return self.strike
     
     def set_color(self, value: str):
-        if type(value) is not str or not re.match(r'^[0-9A-Fa-f]{3,8}$', value):
-            raise Exception('String \"{0}\" passed to set_color does not match desired hexadecimal format'.format(value))
+        if value is None:
+            pass
+        elif type(value) is not str:
+            raise Exception('Value passed to Text_Chunk method \'set_color\' is not of type str'.format(value))
+        elif not re.match(r'^[0-9A-Fa-f]{3,8}$', value):
+            raise Exception('String \"{0}\" passed to Text_Chunk method \'set_color\' does not match desired hexadecimal format'.format(value))
         if value: self.set_style(True)
         self.color = value
     
-    def get_color(self):
+    def get_color(self) -> str:
         return self.color
     
-    def set_size(self, value: float):
-        if type(value) is float:
+    def set_size(self, value):
+        if value is None:
+            pass
+        elif type(value) is float:
             self.size = value
-            if value: self.set_style(True)
+            if value > 0.0: self.set_style(True)
         else:
             try:
                 self.size = float(value)
-                if value: self.set_style(True)
+                if self.size > 0.0: self.set_style(True)
             except Exception as err:
                 raise TypeError(err)
     
-    def get_size(self):
+    def get_size(self) -> float:
         return self.size
-    
-    '''
-    docx_record.write(run.text+'\n')
-    docx_record.write('has_bold = '+str(run.bold)+'\n')
-    docx_record.write('has_italics = '+str(run.italic)+'\n')
-    docx_record.write('has_underlines = '+str(run.underline)+'\n')
-    docx_record.write('has_strikethrough = '+str(run.font.strike)+'\n')
-    docx_record.write('has_subscript = '+str(run.font.subscript)+'\n')
-    docx_record.write('has_superscript = '+str(run.font.superscript)+'\n')
-    if run.font.color and run.font.color.rgb:
-        docx_record.write('color = '+str(run.font.color.rgb)+'\n')
-    docx_record.write('has_size = '+str(run.font.size)+'\n')
-    '''

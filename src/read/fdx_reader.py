@@ -42,7 +42,7 @@ class Fdx_Reader(Reader):
     def readpart(self) -> tuple[list[Text_Chunk], dict]:
         try:
             text_chunks = []
-            curr_attrib = None
+            curr_attrib = {}
             if self.curr_index < self.max_index:
                 if self.content[self.curr_index].tag == 'Paragraph':
                     curr_paragraph = self.content[self.curr_index]

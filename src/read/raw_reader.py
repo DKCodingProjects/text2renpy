@@ -5,6 +5,14 @@ class Raw_Reader(Reader):
     def __init__(self, read_file: str):
         super().__init__(read_file)
 
+    def build_chunk(chunk) -> Text_Chunk:
+        # raise Warning('Raw_Reader has no implementation of the \'build_chunk\' method')
+        return super().build_chunk(chunk)
+    
+    def find_chunks(paragraph) -> list[Text_Chunk]:
+        # raise Warning('Raw_Reader has no implementation of the \'find_chunks\' method')
+        return super().find_chunks(paragraph)
+    
     def open(self):
         try:
             self.open_file = open(self.file_name, 'r')

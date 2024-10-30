@@ -13,18 +13,52 @@ class Docx_Reader(Reader):
         try:
             self.open_file = Document(self.file_name)
             self.content = self.open_file.paragraphs
+            self.curr_index = 0
+            self.max_index = len(self.content)
         except Exception as err:
             raise Exception('An error ocuured while opening document \''+self.file_name+'\' ('+f"{type(err).__name__}: {err}"+')')
+    
+    def build_chunk(chunk) -> Text_Chunk:
+        chunk_data = Text_Chunk(chunk.text)
+        chunk_data.set_bold(True if (chunk.bold) else False)
+        chunk_data.set_italic(True if (chunk.italic) else False)
+        chunk_data.set_underline(True if (chunk.underline) else False)
+        chunk_data.set_strike(True if (chunk.font.strike) else False)
+        chunk_data.set_color(str(chunk.font.color.rgb) if (chunk.font.color and chunk.font.color.rgb) else None)
+        chunk_data.set_size(chunk.font.size.pt if (chunk.font.size) else None)
+        return chunk_data
+
+    def find_chunks(paragraph) -> list [Text_Chunk]:
+        text_chunks = []
+        for run in paragraph.runs:
+            text_chunks.append(Docx_Reader.build_chunk(run))
+        return text_chunks
 
     def readpart(self) -> tuple[list[Text_Chunk], dict]:
         try:
-            raise Exception('Docx_Reader \'readpart\' is still in development! Download latest version or wait for update.')
-            for paragraph in self.content:
-                for run in paragraph.runs:
-                    pass
+            # raise Exception('Docx_Reader \'readpart\' is still in development! Download latest version or wait for update.')
             text_chunks = ''
-            curr_attrib = None
-            self.is_eof = True
+            curr_attrib = {}
+            if self.curr_index < self.max_index:
+                curr_paragraph = self.content[self.curr_index]
+                curr_attrib['alignment'] = curr_paragraph.alignment if curr_paragraph.alignment else None
+                text_chunks = Docx_Reader.find_chunks(curr_paragraph)
+                self.curr_index += 1
+            else:
+                self.is_eof = True
         except Exception as err:
             raise Exception('Something went wrong with Docx_Reader in method \'readpart\'('+f"{type(err).__name__}: {err}"+')')
         return text_chunks, curr_attrib
+
+'''
+docx_record.write(run.text+'\n')
+docx_record.write('has_bold = '+str(run.bold)+'\n')
+docx_record.write('has_italics = '+str(run.italic)+'\n')
+docx_record.write('has_underlines = '+str(run.underline)+'\n')
+docx_record.write('has_strikethrough = '+str(run.font.strike)+'\n')
+docx_record.write('has_subscript = '+str(run.font.subscript)+'\n')
+docx_record.write('has_superscript = '+str(run.font.superscript)+'\n')
+if run.font.color and run.font.color.rgb:
+    docx_record.write('color = '+str(run.font.color.rgb)+'\n')
+docx_record.write('has_size = '+str(run.font.size)+'\n')
+'''
