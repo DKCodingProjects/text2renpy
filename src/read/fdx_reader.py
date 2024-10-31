@@ -9,6 +9,9 @@ class Fdx_Reader(Reader):
     def lowercase_dict(self, dict):
         return super().lowercase_dict(dict)
 
+    def open_except(self, err):
+        return super().open_except(err)
+    
     def open(self):
         try:
             self.open_file = et.parse(self.file_name)
@@ -16,7 +19,7 @@ class Fdx_Reader(Reader):
             self.curr_index = 0
             self.max_index = len(self.content)
         except Exception as err:
-            raise Exception('An error ocuured while parsing file \''+self.file_name+'\' ('+f"{type(err).__name__}: {err}"+')')
+            self.open_except(err)
         
     def build_chunk(chunk) -> Text_Chunk:
         chunk_data = Text_Chunk(chunk.text)
@@ -38,6 +41,9 @@ class Fdx_Reader(Reader):
                 text_chunks.append(Fdx_Reader.build_chunk(curr_chunk))
             para_index += 1
         return text_chunks
+    
+    def readpart_except(self, err):
+        return super().readpart_except(err)
 
     def readpart(self) -> tuple[list[Text_Chunk], dict]:
         try:
@@ -53,5 +59,5 @@ class Fdx_Reader(Reader):
             else:
                 self.is_eof = True
         except Exception as err:
-            raise Exception('Something went wrong with Fdx_Reader in method \'readpart\'('+f"{type(err).__name__}: {err}"+')')
+            self.readpart_except(err)
         return text_chunks, curr_attrib

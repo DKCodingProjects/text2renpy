@@ -20,4 +20,4 @@ class Reader_Proxy:
         elif extension in Reader_Proxy.raw_files:
             return Raw_Reader(read_file)
         else:
-            raise TypeError('document \"'+read_file+'\" is not a supported document for Text2RenPy')
+            raise TypeError('document \"{0}\" is not a supported document type for Text2RenPy'.format(read_file))

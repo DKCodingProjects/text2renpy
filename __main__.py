@@ -5,6 +5,8 @@ from test.tester import Tester
 ###############################
 import dev.sandbox as dev
 
+PROGRAM_NAME = 'Text2RenPy'
+
 def main():
     '''
     print('starting program...')
