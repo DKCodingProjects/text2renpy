@@ -1,4 +1,11 @@
+from enum import Enum
 
+class Document_Types(Enum):
+    UNKNOWN = 0
+    RAW = 1
+    MARKDOWN = 2
+    FDX = 3
+    DOCX = 4
 
 class Document_Metadata():
     def __init__(self):
