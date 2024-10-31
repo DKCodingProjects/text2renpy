@@ -1,7 +1,7 @@
 from enum import Enum
 
 class Paragraph_Alignment(Enum):
-    UNKNOWN = 0
+    NONE = 0
     LEFT = 1
     CENTER = 2
     RIGHT = 3
@@ -11,7 +11,7 @@ class Paragraph_Alignment(Enum):
 class Paragraph_Attributes():
     def __init__(self):
         self.type: str = None
-        self.alignment = Paragraph_Alignment.UNKNOWN
+        self.alignment = Paragraph_Alignment.NONE
 
     def set_alignment(self, alignment: Paragraph_Alignment):
         if type(alignment) is Paragraph_Alignment:

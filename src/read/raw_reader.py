@@ -1,5 +1,6 @@
 from .reader import Reader
 from src.collect.text_chunk import Text_Chunk
+from src.collect.para_attribs import *
 
 class Raw_Reader(Reader):
     def __init__(self, read_file: str):
@@ -17,11 +18,11 @@ class Raw_Reader(Reader):
     def readpart_except(self, err):
         return super().readpart_except(err)
 
-    def readpart(self) -> tuple[list[Text_Chunk], dict]:
+    def readpart(self) -> tuple[list[Text_Chunk], Paragraph_Attributes]:
         try:
-            text_chunks = Text_Chunk(self.open_file.readline())
-            if text_chunks.get_text() == '':
+            text_chunks: list[Text_Chunk] = [Text_Chunk(self.open_file.readline())]
+            if text_chunks[0].get_text() == '':
                 self.is_eof = True
         except Exception as err:
             self.readpart_except(err)
-        return text_chunks, None
+        return text_chunks, Paragraph_Attributes()

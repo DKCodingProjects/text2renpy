@@ -1,7 +1,7 @@
 from enum import Enum
 
 class Document_Types(Enum):
-    UNKNOWN = 0
+    NONE = 0
     RAW = 1
     MARKDOWN = 2
     FDX = 3
