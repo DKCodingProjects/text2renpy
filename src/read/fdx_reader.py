@@ -1,6 +1,7 @@
 from .reader import Reader
-from src.collect.text_chunk import Text_Chunk
 import xml.etree.ElementTree as et
+from src.collect.text_chunk import Text_Chunk
+from src.collect.para_attribs import *
 
 class Fdx_Reader(Reader):
     def __init__(self, read_file: str):
@@ -20,6 +21,14 @@ class Fdx_Reader(Reader):
             self.max_index = len(self.content)
         except Exception as err:
             self.open_except(err)
+    
+    def build_attributes(paragraph: et.Element) -> Paragraph_Attributes:
+        para_attrib = Paragraph_Attributes()
+        attrib_dict = paragraph.attrib
+        align_dict = {'Left': 1, 'Center': 2, 'Right': 3}
+        para_attrib.set_alignment(Paragraph_Alignment(align_dict[attrib_dict['Alignment']] if ('Alignment' in attrib_dict) else 0))
+        para_attrib.set_type(attrib_dict['Type'].lower() if ('Type' in attrib_dict) else None)
+        return para_attrib
         
     def build_chunk(chunk) -> Text_Chunk:
         chunk_data = Text_Chunk(chunk.text)
@@ -47,17 +56,17 @@ class Fdx_Reader(Reader):
 
     def readpart(self) -> tuple[list[Text_Chunk], dict]:
         try:
-            text_chunks = []
-            curr_attrib = {}
+            text_chunks: list[Text_Chunk] = []
+            para_attribs: Paragraph_Attributes = None
             if self.curr_index < self.max_index:
                 if self.content[self.curr_index].tag == 'Paragraph':
                     curr_paragraph = self.content[self.curr_index]
-                    curr_attrib = self.lowercase_dict(curr_paragraph.attrib)
-                    if self.content[self.curr_index].find('Text') is not None:
+                    para_attribs = Fdx_Reader.build_attributes(curr_paragraph)
+                    if curr_paragraph.find('Text') is not None:
                         text_chunks = Fdx_Reader.find_chunks(curr_paragraph)
                 self.curr_index += 1
             else:
                 self.is_eof = True
         except Exception as err:
             self.readpart_except(err)
-        return text_chunks, curr_attrib
+        return text_chunks, para_attribs

@@ -63,7 +63,7 @@ class Text_Chunk():
         if value is None:
             pass
         elif type(value) is not str:
-            raise TypeError('Value {0} passed to Text_Chunk method \'set_color\' is not of type str'.format(value))
+            raise TypeError('Value {0} passed to Text_Chunk method \'set_color\' is not of type \'str\''.format(value))
         elif not re.match(r'^[0-9A-Fa-f]{3,8}$', value):
             raise TypeError('String \"{0}\" passed to Text_Chunk method \'set_color\' does not match desired hexadecimal format'.format(value))
         if value: self.set_style(True)
@@ -79,11 +79,7 @@ class Text_Chunk():
             self.size = value
             if value > 0.0: self.set_style(True)
         else:
-            try:
-                self.size = float(value)
-                if self.size > 0.0: self.set_style(True)
-            except Exception as err:
-                raise TypeError('Value {0} passed to Text_Chunk method \'set_size\' failed to be/converted-to a float({1})'.format(value, err))
+            raise TypeError('Value {0} passed to Text_Chunk method \'set_size\' is not of type \'float\''.format(value))
     
     def get_size(self) -> float:
         return self.size
