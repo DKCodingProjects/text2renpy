@@ -51,16 +51,3 @@ class Docx_Reader(Reader):
         except Exception as err:
             self.readpart_except(err)
         return text_chunks, curr_attrib
-
-'''
-docx_record.write(run.text+'\n')
-docx_record.write('has_bold = '+str(run.bold)+'\n')
-docx_record.write('has_italics = '+str(run.italic)+'\n')
-docx_record.write('has_underlines = '+str(run.underline)+'\n')
-docx_record.write('has_strikethrough = '+str(run.font.strike)+'\n')
-docx_record.write('has_subscript = '+str(run.font.subscript)+'\n')
-docx_record.write('has_superscript = '+str(run.font.superscript)+'\n')
-if run.font.color and run.font.color.rgb:
-    docx_record.write('color = '+str(run.font.color.rgb)+'\n')
-docx_record.write('has_size = '+str(run.font.size)+'\n')
-'''
