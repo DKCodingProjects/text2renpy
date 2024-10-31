@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-from src.misc.text_chunk import Text_Chunk
+from src.collect.text_chunk import Text_Chunk
 
 class Reader(ABC):
     def __init__(self, read_file: str):

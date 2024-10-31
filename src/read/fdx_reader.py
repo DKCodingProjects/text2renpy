@@ -1,5 +1,5 @@
 from .reader import Reader
-from src.misc.text_chunk import Text_Chunk
+from src.collect.text_chunk import Text_Chunk
 import xml.etree.ElementTree as et
 
 class Fdx_Reader(Reader):

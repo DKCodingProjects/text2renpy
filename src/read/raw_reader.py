@@ -1,5 +1,5 @@
 from .reader import Reader
-from src.misc.text_chunk import Text_Chunk
+from src.collect.text_chunk import Text_Chunk
 
 class Raw_Reader(Reader):
     def __init__(self, read_file: str):
