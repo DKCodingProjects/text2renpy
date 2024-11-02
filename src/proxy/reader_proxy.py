@@ -1,17 +1,20 @@
-from .raw_reader import Raw_Reader
-from .fdx_reader import Fdx_Reader
-from .docx_reader import Docx_Reader
+from proxy.proxy import Proxy
+from src.read.raw_reader import Raw_Reader
+from src.read.fdx_reader import Fdx_Reader
+from src.read.docx_reader import Docx_Reader
+from src.read.reader import Reader
 from pathlib import Path
 
-class Reader_Proxy:
+class Reader_Proxy(Proxy):
     raw_files = {'.txt', '.rpy'}
     fdx_files = {'.fdx'}
     doc_files = {'.docx'}
     # md_files = {'.md', '.fountain'}
-    def __init__(self):
-        pass
 
-    def get_reader(read_file: str):
+    def get_instance_except(self, err, instance = Reader('')):
+        return super().get_instance_except(instance, err)
+
+    def get_instance(read_file: str):
         extension = Path(read_file).suffix
         if extension in Reader_Proxy.doc_files:
             return Docx_Reader(read_file)
