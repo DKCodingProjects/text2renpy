@@ -11,7 +11,8 @@ class Reader_Proxy(Proxy):
     doc_files = {'.docx'}
     # md_files = {'.md', '.fountain'}
 
-    def get_instance_except(self, err, instance = Reader('')):
+    def get_instance_except(self, err):
+        instance = Reader('')
         return super().get_instance_except(instance, err)
 
     def get_instance(read_file: str):
