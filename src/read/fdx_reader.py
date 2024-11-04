@@ -42,8 +42,8 @@ class Fdx_Reader(Reader):
     
     def find_chunks(paragraph) -> list[Text_Chunk]:
         text_chunks = []
-        para_len = len(paragraph)
         para_index = 0
+        para_len = len(paragraph)
         while para_index < para_len:
             curr_chunk = paragraph[para_index]
             if curr_chunk.tag == 'Text':

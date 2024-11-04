@@ -8,7 +8,6 @@ class Reader(ABC):
         self.open_file = None
         self.is_eof: bool = False
     
-    @abstractmethod
     def open_except(self, err: Exception):
         raise Exception('An error occured in {0} while opening file \'{1}\' ({2})'.format(self.__class__.__name__, self.file_name, f"{type(err).__name__}: {err}"))
 

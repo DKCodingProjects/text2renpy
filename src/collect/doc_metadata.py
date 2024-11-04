@@ -1,14 +1,14 @@
 from enum import Enum
 from pathlib import Path
 
-class Document_Types(Enum):
+class Document_Type(Enum):
     RAW = 0
     MARKDOWN = 1
     FDX = 2
     DOCX = 3
 
 class Document_Metadata():
-    def find_type(file_name: str) -> Document_Types:
+    def find_type(file_name: str) -> Document_Type:
         raw_files = {'.txt', '.rpy'}
         md_files = {'.md', '.fountain'}
         fdx_files = {'.fdx'}
@@ -16,13 +16,13 @@ class Document_Metadata():
 
         extension = Path(file_name).suffix
         if extension in raw_files:
-            return Document_Types.RAW
+            return Document_Type.RAW
         elif extension in md_files:
-            return Document_Types.MARKDOWN
+            return Document_Type.MARKDOWN
         elif extension in fdx_files:
-            return Document_Types.FDX
+            return Document_Type.FDX
         elif extension in doc_files:
-            return Document_Types.DOCX
+            return Document_Type.DOCX
         else:
             raise TypeError('document \"{0}\" is not a supported document type for Text2RenPy'.format(file_name))
 

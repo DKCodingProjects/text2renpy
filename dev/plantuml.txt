@@ -1,0 +1,124 @@
+@startuml
+
+package read{
+abstract class Reader {
+  self.file_name: str
+  self.open_file: any
+  self.is_eof: bool
+  open_except()
+  read_except()
+  {abstract} open()
+  {abstract} read()
+}
+
+class Docx_Reader {
+  self.file_name: str
+  self.open_file: any
+  self.is_eof: bool
+  open()
+  read()
+}
+Docx_Reader <|-- Reader
+
+class Fdx_Reader {
+  self.file_name: str
+  self.open_file: any
+  self.is_eof: bool
+  open()
+  read()
+}
+Fdx_Reader <|-- Reader
+class Raw_Reader{
+  self.file_name: str
+  self.open_file: any
+  self.is_eof: bool
+  open()
+  read()
+}
+Raw_Reader <|-- Reader
+}
+
+package collect {
+class Text_Chunk {
+  self.text
+  self.bold: bool
+  self.italic: bool
+  self.underline: bool
+  self.strike: bool
+  self.color: str
+  self.size: float
+  self.has_style
+  set_text()
+  get_text()
+  test_bool()
+  set_style()
+  set_bold()
+  is_bold()
+  set_italic()
+  is_italic()
+  set_underline()
+  is_underline()
+  set_strike()
+  is_strike()
+  set_color()
+  get_color()
+  set_size()
+  get_size()
+}
+
+enum Paragraph_Alignment {
+  NONE = 0
+  LEFT = 1
+  CENTER = 2
+  RIGHT = 3
+  JUSTIFY = 4
+  OTHER = 5
+}
+
+class Paragraph_Attributes {
+  self.type: str
+  self.alignment: Paragraph_Alignment
+  set_alignment()
+  get_alignment()
+  set_type()
+  get_type()
+}
+
+Paragraph_Attributes *-- Paragraph_Alignment
+
+read *-- Text_Chunk
+
+read *-- Paragraph_Attributes
+
+enum Document_Type {
+  RAW = 0
+  MARKDOWN = 1
+  FDX = 2
+  DOCX = 3
+}
+
+class Document_Metadata {
+  self.file_name: str
+  self.type: Document_Type
+  self.font_size: float
+  self.doc_length: int
+  find_type()
+}
+Document_Metadata *-- Document_Type 
+}
+
+package proxy{
+abstract class Proxy {
+  get_instance_except()
+  {abstract} get_instance()
+}
+
+class Reader_Proxy {
+  get_instance()
+}
+Reader_Proxy <|-- Proxy
+
+Reader_Proxy *-- read
+}
+
+@enduml
