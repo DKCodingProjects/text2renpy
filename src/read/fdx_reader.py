@@ -1,7 +1,7 @@
 from .reader import Reader
 import xml.etree.ElementTree as et
-from src.collect.text_chunk import Text_Chunk
-from src.collect.para_attribs import *
+from src.store.text_chunk import Text_Chunk
+from src.store.para_attribs import *
 
 class Fdx_Reader(Reader):
     def __init__(self, read_file: str):

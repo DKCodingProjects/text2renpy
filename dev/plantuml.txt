@@ -38,7 +38,7 @@ class Raw_Reader{
 Raw_Reader <|-- Reader
 }
 
-package collect {
+package store {
 class Text_Chunk {
   self.text
   self.bold: bool

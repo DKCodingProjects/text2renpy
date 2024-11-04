@@ -6,8 +6,8 @@ import docx.text.paragraph
 import docx.text.run
 from .reader import Reader
 import docx
-from src.collect.text_chunk import Text_Chunk
-from src.collect.para_attribs import *
+from src.store.text_chunk import Text_Chunk
+from src.store.para_attribs import *
 
 class Docx_Reader(Reader):
     def __init__(self, read_file):

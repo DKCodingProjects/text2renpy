@@ -1,5 +1,5 @@
 from src.read import *
-from src.collect.text_chunk import Text_Chunk
+from src.store.text_chunk import Text_Chunk
 import os, sys
 
 class Tester():

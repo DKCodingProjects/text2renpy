@@ -1,6 +1,6 @@
 from .reader import Reader
-from src.collect.text_chunk import Text_Chunk
-from src.collect.para_attribs import *
+from src.store.text_chunk import Text_Chunk
+from src.store.para_attribs import *
 
 class Raw_Reader(Reader):
     def __init__(self, read_file: str):

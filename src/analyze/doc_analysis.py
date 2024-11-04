@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-from src.collect.doc_metadata import *
+from src.store.doc_metadata import *
 
 class Document_Analysis(ABC):
     def __init__(self, read_file: str):
