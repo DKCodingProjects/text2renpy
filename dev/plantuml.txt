@@ -28,6 +28,7 @@ class Fdx_Reader {
   read()
 }
 Fdx_Reader <|-- Reader
+
 class Raw_Reader{
   self.file_name: str
   self.open_file: any

@@ -7,21 +7,23 @@ class Document_Type(Enum):
     FDX = 2
     DOCX = 3
 
+class Supported_Extensions:
+    raw_files = {'.txt', '.rpy'}
+    md_files = {'.md', '.fountain'}
+    fdx_files = {'.fdx'}
+    doc_files = {'.docx'}
+
 class Document_Metadata():
     def find_type(file_name: str) -> Document_Type:
-        raw_files = {'.txt', '.rpy'}
-        md_files = {'.md', '.fountain'}
-        fdx_files = {'.fdx'}
-        doc_files = {'.docx'}
-
         extension = Path(file_name).suffix
-        if extension in raw_files:
+        if extension in Supported_Extensions.raw_files:
             return Document_Type.RAW
-        elif extension in md_files:
+        elif extension in Supported_Extensions.md_files:
+            raise TypeError('class \'Markdown_Reader\' is still being developed! Update to latest version or wait for a working release!')
             return Document_Type.MARKDOWN
-        elif extension in fdx_files:
+        elif extension in Supported_Extensions.fdx_files:
             return Document_Type.FDX
-        elif extension in doc_files:
+        elif extension in Supported_Extensions.doc_files:
             return Document_Type.DOCX
         else:
             raise TypeError('document \"{0}\" is not a supported document type for Text2RenPy'.format(file_name))
