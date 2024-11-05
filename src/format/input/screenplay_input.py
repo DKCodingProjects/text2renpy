@@ -1,18 +1,7 @@
 import re
-from enum import Enum
+from src.enum.screenplay_enum import Screenplay_Enum
+from src.enum.para_align_enum import Paragraph_Alignment
 from src.store.para_attribs import *
-
-class Screenplay_Enum(Enum):
-    NONE = 0
-    TRNSTN = 1
-    HEADER = 2
-    ACTION = 3
-    SLUGLN = 4
-    CHRCTR = 5
-    PRNTHT = 6
-    DIALOG = 7
-    NORMAL = 8 # for undetermined normalcase
-    UPPER = 9 # for undetermined uppercase
 
 class Screenplay_Input:
     def __init__(self):

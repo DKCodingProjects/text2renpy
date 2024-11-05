@@ -1,11 +1,5 @@
-from enum import Enum
+from src.enum.doc_type_enum import Document_Type
 from pathlib import Path
-
-class Document_Type(Enum):
-    RAW = 0
-    MARKDOWN = 1
-    FDX = 2
-    DOCX = 3
 
 class Supported_Extensions:
     raw_files = {'.txt', '.rpy'}

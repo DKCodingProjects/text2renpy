@@ -1,18 +1,6 @@
 import re
-from enum import Enum
+from src.enum.renpy_enum import RenPy_Enum
 from src.store.para_attribs import *
-
-class RenPy_Enum(Enum):
-    NONE = 0
-    SAY = 1
-    SHOW = 2
-    SCENE = 3
-    AUDIO = 4
-    VOICE = 5
-    SOUND = 6
-    MUSIC = 7
-    IMAGE = 8
-    DEFINE = 9
 
 class RenPy_Output:
     def __init__(self):

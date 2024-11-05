@@ -1,9 +1,3 @@
-import docx.document
-import docx.enum
-import docx.enum.text
-import docx.text
-import docx.text.paragraph
-import docx.text.run
 from .reader import Reader
 import docx
 from src.store.text_chunk import Text_Chunk
