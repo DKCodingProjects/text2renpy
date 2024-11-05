@@ -5,7 +5,7 @@ class Paragraph_Alignment(Enum):
     LEFT = 1
     CENTER = 2
     RIGHT = 3
-    JUSTIFY = 4
+    JUSTFY = 4
     OTHER = 5
 
 class Paragraph_Attributes():
