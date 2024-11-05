@@ -11,3 +11,5 @@ class Screenplay_Enum(Enum):
     DIALOG = 7
     NORMAL = 8 # for undetermined normalcase
     UPPER = 9 # for undetermined uppercase
+    # COMMAND = 10
+    # COMMENT = 11

@@ -17,18 +17,18 @@ class Text_Chunk():
     def get_text(self):
         return self.text
     
-    def test_bool(method: str, value):
+    def test_bool(self, method: str, value):
         if type(value) is not bool and value is not None:
-            raise TypeError('value \"{0}\" passed to the {1} method in Text_Chunk isn\'t of type \'bool\''.format(value, method))
+            raise TypeError('value \"{0}\" passed to the {1} method in {2} isn\'t of type \'bool\''.format(value, method, self.__class__.__name__))
         else:
             pass # do nothing
     
     def set_style(self, value: bool):
-        Text_Chunk.test_bool('set_style', value)
+        self.test_bool('set_style', value)
         self.has_style = value
     
     def set_bold(self, value: bool):
-        Text_Chunk.test_bool('set_bold', value)
+        self.test_bool('set_bold', value)
         if value: self.set_style(True)
         self.bold = value
     
@@ -36,7 +36,7 @@ class Text_Chunk():
         return self.bold
     
     def set_italic(self, value: bool):
-        Text_Chunk.test_bool('set_italic', value)
+        self.test_bool('set_italic', value)
         if value: self.set_style(True)
         self.italic = value
     
@@ -44,7 +44,7 @@ class Text_Chunk():
         return self.italic
     
     def set_underline(self, value: bool):
-        Text_Chunk.test_bool('set_underline', value)
+        self.test_bool('set_underline', value)
         if value: self.set_style(True)
         self.underline = value
     
@@ -52,7 +52,7 @@ class Text_Chunk():
         return self.underline
     
     def set_strike(self, value: bool):
-        Text_Chunk.test_bool('set_strike', value)
+        self.test_bool('set_strike', value)
         if value: self.set_style(True)
         self.strike = value
     

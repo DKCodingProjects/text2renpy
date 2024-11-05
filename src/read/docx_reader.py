@@ -21,19 +21,19 @@ class Docx_Reader(Reader):
 
     def find_alignment(alignment: docx.enum.text.WD_ALIGN_PARAGRAPH) -> Paragraph_Alignment:
         if alignment is None:
-            return Paragraph_Alignment(0)
+            return Paragraph_Alignment.NONE
         elif alignment.value == docx.enum.text.WD_ALIGN_PARAGRAPH.LEFT:
-            return Paragraph_Alignment(1)
+            return Paragraph_Alignment.LEFT
         elif alignment.value == docx.enum.text.WD_ALIGN_PARAGRAPH.CENTER:
-            return Paragraph_Alignment(2)
+            return Paragraph_Alignment.CENTER
         elif alignment.value == docx.enum.text.WD_ALIGN_PARAGRAPH.RIGHT:
-            return Paragraph_Alignment(3)
+            return Paragraph_Alignment.RIGHT
         elif alignment.value == docx.enum.text.WD_ALIGN_PARAGRAPH.JUSTIFY:
-            return Paragraph_Alignment(4)
+            return Paragraph_Alignment.JUSTFY
         elif alignment.value >= docx.enum.text.WD_ALIGN_PARAGRAPH.DISTRIBUTE:
-            return Paragraph_Alignment(5)
+            return Paragraph_Alignment.OTHER
         else:
-            return Paragraph_Alignment(0)
+            return Paragraph_Alignment.NONE
     
     def build_attributes(paragraph: docx.text.paragraph.Paragraph) -> Paragraph_Attributes:
         para_attrib = Paragraph_Attributes()
@@ -62,7 +62,7 @@ class Docx_Reader(Reader):
     def readpart(self) -> tuple[list[Text_Chunk], dict]:
         try:
             text_chunks: list[Text_Chunk] = []
-            para_attribs: Paragraph_Attributes = None
+            para_attribs: Paragraph_Attributes = Paragraph_Attributes()
             if self.curr_index < self.max_index:
                 curr_paragraph = self.content[self.curr_index]
                 para_attribs = Docx_Reader.build_attributes(curr_paragraph)

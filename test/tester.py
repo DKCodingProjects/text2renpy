@@ -79,7 +79,7 @@ class Tester():
             read_docx = docx_reader.Docx_Reader(docx_file)
             read_docx.open()
             curr_line, curr_attrib = read_docx.readpart()
-            while curr_line or curr_attrib:
+            while not read_docx.is_eof:
                 curr_line, curr_attrib = read_docx.readpart()
         except Exception as err:
             msg = f"{err}"

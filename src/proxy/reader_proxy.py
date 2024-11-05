@@ -1,4 +1,4 @@
-from proxy.proxy import Proxy
+from .proxy import Proxy
 from src.read.raw_reader import Raw_Reader
 from src.read.fdx_reader import Fdx_Reader
 from src.read.docx_reader import Docx_Reader
