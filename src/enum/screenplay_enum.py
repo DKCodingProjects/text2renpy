@@ -1,6 +1,7 @@
 from enum import Enum
 
 class Screenplay_Enum(Enum):
+    IGNORE = -1
     NONE = 0
     TRNSTN = 1
     HEADER = 2

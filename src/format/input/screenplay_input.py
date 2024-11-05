@@ -19,7 +19,7 @@ class Screenplay_Input:
         if type(para_attribs) is not Paragraph_Attributes:
             raise TypeError('Argument \'para_attribs\' sent to method \'match\' in class {0} is not of type Paragraph_Attributes'.format(self.__class__.__name__))
         if self.empty.match(text):
-            return Screenplay_Enum.NONE
+            return Screenplay_Enum.IGNORE
         elif self.upper.match(text):
             if self.header.match(text):
                 return Screenplay_Enum.HEADER
