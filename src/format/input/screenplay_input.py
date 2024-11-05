@@ -14,7 +14,7 @@ class Screenplay_Enum(Enum):
     NORMAL = 8 # for undetermined normalcase
     UPPER = 9 # for undetermined uppercase
 
-class Screenplay_Format:
+class Screenplay_Input:
     def __init__(self):
         self.empty = re.compile(r'^\s*$')
         self.normal = re.compile(r'^\s*(.+[\.…!?~\-\"\'\)\]\}])\s*$') # Used for both Dialogue and Action (aka Narration)

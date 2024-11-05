@@ -14,7 +14,7 @@ class RenPy_Enum(Enum):
     IMAGE = 8
     DEFINE = 9
 
-class RenPy_Format:
+class RenPy_Output:
     def __init__(self):
         pass # regex for renpy stuff here!
 
