@@ -77,7 +77,7 @@ class Text_Chunk():
             pass
         elif type(value) is float:
             self.size = value
-            if value > 0.0: self.set_style(True)
+            if value > 1.0: self.set_style(True)
         else:
             raise TypeError('Value {0} passed to Text_Chunk method \'set_size\' is not of type \'float\''.format(value))
     

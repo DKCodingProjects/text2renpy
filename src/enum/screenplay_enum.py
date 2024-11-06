@@ -1,7 +1,7 @@
 from enum import Enum
 
 class Screenplay_Enum(Enum):
-    IGNORE = -1
+    EMPTY = -1
     NONE = 0
     TRNSTN = 1
     HEADER = 2
@@ -10,7 +10,5 @@ class Screenplay_Enum(Enum):
     CHRCTR = 5
     PRNTHT = 6
     DIALOG = 7
-    NORMAL = 8 # for undetermined normalcase
-    UPPER = 9 # for undetermined uppercase
-    # COMMAND = 10
-    # COMMENT = 11
+    NORMAL = 8 # for undetermined normalcase text ending with punctuation
+    UPPER = 9 # for undetermined uppercase without ending punctuation

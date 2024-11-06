@@ -1,1 +1,1 @@
-__all__ = ['reader', 'raw_reader', 'fdx_reader', 'docx_reader']
+__all__ = ['reader', 'raw_reader', 'fdx_reader', 'docx_reader', 'md_reader']

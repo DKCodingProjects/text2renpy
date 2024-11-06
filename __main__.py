@@ -18,7 +18,7 @@ def main():
     '''
     # print(type(reader_proxy.Reader_Proxy.get_reader('somefile.fdx')))
     Tester.test_all()
-    reader = Reader_Proxy.get_instance(r'test\test_screenplays\test_script.docx')
+    reader = Reader_Proxy.get_instance(r'test\test_screenplays\test_script.fdx')
     reader.open()
     translator = screenplay_to_renpy.Screenplay_to_Renpy()
     while not reader.is_eof:

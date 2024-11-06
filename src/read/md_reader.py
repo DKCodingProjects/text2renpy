@@ -11,6 +11,7 @@ class Markdown_Reader(Reader):
     
     def open(self):
         try:
+            raise TypeError('class method \'open\' in {0} is still being developed! Update to latest version or wait for a working release!'.format(self.__class__.__name__))
             self.open_file = open(self.file_name, 'r')
         except Exception as err:
             self.open_except(err)

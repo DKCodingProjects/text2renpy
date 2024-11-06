@@ -34,13 +34,13 @@ class Tester():
             msg = 'Successfully read \'test_script.txt\' without issue.'
         return name, status, msg
     
-    def test_raw_fountain() -> list[str, bool, str]:
+    def test_md_fountain() -> list[str, bool, str]:
         name = 'Reading Screenplay Fountain file using Raw_Reader'
         status = False
         msg = ''
         try:
             fountain_file = os.path.join('test', 'test_screenplays', 'test_script.fountain')
-            read_fountain = raw_reader.Raw_Reader(fountain_file)
+            read_fountain = md_reader.Markdown_Reader(fountain_file)
             read_fountain.open()
             curr_line, curr_attrib = read_fountain.readpart()
             while not read_fountain.is_eof:
@@ -96,7 +96,7 @@ class Tester():
     def test_all():
         name, value, msg = Tester.test_raw_txt()
         Tester.print_test(name, value, msg)
-        name, value, msg = Tester.test_raw_fountain()
+        name, value, msg = Tester.test_md_fountain()
         Tester.print_test(name, value, msg)
         name, value, msg = Tester.test_xml_fdx()
         Tester.print_test(name, value, msg)
