@@ -18,3 +18,4 @@ class Screenplay_to_Renpy(Translator):
         consolid_text = self.consolidate_chunks(text_chunks)
         script_type = self.input_format.match(consolid_text, para_attribs)
         # print('Text \"{0}\" is of type {1}'.format(consolid_text.strip(), script_type))
+        # para_attribs.print()
