@@ -1,4 +1,5 @@
 from src.enum.doc_type_enum import Document_Type
+from src.enum.para_align_enum import Paragraph_Alignment
 from pathlib import Path
 
 class Supported_Extensions:
@@ -22,11 +23,16 @@ class Document_Metadata():
         else:
             raise TypeError('document \"{0}\" is not a supported document type for Text2RenPy'.format(file_name))
 
-    def __init__(self, doc_name: str):
-        self.file_name: str = doc_name
-        self.type = Document_Metadata.find_type(doc_name)
+    def __init__(self, file_name: str):
+        self.file_name: str = file_name
+        self.type: Document_Type = Document_Metadata.find_type(file_name)
         self.font_size: float = None
-        self.doc_length: int = None
+        self.left_indent: float = None
+        self.alignment: Paragraph_Alignment = None
+    
+    def print(self):
+        print('{0} Object Instance:\n  type = {1}\n  alignment = {2}\n  left_indent = {3}\n  font_size = {4}'.format(self.__class__.__name__, self.type, self.alignment, self.left_indent, self.font_size))
+
     
     def set_font_size(self, size: float):
         if size is None:
@@ -42,17 +48,27 @@ class Document_Metadata():
     def get_font_size(self) -> float:
         return self.font_size
     
-    def set_doc_length(self, length: int):
-        if length is None:
+    def set_left_indent(self, indent: float):
+        if indent is None:
             pass
-        elif type(length) is int:
-            self.doc_length = length
+        elif type(indent) is float:
+            self.left_indent = indent
         else:
             try:
-                self.doc_length = int(length)
+                self.left_indent = float(indent)
             except Exception as err:
                 raise TypeError(err)
     
-    def get_doc_length(self) -> float:
-        return self.doc_length
+    def get_left_indent(self) -> float:
+        return self.left_indent
     
+    def set_alignment(self, alignment: float):
+        if alignment is None:
+            pass
+        elif type(alignment) is Paragraph_Alignment:
+            self.alignment = alignment
+        else:
+            raise TypeError('Error')
+    
+    def get_alignment(self) -> float:
+        return self.alignment

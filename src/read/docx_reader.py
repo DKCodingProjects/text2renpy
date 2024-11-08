@@ -61,7 +61,7 @@ class Docx_Reader(Reader):
     def readpart_except(self, err):
         return super().readpart_except(err)
     
-    def readpart(self) -> tuple[list[Text_Chunk], dict]:
+    def readpart(self) -> tuple[list[Text_Chunk], Paragraph_Attributes]:
         try:
             text_chunks: list[Text_Chunk] = []
             para_attribs: Paragraph_Attributes = Paragraph_Attributes()

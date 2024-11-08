@@ -3,6 +3,7 @@ from src.read import *
 from src.proxy.reader_proxy import Reader_Proxy
 from src.translate import *
 from src.format.input.screenplay_input import *
+from src.analyze.docx_analyzer import Docx_Analyzer
 from test.tester import Tester
 ###############################
 import dev.sandbox as dev
@@ -18,6 +19,9 @@ def main():
     '''
     # print(type(reader_proxy.Reader_Proxy.get_reader('somefile.fdx')))
     Tester.test_all()
+    analyzer = Docx_Analyzer(r'test\test_screenplays\test_script.docx')
+    analyzer.analyze()
+    '''
     reader = Reader_Proxy.get_instance(r'test\test_screenplays\test_script.docx')
     reader.open()
     translator = screenplay_to_renpy.Screenplay_to_Renpy()
@@ -26,6 +30,7 @@ def main():
         translator.translate(text_chunks=curr_chunks, para_attribs=para_attribs)
     else:
         exit()
+    '''
 
 
 if __name__ == '__main__':
