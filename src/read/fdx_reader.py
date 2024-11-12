@@ -1,8 +1,8 @@
 from .reader import Reader
 import xml.etree.ElementTree as et
-from src.store.text_chunk import Text_Chunk
-from src.store.para_attribs import *
-from src.enum.screenplay_enum import SCREENPLAY_FORMAT
+from src.data.prog.build.text_chunk import Text_Chunk
+from src.data.prog.build.para_attribs import *
+from src.data.prog.enum.screenplay_enum import SCREENPLAY_FORMAT
 
 class Fdx_Reader(Reader):
     def __init__(self, read_file: str):

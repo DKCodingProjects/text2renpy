@@ -1,8 +1,8 @@
 from .analyzer import Document_Analyzer
 from src.read.docx_reader import Docx_Reader
-from src.store.doc_metadata import Document_Metadata
+from src.data.prog.build.doc_metadata import Document_Metadata
 from src.format.default.default_document import Default_Document
-from src.enum.para_align_enum import PARAGRAPH_ALIGNMENT
+from src.data.prog.enum.para_align_enum import PARAGRAPH_ALIGNMENT
 
 class Docx_Analyzer(Document_Analyzer):
     def __init__(self, read_file):
@@ -64,13 +64,13 @@ class Docx_Analyzer(Document_Analyzer):
         dominant_indent = Docx_Analyzer._get_max(indent_analysis)
         dominant_alignment = Docx_Analyzer._get_max(alignment_analysis)
         metadata = Document_Metadata(self.file_name)
-        metadata.set_font_size(dominant_size 
+        metadata.set_font_size(dominant_size
                                if type(dominant_size) is float 
                                else Default_Document.font_size)
-        metadata.set_left_indent(dominant_indent 
+        metadata.set_left_indent(dominant_indent
                                  if dominant_indent is float 
                                  else Default_Document.left_indent)
-        metadata.set_alignment(dominant_alignment 
+        metadata.set_alignment(dominant_alignment
                                if (type(dominant_alignment) is PARAGRAPH_ALIGNMENT 
                                    and dominant_alignment != PARAGRAPH_ALIGNMENT.NONE) 
                                else Default_Document.alignment)

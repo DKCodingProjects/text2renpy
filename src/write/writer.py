@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-from src.store.text_chunk import Text_Chunk
+from src.data.prog.build.text_chunk import Text_Chunk
 
 class Writer(ABC):
 

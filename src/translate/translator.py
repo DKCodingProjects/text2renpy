@@ -1,7 +1,7 @@
 from abc import ABC, abstractmethod
-from src.store.text_chunk import *
-from src.store.para_attribs import *
-from src.store.doc_metadata import *
+from src.data.prog.build.text_chunk import *
+from src.data.prog.build.para_attribs import *
+from src.data.prog.build.doc_metadata import *
 
 class Translator(ABC):
     def __init__(self):

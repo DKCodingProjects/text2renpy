@@ -1,5 +1,5 @@
-from src.enum.doc_type_enum import DOCUMENT_TYPE
-from src.enum.para_align_enum import PARAGRAPH_ALIGNMENT
+from src.data.prog.enum.doc_type_enum import DOCUMENT_TYPE
+from src.data.prog.enum.para_align_enum import PARAGRAPH_ALIGNMENT
 from pathlib import Path
 
 class Supported_Extensions:

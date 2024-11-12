@@ -1,7 +1,7 @@
 from src.format.regex.screenplay_regex import Screenplay_Regex
-from src.enum.screenplay_enum import SCREENPLAY_FORMAT
-from src.enum.para_align_enum import PARAGRAPH_ALIGNMENT
-from src.store.para_attribs import *
+from src.data.prog.enum.screenplay_enum import SCREENPLAY_FORMAT
+from src.data.prog.enum.para_align_enum import PARAGRAPH_ALIGNMENT
+from src.data.prog.build.para_attribs import *
 
 class Screenplay_Input:
     def __init__(self):

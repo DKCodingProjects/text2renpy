@@ -1,7 +1,7 @@
 from .translator  import Translator
-from src.store.text_chunk import *
-from src.store.para_attribs import *
-from src.store.doc_metadata import *
+from src.data.prog.build.text_chunk import *
+from src.data.prog.build.para_attribs import *
+from src.data.prog.build.doc_metadata import *
 from src.format.input.screenplay_input import *
 
 class Screenplay_to_Renpy(Translator):
