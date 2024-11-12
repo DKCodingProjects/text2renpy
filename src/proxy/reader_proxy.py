@@ -11,9 +11,9 @@ class Reader_Proxy(Proxy):
     doc_files = {'.docx'}
     # md_files = {'.md', '.fountain'}
 
-    def get_instance_except(self, err):
+    def _get_instance_except(self, err):
         instance = Reader('')
-        return super().get_instance_except(instance, err)
+        return super()._get_instance_except(instance, err)
 
     def get_instance(read_file: str):
         extension = Path(read_file).suffix
@@ -24,4 +24,4 @@ class Reader_Proxy(Proxy):
         elif extension in Reader_Proxy.raw_files:
             return Raw_Reader(read_file)
         else:
-            Reader_Proxy.get_instance_except('TypeError: Extension in document \"{0}\" is not supported in Text2RenPy'.format(read_file))
+            Reader_Proxy._get_instance_except('TypeError: Extension in document \"{0}\" is not supported in Text2RenPy'.format(read_file))

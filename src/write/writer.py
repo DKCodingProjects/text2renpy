@@ -7,7 +7,7 @@ class Writer(ABC):
         self.file_name: str = read_file
         self.open_file = None
     
-    def open_except(self, err: Exception):
+    def _open_except(self, err: Exception):
         raise Exception('An error occured in {0} while opening file \'{1}\' ({2})'.format(self.__class__.__name__, self.file_name, f"{type(err).__name__}: {err}"))
 
     @abstractmethod

@@ -5,7 +5,7 @@ abstract class Reader {
   self.file_name: str
   self.open_file: any
   self.is_eof: bool
-  open_except()
+  _open_except()
   read_except()
   {abstract} open()
   {abstract} read()
@@ -51,7 +51,7 @@ class Text_Chunk {
   self.has_style
   set_text()
   get_text()
-  test_bool()
+  _test_bool()
   set_style()
   set_bold()
   is_bold()
@@ -110,7 +110,7 @@ Document_Metadata *-- DOCUMENT_TYPE
 
 package proxy{
 abstract class Proxy {
-  get_instance_except()
+  _get_instance_except()
   {abstract} get_instance()
 }
 

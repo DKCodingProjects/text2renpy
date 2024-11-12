@@ -8,8 +8,8 @@ class Fdx_Reader(Reader):
     def __init__(self, read_file: str):
         super().__init__(read_file)
 
-    def open_except(self, err):
-        return super().open_except(err)
+    def _open_except(self, err):
+        return super()._open_except(err)
     
     def open(self):
         try:
@@ -18,7 +18,7 @@ class Fdx_Reader(Reader):
             self.curr_index = 0
             self.max_index = len(self.content)
         except Exception as err:
-            self.open_except(err)
+            self._open_except(err)
 
     def _find_screenplay_type(type: str):
         lower_type = type.lower()
@@ -67,8 +67,8 @@ class Fdx_Reader(Reader):
             para_index += 1
         return text_chunks
     
-    def readpart_except(self, err):
-        return super().readpart_except(err)
+    def _readpart_except(self, err):
+        return super()._readpart_except(err)
 
     def readpart(self) -> tuple[list[Text_Chunk], dict]:
         try:
@@ -84,5 +84,5 @@ class Fdx_Reader(Reader):
             else:
                 self.is_eof = True
         except Exception as err:
-            self.readpart_except(err)
+            self._readpart_except(err)
         return text_chunks, para_attribs

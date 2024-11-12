@@ -33,7 +33,6 @@ class Document_Metadata():
     def print(self):
         print('{0} Object Instance:\n  type = {1}\n  alignment = {2}\n  left_indent = {3}\n  font_size = {4}'.format(self.__class__.__name__, self.type, self.alignment, self.left_indent, self.font_size))
 
-    
     def set_font_size(self, size: float):
         if size is None:
             pass

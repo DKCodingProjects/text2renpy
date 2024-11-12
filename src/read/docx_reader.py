@@ -7,8 +7,8 @@ class Docx_Reader(Reader):
     def __init__(self, read_file):
         super().__init__(read_file)
     
-    def open_except(self, err):
-        return super().open_except(err)
+    def _open_except(self, err):
+        return super()._open_except(err)
         
     def open(self):
         try:
@@ -17,7 +17,7 @@ class Docx_Reader(Reader):
             self.curr_index = 0
             self.max_index = len(self.content)
         except Exception as err:
-            self.open_except(err)
+            self._open_except(err)
 
     def _find_alignment(alignment: docx.enum.text.WD_ALIGN_PARAGRAPH) -> PARAGRAPH_ALIGNMENT:
         if alignment is None:
@@ -58,8 +58,8 @@ class Docx_Reader(Reader):
             text_chunks.append(Docx_Reader._build_chunk(run))
         return text_chunks
 
-    def readpart_except(self, err):
-        return super().readpart_except(err)
+    def _readpart_except(self, err):
+        return super()._readpart_except(err)
     
     def readpart(self) -> tuple[list[Text_Chunk], Paragraph_Attributes]:
         try:
@@ -73,5 +73,5 @@ class Docx_Reader(Reader):
             else:
                 self.is_eof = True
         except Exception as err:
-            self.readpart_except(err)
+            self._readpart_except(err)
         return text_chunks, para_attribs
