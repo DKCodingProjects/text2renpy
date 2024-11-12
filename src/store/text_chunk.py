@@ -19,7 +19,7 @@ class Text_Chunk():
     
     def test_bool(self, method: str, value):
         if type(value) is not bool and value is not None:
-            raise TypeError('value \"{0}\" passed to the {1} method in {2} isn\'t of type \'bool\''.format(value, method, self.__class__.__name__))
+            raise TypeError('value \"{0}\" passed to the {1} method in {2} isn\'t of type \'{4}\''.format(value, method, self.__class__.__name__, bool.__name__))
         else:
             pass # do nothing
     

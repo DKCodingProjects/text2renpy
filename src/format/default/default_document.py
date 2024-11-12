@@ -1,8 +1,8 @@
-from src.enum.para_align_enum import Paragraph_Alignment
+from src.enum.para_align_enum import PARAGRAPH_ALIGNMENT
 
 class Default_Document:
     # informed by common best practices
-    alignment = Paragraph_Alignment.LEFT
+    alignment = PARAGRAPH_ALIGNMENT.LEFT
     font_size: float = 11.0
     left_indent: float = 1.0
     right_indent: float = 1.0

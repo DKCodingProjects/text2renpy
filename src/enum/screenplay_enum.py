@@ -1,6 +1,6 @@
 from enum import Enum
 
-class Screenplay_Enum(Enum):
+class SCREENPLAY_FORMAT(Enum):
     EMPTY = -1
     NONE = 0
     TRNSTN = 1

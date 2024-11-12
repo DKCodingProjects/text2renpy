@@ -1,5 +1,5 @@
-from src.enum.doc_type_enum import Document_Type
-from src.enum.para_align_enum import Paragraph_Alignment
+from src.enum.doc_type_enum import DOCUMENT_TYPE
+from src.enum.para_align_enum import PARAGRAPH_ALIGNMENT
 from pathlib import Path
 
 class Supported_Extensions:
@@ -9,26 +9,26 @@ class Supported_Extensions:
     doc_files = {'.docx'}
 
 class Document_Metadata():
-    def find_type(file_name: str) -> Document_Type:
-        extension = Path(file_name).suffix
-        if extension in Supported_Extensions.raw_files:
-            return Document_Type.RAW
-        elif extension in Supported_Extensions.md_files:
-            raise TypeError('class \'Markdown_Reader\' is still being developed! Update to latest version or wait for a working release!')
-            return Document_Type.MARKDOWN
-        elif extension in Supported_Extensions.fdx_files:
-            return Document_Type.FDX
-        elif extension in Supported_Extensions.doc_files:
-            return Document_Type.DOCX
-        else:
-            raise TypeError('document \"{0}\" is not a supported document type for Text2RenPy'.format(file_name))
-
     def __init__(self, file_name: str):
         self.file_name: str = file_name
-        self.type: Document_Type = Document_Metadata.find_type(file_name)
+        self.type: DOCUMENT_TYPE = Document_Metadata.find_type(file_name)
         self.font_size: float = None
         self.left_indent: float = None
-        self.alignment: Paragraph_Alignment = None
+        self.alignment: PARAGRAPH_ALIGNMENT = None
+
+    def find_type(file_name: str) -> DOCUMENT_TYPE:
+        extension = Path(file_name).suffix
+        if extension in Supported_Extensions.raw_files:
+            return DOCUMENT_TYPE.RAW
+        elif extension in Supported_Extensions.md_files:
+            raise TypeError('class \'Markdown_Reader\' is still being developed! Update to latest version or wait for a working release!')
+            return DOCUMENT_TYPE.MARKDOWN
+        elif extension in Supported_Extensions.fdx_files:
+            return DOCUMENT_TYPE.FDX
+        elif extension in Supported_Extensions.doc_files:
+            return DOCUMENT_TYPE.DOCX
+        else:
+            raise TypeError('document \"{0}\" is not a supported document type for Text2RenPy'.format(file_name))
     
     def print(self):
         print('{0} Object Instance:\n  type = {1}\n  alignment = {2}\n  left_indent = {3}\n  font_size = {4}'.format(self.__class__.__name__, self.type, self.alignment, self.left_indent, self.font_size))
@@ -65,7 +65,7 @@ class Document_Metadata():
     def set_alignment(self, alignment: float):
         if alignment is None:
             pass
-        elif type(alignment) is Paragraph_Alignment:
+        elif type(alignment) is PARAGRAPH_ALIGNMENT:
             self.alignment = alignment
         else:
             raise TypeError('Error')

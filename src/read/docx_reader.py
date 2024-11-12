@@ -19,30 +19,30 @@ class Docx_Reader(Reader):
         except Exception as err:
             self.open_except(err)
 
-    def find_alignment(alignment: docx.enum.text.WD_ALIGN_PARAGRAPH) -> Paragraph_Alignment:
+    def _find_alignment(alignment: docx.enum.text.WD_ALIGN_PARAGRAPH) -> PARAGRAPH_ALIGNMENT:
         if alignment is None:
-            return Paragraph_Alignment.NONE
+            return PARAGRAPH_ALIGNMENT.NONE
         elif alignment.value == docx.enum.text.WD_ALIGN_PARAGRAPH.LEFT:
-            return Paragraph_Alignment.LEFT
+            return PARAGRAPH_ALIGNMENT.LEFT
         elif alignment.value == docx.enum.text.WD_ALIGN_PARAGRAPH.CENTER:
-            return Paragraph_Alignment.CENTER
+            return PARAGRAPH_ALIGNMENT.CENTER
         elif alignment.value == docx.enum.text.WD_ALIGN_PARAGRAPH.RIGHT:
-            return Paragraph_Alignment.RIGHT
+            return PARAGRAPH_ALIGNMENT.RIGHT
         elif alignment.value == docx.enum.text.WD_ALIGN_PARAGRAPH.JUSTIFY:
-            return Paragraph_Alignment.JUSTFY
+            return PARAGRAPH_ALIGNMENT.JUSTFY
         elif alignment.value >= docx.enum.text.WD_ALIGN_PARAGRAPH.DISTRIBUTE:
-            return Paragraph_Alignment.OTHER
+            return PARAGRAPH_ALIGNMENT.OTHER
         else:
-            return Paragraph_Alignment.NONE
+            return PARAGRAPH_ALIGNMENT.NONE
     
-    def build_attributes(paragraph: docx.text.paragraph.Paragraph) -> Paragraph_Attributes:
+    def _build_attributes(paragraph: docx.text.paragraph.Paragraph) -> Paragraph_Attributes:
         para_attrib = Paragraph_Attributes()
-        para_attrib.set_alignment(Docx_Reader.find_alignment(paragraph.alignment))
+        para_attrib.set_alignment(Docx_Reader._find_alignment(paragraph.alignment))
         para_attrib.set_left_indent(paragraph.paragraph_format.left_indent.inches if paragraph.paragraph_format.left_indent else None)
         para_attrib.set_right_indent(paragraph.paragraph_format.right_indent.inches if paragraph.paragraph_format.right_indent else None)
         return para_attrib
     
-    def build_chunk(chunk: docx.text.run.Run) -> Text_Chunk:
+    def _build_chunk(chunk: docx.text.run.Run) -> Text_Chunk:
         chunk_data = Text_Chunk(chunk.text)
         chunk_data.set_bold(True if (chunk.bold) else False)
         chunk_data.set_italic(True if (chunk.italic) else False)
@@ -52,10 +52,10 @@ class Docx_Reader(Reader):
         chunk_data.set_size(chunk.font.size.pt if (chunk.font.size) else None)
         return chunk_data
 
-    def find_chunks(paragraph: docx.text.paragraph.Paragraph) -> list[Text_Chunk]:
+    def _find_chunks(paragraph: docx.text.paragraph.Paragraph) -> list[Text_Chunk]:
         text_chunks = []
         for run in paragraph.runs:
-            text_chunks.append(Docx_Reader.build_chunk(run))
+            text_chunks.append(Docx_Reader._build_chunk(run))
         return text_chunks
 
     def readpart_except(self, err):
@@ -67,8 +67,8 @@ class Docx_Reader(Reader):
             para_attribs: Paragraph_Attributes = Paragraph_Attributes()
             if self.curr_index < self.max_index:
                 curr_paragraph = self.content[self.curr_index]
-                para_attribs = Docx_Reader.build_attributes(curr_paragraph)
-                text_chunks = Docx_Reader.find_chunks(curr_paragraph)
+                para_attribs = Docx_Reader._build_attributes(curr_paragraph)
+                text_chunks = Docx_Reader._find_chunks(curr_paragraph)
                 self.curr_index += 1
             else:
                 self.is_eof = True

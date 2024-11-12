@@ -1,6 +1,7 @@
 from enum import Enum
 
-class RenPy_Enum(Enum):
+class RENPY_STATEMENT(Enum):
+    EMPTY = -1
     NONE = 0
     SAY = 1
     SHOW = 2

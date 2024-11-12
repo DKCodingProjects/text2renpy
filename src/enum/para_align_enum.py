@@ -1,6 +1,6 @@
 from enum import Enum
 
-class Paragraph_Alignment(Enum):
+class PARAGRAPH_ALIGNMENT(Enum):
     NONE = 0
     LEFT = 1
     CENTER = 2

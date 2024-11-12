@@ -1,5 +1,5 @@
 import re
-from src.enum.renpy_enum import RenPy_Enum
+from enum.renpy_statement_enum import RenPy_Enum
 from src.store.para_attribs import *
 
 class RenPy_Output:

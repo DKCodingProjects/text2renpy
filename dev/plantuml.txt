@@ -67,7 +67,7 @@ class Text_Chunk {
   get_size()
 }
 
-enum Paragraph_Alignment {
+enum PARAGRAPH_ALIGNMENT {
   NONE = 0
   LEFT = 1
   CENTER = 2
@@ -78,20 +78,20 @@ enum Paragraph_Alignment {
 
 class Paragraph_Attributes {
   self.type: str
-  self.alignment: Paragraph_Alignment
+  self.alignment: PARAGRAPH_ALIGNMENT
   set_alignment()
   get_alignment()
   set_type()
   get_type()
 }
 
-Paragraph_Attributes *-- Paragraph_Alignment
+Paragraph_Attributes *-- PARAGRAPH_ALIGNMENT
 
 read *-- Text_Chunk
 
 read *-- Paragraph_Attributes
 
-enum Document_Type {
+enum DOCUMENT_TYPE {
   RAW = 0
   MARKDOWN = 1
   FDX = 2
@@ -100,12 +100,12 @@ enum Document_Type {
 
 class Document_Metadata {
   self.file_name: str
-  self.type: Document_Type
+  self.type: DOCUMENT_TYPE
   self.font_size: float
   self.doc_length: int
   find_type()
 }
-Document_Metadata *-- Document_Type 
+Document_Metadata *-- DOCUMENT_TYPE 
 }
 
 package proxy{
