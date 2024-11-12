@@ -2,7 +2,7 @@ from .analyzer import Document_Analyzer
 from src.read.docx_reader import Docx_Reader
 from src.data.prog.build.doc_metadata import Document_Metadata
 from src.format.default.default_document import Default_Document
-from src.data.prog.enum.para_align_enum import PARAGRAPH_ALIGNMENT
+from src.data.prog.enum.para_alignment import PARAGRAPH_ALIGNMENT
 
 class Docx_Analyzer(Document_Analyzer):
     def __init__(self, read_file):

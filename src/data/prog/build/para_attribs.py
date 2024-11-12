@@ -1,4 +1,4 @@
-from src.data.prog.enum.para_align_enum import PARAGRAPH_ALIGNMENT
+from src.data.prog.enum.para_alignment import PARAGRAPH_ALIGNMENT
 
 class Paragraph_Attributes():
     def __init__(self):

@@ -2,6 +2,8 @@ from .translator  import Translator
 from src.data.prog.build.text_chunk import *
 from src.data.prog.build.para_attribs import *
 from src.data.prog.build.doc_metadata import *
+from src.data.prog.enum.screenplay_text import SCREENPLAY_TEXT
+from src.data.prog.enum.renpy_statement import RENPY_STATEMENT
 from src.format.input.screenplay_input import *
 
 class Screenplay_to_Renpy(Translator):

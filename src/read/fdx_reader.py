@@ -2,7 +2,7 @@ from .reader import Reader
 import xml.etree.ElementTree as et
 from src.data.prog.build.text_chunk import Text_Chunk
 from src.data.prog.build.para_attribs import *
-from src.data.prog.enum.screenplay_enum import SCREENPLAY_FORMAT
+from src.data.prog.enum.screenplay_text import SCREENPLAY_TEXT
 
 class Fdx_Reader(Reader):
     def __init__(self, read_file: str):
@@ -23,19 +23,19 @@ class Fdx_Reader(Reader):
     def _find_screenplay_type(type: str):
         lower_type = type.lower()
         if lower_type == 'transition':
-            return SCREENPLAY_FORMAT.TRNSTN
+            return SCREENPLAY_TEXT.TRNSTN
         elif lower_type == 'scene heading':
-            return SCREENPLAY_FORMAT.HEADER
+            return SCREENPLAY_TEXT.HEADER
         elif lower_type == 'action':
-            return SCREENPLAY_FORMAT.ACTION
+            return SCREENPLAY_TEXT.ACTION
         elif lower_type == 'character':
-            return SCREENPLAY_FORMAT.CHRCTR
+            return SCREENPLAY_TEXT.CHRCTR
         elif lower_type == 'parenthetical':
-            return SCREENPLAY_FORMAT.PRNTHT
+            return SCREENPLAY_TEXT.PRNTHT
         elif lower_type == 'dialogue':
-            return SCREENPLAY_FORMAT.DIALOG
+            return SCREENPLAY_TEXT.DIALOG
         else:
-            return SCREENPLAY_FORMAT.NONE
+            return SCREENPLAY_TEXT.NONE
 
     
     def _build_attributes(paragraph: et.Element) -> Paragraph_Attributes:

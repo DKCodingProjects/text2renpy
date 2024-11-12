@@ -1,6 +1,6 @@
 from abc import ABC, abstractmethod
 from src.data.prog.build.doc_metadata import *
-from src.data.prog.enum.para_align_enum import PARAGRAPH_ALIGNMENT
+from src.data.prog.enum.para_alignment import PARAGRAPH_ALIGNMENT
 
 class Document_Analyzer(ABC):
     def __init__(self, read_file: str):
