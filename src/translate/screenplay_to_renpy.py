@@ -1,4 +1,4 @@
-from format.output.renpy_output import RenPy_Output
+from src.format.output.renpy_output import RenPy_Output
 from .translator  import Translator
 from src.data.prog.build.text_chunk import *
 from src.data.prog.build.para_attribs import *

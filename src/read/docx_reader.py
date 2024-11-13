@@ -39,7 +39,6 @@ class Docx_Reader(Reader):
         para_attrib = Paragraph_Attributes()
         para_attrib.set_alignment(Docx_Reader._find_alignment(paragraph.alignment))
         para_attrib.set_left_indent(paragraph.paragraph_format.left_indent.inches if paragraph.paragraph_format.left_indent else None)
-        para_attrib.set_right_indent(paragraph.paragraph_format.right_indent.inches if paragraph.paragraph_format.right_indent else None)
         return para_attrib
     
     def _build_chunk(chunk: docx.text.run.Run) -> Text_Chunk:

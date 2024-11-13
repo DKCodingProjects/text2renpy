@@ -5,5 +5,4 @@ class Default_Document:
     alignment = PARAGRAPH_ALIGNMENT.LEFT
     font_size: float = 11.0
     left_indent: float = 1.0
-    right_indent: float = 1.0
     # most document properties (spacing, first line indentation, etc.) are irrelevant to this program
