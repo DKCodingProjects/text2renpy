@@ -14,7 +14,7 @@ class Writer(ABC):
     def open(self):
         pass
 
-    def writepart_except(self, err: Exception):
+    def _writepart_except(self, err: Exception):
         raise Exception('Something went wrong with {0} in method \'writepart\' ({1})'.format(self.__class__.__name__, f"{type(err).__name__}: {err}"))
 
     @abstractmethod

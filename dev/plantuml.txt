@@ -122,71 +122,118 @@ package data {
 
 package format {
   package default {
+    class Default_Document {
+      alignment = PARAGRAPH_ALIGNMENT.LEFT
+      font_size = 11.0
+      left_indent = 1.0
+      right_indent = 1.0
+    }
 
+    class Default_Screenplay {
+      alignment = PARAGRAPH_ALIGNMENT.LEFT
+      font_size = 12.0
+      left_indent = 1.5
+      right_indent = 1.0
+      chrctr_indent = 3.5
+      prnth_indent = 3.0
+      dialog_indent = 2.5
+      trnstn_indent = 6.0
+    }
   }
 
   package input {
-
+    class Screenplay_Input {
+      regex: Screenplay_Regex
+      match()
+    }
   }
 
   package output {
-
+    class RenPy_Output {
+      None
+    }
   }
 
   package regex {
-
+    class Screenplay_Regex {
+      empty: re.Pattern
+      normal: re.Pattern
+      upper: re.Pattern
+      char_set: re.Pattern
+      transition: re.Pattern
+      header: re.Pattern
+      character: re.Pattern
+      parenthetical: re.Pattern
+    }
   }
+}
+
+package proxy {
+  abstract class Proxy {
+    {abstract} get_instance()
+  }
+
+  class Reader_Proxy {
+    get_instance()
+  }
+  Reader_Proxy <|-- Proxy
 }
 
 package read {
   abstract class Reader {
-    self.file_name: str
-    self.open_file: any
-    self.is_eof: bool
-    open_except()
-    read_except()
+    file_name: str
+    open_file: any
+    is_eof: bool
     {abstract} open()
     {abstract} read()
   }
 
   class Docx_Reader {
-    self.file_name: str
-    self.open_file: any
-    self.is_eof: bool
+    file_name: str
+    open_file: any
+    is_eof: bool
     open()
     read()
   }
   Docx_Reader <|-- Reader
 
   class Fdx_Reader {
-    self.file_name: str
-    self.open_file: any
-    self.is_eof: bool
+    file_name: str
+    open_file: any
+    is_eof: bool
     open()
     read()
   }
   Fdx_Reader <|-- Reader
 
   class Raw_Reader{
-    self.file_name: str
-    self.open_file: any
-    self.is_eof: bool
+    file_name: str
+    open_file: any
+    is_eof: bool
     open()
     read()
   }
   Raw_Reader <|-- Reader
 }
 
-package proxy {
-  abstract class Proxy {
-    get_instance_except()
-    {abstract} get_instance()
+package translate {
+  abstract class Translator {
+    {abstract} translate()
   }
 
-  class Reader_Proxy {
-    get_instance_except()
-    get_instance()
+  class Screenplay_to_Renpy {
+    input_format: Screenplay_Input
+    translate()
   }
-  Reader_Proxy <|-- Proxy
+  Screenplay_to_Renpy  <|-- Translator
+}
+
+package write {
+  abstract class Writer {
+    file_name: str
+    open_file: any
+    {abstract} open()
+    {abstract} writepart()
+  }
 }
 @enduml
