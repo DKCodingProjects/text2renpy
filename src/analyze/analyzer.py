@@ -2,7 +2,7 @@ from abc import ABC, abstractmethod
 from src.data.prog.build.doc_metadata import *
 from src.data.prog.enum.para_alignment import PARAGRAPH_ALIGNMENT
 
-class Document_Analyzer(ABC):
+class Analyzer(ABC):
     def __init__(self, read_file: str):
         self.metadata: Document_Metadata = Document_Metadata(read_file)
         # Delete the following

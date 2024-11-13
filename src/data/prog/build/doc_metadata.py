@@ -11,12 +11,12 @@ class Supported_Extensions:
 class Document_Metadata():
     def __init__(self, file_name: str):
         self.file_name: str = file_name
-        self.type: DOCUMENT_TYPE = Document_Metadata.find_type(file_name)
+        self.type: DOCUMENT_TYPE = Document_Metadata._find_type(file_name)
         self.font_size: float = None
         self.left_indent: float = None
         self.alignment: PARAGRAPH_ALIGNMENT = None
 
-    def find_type(file_name: str) -> DOCUMENT_TYPE:
+    def _find_type(file_name: str) -> DOCUMENT_TYPE:
         extension = Path(file_name).suffix
         if extension in Supported_Extensions.raw_files:
             return DOCUMENT_TYPE.RAW

@@ -1,125 +1,192 @@
 @startuml
 
-package read{
-abstract class Reader {
-  self.file_name: str
-  self.open_file: any
-  self.is_eof: bool
-  _open_except()
-  read_except()
-  {abstract} open()
-  {abstract} read()
+package analyze {
+  abstract class Analyzer {
+    metadata: Document_Metadata
+    {abstract} analyze()
+  }
+
+  class Docx_Analyzer {
+    metadata: Document_Metadata
+    analyze()
+  }
+  Docx_Analyzer <|-- Analyzer
 }
 
-class Docx_Reader {
-  self.file_name: str
-  self.open_file: any
-  self.is_eof: bool
-  open()
-  read()
-}
-Docx_Reader <|-- Reader
-
-class Fdx_Reader {
-  self.file_name: str
-  self.open_file: any
-  self.is_eof: bool
-  open()
-  read()
-}
-Fdx_Reader <|-- Reader
-
-class Raw_Reader{
-  self.file_name: str
-  self.open_file: any
-  self.is_eof: bool
-  open()
-  read()
-}
-Raw_Reader <|-- Reader
+package args {
+  class Argv_Parser {
+    parser: argparse.ArgumentParser
+  } 
 }
 
-package store {
-class Text_Chunk {
-  self.text
-  self.bold: bool
-  self.italic: bool
-  self.underline: bool
-  self.strike: bool
-  self.color: str
-  self.size: float
-  self.has_style
-  set_text()
-  get_text()
-  _test_bool()
-  set_style()
-  set_bold()
-  is_bold()
-  set_italic()
-  is_italic()
-  set_underline()
-  is_underline()
-  set_strike()
-  is_strike()
-  set_color()
-  get_color()
-  set_size()
-  get_size()
+package data {
+  package prog {
+    package build {
+      class Text_Chunk {
+        set_text()
+        get_text()
+        test_bool()
+        set_style()
+        set_bold()
+        is_bold()
+        set_italic()
+        is_italic()
+        set_underline()
+        is_underline()
+        set_strike()
+        is_strike()
+        set_color()
+        get_color()
+        set_size()
+        get_size()
+      }
+
+      class Paragraph_Attributes {
+        set_alignment()
+        get_alignment()
+        set_type()
+        get_type()
+        set_left_indent()
+        get_left_indent()
+        set_right_indent()
+        get_right_indent()
+      }
+
+      class Document_Metadata {
+        set_font_size()
+        get_font_size()
+        set_left_indent()
+        get_left_indent()
+        set_alignment()
+        get_alignment()
+      }
+    }
+
+    package enum {
+      enum DOCUMENT_FORMAT {
+        NONE = 0
+        SCRNPL = 1
+        RENPY = 2
+      }
+
+      enum DOCUMENT_TYPE {
+        RAW = 0
+        MRKDWN = 1
+        FDX = 2
+        DOCX = 3
+      }
+
+      enum PARAGRAPH_ALIGNMENT {
+        NONE = 0
+        LEFT = 1
+        CENTER = 2
+        RIGHT = 3
+        JUSTIFY = 4
+        OTHER = 5
+      }
+
+      enum RENPY_STATEMENT {
+        EMPTY = -1
+        NONE = 0
+        SAY = 1
+        SHOW = 2
+        SCENE = 3
+        AUDIO = 4
+        VOICE = 5
+        SOUND = 6
+        MUSIC = 7
+        IMAGE = 8
+        DEFINE = 9
+      }
+
+      enum SCREENPLAY_TEXT {
+        EMPTY = -1
+        NONE = 0
+        TRNSTN = 1
+        HEADER = 2
+        ACTION = 3
+        SLUGLN = 4
+        CHRCTR = 5
+        PRNTHT = 6
+        DIALOG = 7
+        NORMAL = 8
+        UPPER = 9
+      }
+    }
+  }
+
+  package user {
+    database projects.json {}
+  }
 }
 
-enum PARAGRAPH_ALIGNMENT {
-  NONE = 0
-  LEFT = 1
-  CENTER = 2
-  RIGHT = 3
-  JUSTIFY = 4
-  OTHER = 5
+package format {
+  package default {
+
+  }
+
+  package input {
+
+  }
+
+  package output {
+
+  }
+
+  package regex {
+
+  }
 }
 
-class Paragraph_Attributes {
-  self.type: str
-  self.alignment: PARAGRAPH_ALIGNMENT
-  set_alignment()
-  get_alignment()
-  set_type()
-  get_type()
+package read {
+  abstract class Reader {
+    self.file_name: str
+    self.open_file: any
+    self.is_eof: bool
+    open_except()
+    read_except()
+    {abstract} open()
+    {abstract} read()
+  }
+
+  class Docx_Reader {
+    self.file_name: str
+    self.open_file: any
+    self.is_eof: bool
+    open()
+    read()
+  }
+  Docx_Reader <|-- Reader
+
+  class Fdx_Reader {
+    self.file_name: str
+    self.open_file: any
+    self.is_eof: bool
+    open()
+    read()
+  }
+  Fdx_Reader <|-- Reader
+
+  class Raw_Reader{
+    self.file_name: str
+    self.open_file: any
+    self.is_eof: bool
+    open()
+    read()
+  }
+  Raw_Reader <|-- Reader
 }
 
-Paragraph_Attributes *-- PARAGRAPH_ALIGNMENT
+package proxy {
+  abstract class Proxy {
+    get_instance_except()
+    {abstract} get_instance()
+  }
 
-read *-- Text_Chunk
-
-read *-- Paragraph_Attributes
-
-enum DOCUMENT_TYPE {
-  RAW = 0
-  MARKDOWN = 1
-  FDX = 2
-  DOCX = 3
+  class Reader_Proxy {
+    get_instance_except()
+    get_instance()
+  }
+  Reader_Proxy <|-- Proxy
 }
-
-class Document_Metadata {
-  self.file_name: str
-  self.type: DOCUMENT_TYPE
-  self.font_size: float
-  self.doc_length: int
-  find_type()
-}
-Document_Metadata *-- DOCUMENT_TYPE 
-}
-
-package proxy{
-abstract class Proxy {
-  _get_instance_except()
-  {abstract} get_instance()
-}
-
-class Reader_Proxy {
-  get_instance()
-}
-Reader_Proxy <|-- Proxy
-
-Reader_Proxy *-- read
-}
-
 @enduml

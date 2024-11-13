@@ -1,10 +1,10 @@
-from .analyzer import Document_Analyzer
+from .analyzer import Analyzer
 from src.read.docx_reader import Docx_Reader
 from src.data.prog.build.doc_metadata import Document_Metadata
 from src.format.default.default_document import Default_Document
 from src.data.prog.enum.para_alignment import PARAGRAPH_ALIGNMENT
 
-class Docx_Analyzer(Document_Analyzer):
+class Docx_Analyzer(Analyzer):
     def __init__(self, read_file):
         super().__init__(read_file)
 
