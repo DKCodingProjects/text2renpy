@@ -1,3 +1,4 @@
+from format.output.renpy_output import RenPy_Output
 from .translator  import Translator
 from src.data.prog.build.text_chunk import *
 from src.data.prog.build.para_attribs import *
@@ -8,7 +9,8 @@ from src.format.input.screenplay_input import *
 
 class Screenplay_to_Renpy(Translator):
     def __init__(self):
-        self.input_format = Screenplay_Input()
+        self.input_format: Screenplay_Input = Screenplay_Input()
+        self.output_format: RenPy_Output = RenPy_Output()
 
     def _translate_except(err):
         return super()._translate_except(err)

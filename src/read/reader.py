@@ -5,7 +5,7 @@ class Reader(ABC):
 
     def __init__(self, read_file: str):
         self.file_name: str = read_file
-        self.open_file = None
+        self.open_file: any = None
         self.is_eof: bool = False
     
     def _open_except(self, err: Exception):

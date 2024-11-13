@@ -5,7 +5,7 @@ from src.data.prog.build.para_attribs import *
 
 class Screenplay_Input:
     def __init__(self):
-        self.regex = Screenplay_Regex()
+        self.regex: Screenplay_Regex = Screenplay_Regex()
     
     def match(self, text: str, para_attribs: Paragraph_Attributes) -> SCREENPLAY_TEXT:
         if type(para_attribs) is not Paragraph_Attributes:
