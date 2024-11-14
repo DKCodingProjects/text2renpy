@@ -8,8 +8,16 @@ from src.data.prog.enum.renpy_statement import RENPY_STATEMENT
 from src.format.input.screenplay_input import *
 
 class Screenplay_to_Renpy(Translator):
+    def _placeholder_metadata() -> Document_Metadata:
+        doc_meta = Document_Metadata('file.docx')
+        doc_meta.set_left_indent(1.0)
+        doc_meta.set_font_size(12.0)
+        doc_meta.set_alignment(PARAGRAPH_ALIGNMENT.LEFT)
+        doc_meta.print()
+        return doc_meta
+    
     def __init__(self):
-        self.input_format: Screenplay_Input = Screenplay_Input()
+        self.input_format: Screenplay_Input = Screenplay_Input(Screenplay_to_Renpy._placeholder_metadata())
         self.output_format: RenPy_Output = RenPy_Output()
 
     def _translate_except(err):

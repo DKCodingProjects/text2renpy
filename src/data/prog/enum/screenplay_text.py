@@ -10,5 +10,5 @@ class SCREENPLAY_TEXT(Enum):
     CHRCTR = 5
     PRNTHT = 6
     DIALOG = 7
-    NORMAL = 8 # for undetermined normalcase text ending with punctuation
-    UPPER = 9 # for undetermined uppercase without ending punctuation
+    METALN = 8 # for undetermined "metalines" such as Scene Headers, Slug Lines, Characters, etc
+    TEXTLN = 9 # for undetermined uppercase without ending punctuation

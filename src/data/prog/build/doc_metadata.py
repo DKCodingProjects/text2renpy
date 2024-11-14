@@ -36,7 +36,7 @@ class Document_Metadata():
     def set_font_size(self, size: float):
         if size is None:
             pass
-        elif type(size) is float:
+        elif isinstance(size, float):
             self.font_size = size
         else:
             try:
@@ -50,7 +50,7 @@ class Document_Metadata():
     def set_left_indent(self, indent: float):
         if indent is None:
             pass
-        elif type(indent) is float:
+        elif isinstance(indent, float):
             self.left_indent = indent
         else:
             try:
@@ -64,7 +64,7 @@ class Document_Metadata():
     def set_alignment(self, alignment: float):
         if alignment is None:
             pass
-        elif type(alignment) is PARAGRAPH_ALIGNMENT:
+        elif isinstance(alignment, PARAGRAPH_ALIGNMENT):
             self.alignment = alignment
         else:
             raise TypeError('Error')
