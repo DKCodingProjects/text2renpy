@@ -9,7 +9,7 @@ from src.format.input.screenplay_input import *
 
 class Screenplay_to_Renpy(Translator):
     def _placeholder_metadata() -> Document_Metadata:
-        doc_meta = Document_Metadata('file.docx')
+        doc_meta = Document_Metadata('file.txt')
         doc_meta.set_left_indent(1.0)
         doc_meta.set_font_size(12.0)
         doc_meta.set_alignment(PARAGRAPH_ALIGNMENT.LEFT)

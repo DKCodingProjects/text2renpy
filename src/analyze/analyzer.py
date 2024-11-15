@@ -11,8 +11,7 @@ class Analyzer(ABC):
         self.dominant_indent: float = None
         self.dominant_alignment: PARAGRAPH_ALIGNMENT = None
     
-    @abstractmethod
-    def analyze_except(self, err: Exception):
+    def _analyze_except(self, err: Exception):
         raise Exception('An error occured in {0} while analyzing file \'{1}\' ({2})'.format(self.__class__.__name__, self.file_name, f"{type(err).__name__}: {err}"))
 
     @abstractmethod

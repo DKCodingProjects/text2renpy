@@ -1,9 +1,7 @@
 from src.args import *
-from src.read import *
-from src.proxy.reader_proxy import Reader_Proxy
+from src.proxy import *
 from src.translate import *
 from src.format.input.screenplay_input import *
-from src.analyze.docx_analyzer import Docx_Analyzer
 from test.tester import Tester
 import xml.etree.ElementTree as et
 ###############################
@@ -20,9 +18,10 @@ def main():
     arg_obj.print()
     '''
     # Tester.test_all()
-    analyzer = Docx_Analyzer(r'test\test_screenplays\test_script.docx')
+    filepath = r'test\test_screenplays\test_script.txt'
+    analyzer = analyzer_proxy.Analyzer_Proxy.get_instance(filepath)
     analyzer.analyze()
-    reader = Reader_Proxy.get_instance(r'test\test_screenplays\test_script.docx')
+    reader = reader_proxy.Reader_Proxy.get_instance(filepath)
     reader.open()
     translator = screenplay_to_renpy.Screenplay_to_Renpy()
     while not reader.is_eof:

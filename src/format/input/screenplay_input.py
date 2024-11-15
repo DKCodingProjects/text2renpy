@@ -18,22 +18,27 @@ class Screenplay_Input:
                     return SCREENPLAY_TEXT.CHRCTR
                 else:
                     return SCREENPLAY_TEXT.TRNSTN
-        elif para_attribs.get_alignment() is not None:
+        elif para_attribs.get_alignment() != PARAGRAPH_ALIGNMENT.NONE:
             if para_attribs.get_alignment() != self.metadata.get_alignment():
                 new_align = para_attribs.get_alignment()
                 if new_align == PARAGRAPH_ALIGNMENT.CENTER:
                     return SCREENPLAY_TEXT.CHRCTR
                 elif new_align == PARAGRAPH_ALIGNMENT.RIGHT:
                     return SCREENPLAY_TEXT.TRNSTN
-        if self.regex.header.match(text):
-            return SCREENPLAY_TEXT.HEADER
-        else:
-            return SCREENPLAY_TEXT.METALN
+        else: # Make a best guess
+            if self.regex.header.match(text):
+                return SCREENPLAY_TEXT.HEADER
+            elif self.regex.transition.match(text):
+                return SCREENPLAY_TEXT.TRNSTN
+            elif self.regex.character.match(text):
+                return SCREENPLAY_TEXT.CHRCTR
+            else:
+                return SCREENPLAY_TEXT.METALN
     
     def _handle_parenthetical(self, text: str) -> SCREENPLAY_TEXT:
         if self.regex.parenthetical.match(text):
             match = self.regex.parenthetical.match(text)
-            if match.group(1).lower() == 'more':
+            if match.group(1).strip().lower() == 'more':
                 return SCREENPLAY_TEXT.NONE
             else:
                 return SCREENPLAY_TEXT.PRNTHT
@@ -46,13 +51,21 @@ class Screenplay_Input:
                     return rtrn
                 else:
                     return SCREENPLAY_TEXT.DIALOG
+            else:
+                return SCREENPLAY_TEXT.ACTION
         elif para_attribs.get_alignment() != PARAGRAPH_ALIGNMENT.NONE:
             if para_attribs.get_alignment() != self.metadata.get_alignment():
                 if rtrn := self._handle_parenthetical(text):
                     return rtrn
                 else:
                     return SCREENPLAY_TEXT.TEXTLN
-        return SCREENPLAY_TEXT.ACTION
+            else:
+                return SCREENPLAY_TEXT.ACTION
+        else:
+            if rtrn := self._handle_parenthetical(text):
+                return rtrn
+            else:
+                return SCREENPLAY_TEXT.TEXTLN
     
     def match(self, text: str, para_attribs: Paragraph_Attributes) -> SCREENPLAY_TEXT:
         if not isinstance(para_attribs, Paragraph_Attributes):

@@ -8,8 +8,8 @@ class Docx_Analyzer(Analyzer):
     def __init__(self, read_file):
         super().__init__(read_file)
 
-    def analyze_except(self, err):
-        return super().analyze_except(err)
+    def _analyze_except(self, err):
+        return super()._analyze_except(err)
 
     def _update_occurence(key: any, occurence_dict: dict) -> dict:
         if key in occurence_dict:

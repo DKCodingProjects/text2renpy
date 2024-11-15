@@ -1,27 +1,24 @@
 from .proxy import Proxy
-from src.read.raw_reader import Raw_Reader
-from src.read.fdx_reader import Fdx_Reader
-from src.read.docx_reader import Docx_Reader
-from src.read.reader import Reader
+from src.read import *
+from src.data.prog.support.doc_extensions import Supported_Document_Extensions
 from pathlib import Path
 
 class Reader_Proxy(Proxy):
-    raw_files = {'.txt', '.rpy'}
-    fdx_files = {'.fdx'}
-    doc_files = {'.docx'}
-    # md_files = {'.md', '.fountain'}
-
     def _get_instance_except(self, err):
-        instance = Reader('')
-        return super()._get_instance_except(instance, err)
+        instance = reader.Reader('')
+        return super()._get_instance_except(self, instance, err)
 
     def get_instance(read_file: str):
+        support = Supported_Document_Extensions()
         extension = Path(read_file).suffix
-        if extension in Reader_Proxy.doc_files:
-            return Docx_Reader(read_file)
-        elif extension in Reader_Proxy.fdx_files:
-            return Fdx_Reader(read_file)
-        elif extension in Reader_Proxy.raw_files:
-            return Raw_Reader(read_file)
+        if extension in support.doc_files:
+            return docx_reader.Docx_Reader(read_file)
+        elif extension in support.fdx_files:
+            return fdx_reader.Fdx_Reader(read_file)
+        elif extension in support.md_files:
+            raise TypeError('class \'Markdown_Reader\' is still being developed! Update to latest version or wait for a working release!')
+            return md_reader.Markdown_Reader(read_file)
+        elif extension in support.raw_files:
+            return raw_reader.Raw_Reader(read_file)
         else:
             Reader_Proxy._get_instance_except('TypeError: Extension in document \"{0}\" is not supported in Text2RenPy'.format(read_file))

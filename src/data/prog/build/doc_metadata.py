@@ -1,12 +1,7 @@
 from src.data.prog.enum.document_type import DOCUMENT_TYPE
 from src.data.prog.enum.para_alignment import PARAGRAPH_ALIGNMENT
+from src.data.prog.support.doc_extensions import Supported_Document_Extensions
 from pathlib import Path
-
-class Supported_Extensions:
-    raw_files = {'.txt', '.rpy'}
-    md_files = {'.md', '.fountain'}
-    fdx_files = {'.fdx'}
-    doc_files = {'.docx'}
 
 class Document_Metadata():
     def __init__(self, file_name: str):
@@ -14,19 +9,20 @@ class Document_Metadata():
         self.type: DOCUMENT_TYPE = Document_Metadata._find_type(file_name)
         self.font_size: float = None
         self.left_indent: float = None
-        self.alignment: PARAGRAPH_ALIGNMENT = None
+        self.alignment: PARAGRAPH_ALIGNMENT = PARAGRAPH_ALIGNMENT.NONE
 
     def _find_type(file_name: str) -> DOCUMENT_TYPE:
+        support = Supported_Document_Extensions()
         extension = Path(file_name).suffix
-        if extension in Supported_Extensions.raw_files:
+        if extension in support.doc_files:
+            return DOCUMENT_TYPE.DOCX
+        elif extension in support.raw_files:
             return DOCUMENT_TYPE.RAW
-        elif extension in Supported_Extensions.md_files:
+        elif extension in support.md_files:
             raise TypeError('class \'Markdown_Reader\' is still being developed! Update to latest version or wait for a working release!')
             return DOCUMENT_TYPE.MARKDOWN
-        elif extension in Supported_Extensions.fdx_files:
+        elif extension in support.fdx_files:
             return DOCUMENT_TYPE.FDX
-        elif extension in Supported_Extensions.doc_files:
-            return DOCUMENT_TYPE.DOCX
         else:
             raise TypeError('document \"{0}\" is not a supported document type for Text2RenPy'.format(file_name))
     

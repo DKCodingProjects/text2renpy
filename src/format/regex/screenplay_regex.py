@@ -9,5 +9,7 @@ class Screenplay_Regex:
         _char_set = r'[A-Z0-9\s\-_]+?'
         self.transition: re.Pattern = re.compile(r'^\s*('+_char_set+r')\s+[A-Z]+:\s*$')
         self.header: re.Pattern = re.compile(r'^\s*([INTEXT\.\\\/]{1,9}\s+'+_char_set+r')\s*$')
-        self.character: re.Pattern = re.compile(r'^\s*((?:'+_char_set+r'\.\s*)?'+_char_set+r')(?:\s+\(\s*(.+?)\s*\))?\s*$')
+        self.character: re.Pattern = re.compile(r'^\s*((?:'+_char_set+r'\.\s*)?'+_char_set+r')(?:\s+\(\s*(.+?)\s*\))\s*$') # only works if character name has an extension
         self.parenthetical: re.Pattern = re.compile(r'^\s*\(([\w\s]+)\)\s*$')
+
+        # ^\s*((?:[A-Z0-9\s\-_]+?\.\s*)?[A-Z0-9\s\-_]+?)(?:\s+\(\s*(.+?)\s*\))\s*$
