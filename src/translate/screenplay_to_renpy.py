@@ -26,7 +26,7 @@ class Screenplay_to_Renpy(Translator):
     def _consolidate_chunks(self, text_chunks: Text_Chunk):
         return super()._consolidate_chunks(text_chunks)
     
-    def translate(self, text_chunks: list[Text_Chunk], para_attribs: Paragraph_Attributes):
+    def translate(self, text_chunks: list[Text_Chunk], para_attribs: Paragraph_Attributes) -> str:
         consolid_text = self._consolidate_chunks(text_chunks)
         script_type = self.input_format.match(consolid_text, para_attribs)
         print('Text \"{0}\" is of type {1}'.format(consolid_text.strip(), script_type))

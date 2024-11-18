@@ -18,5 +18,5 @@ class Translator(ABC):
         return consolid_text
     
     @abstractmethod
-    def translate(self, text_chunks: list[Text_Chunk], para_attribs: Paragraph_Attributes):
+    def translate(self, text_chunks: list[Text_Chunk], para_attribs: Paragraph_Attributes) -> str:
         pass
