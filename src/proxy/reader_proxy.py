@@ -4,9 +4,11 @@ from src.data.prog.support.doc_extensions import Supported_Document_Extensions
 from pathlib import Path
 
 class Reader_Proxy(Proxy):
+    def __init__(self):
+        self.instanceof: reader.Reader = reader.Reader('')
+
     def _get_instance_except(self, err):
-        instance = reader.Reader('')
-        return super()._get_instance_except(self, instance, err)
+        return super()._get_instance_except(self, self.instanceof, err)
 
     def get_instance(read_file: str):
         support = Supported_Document_Extensions()

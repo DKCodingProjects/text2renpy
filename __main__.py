@@ -2,6 +2,7 @@ from src.args import *
 from src.proxy import *
 from src.translate import *
 from src.format.input.screenplay_input import *
+from src.format.output.renpy_output import *
 from test.tester import Tester
 import xml.etree.ElementTree as et
 ###############################
@@ -17,7 +18,12 @@ def main():
     arg_obj.argparse_populate(args)
     arg_obj.print()
     '''
+    text = r'{i} I am italicized{/i} i am not {i} iam though{/i}{i} me too!{/i}   {i}me three!{/i}'
+    text = RenPy_Output._remove_duplicate_tags(text, 'i')
+    text = RenPy_Output._maintain_spacing(text)
+    print(text)
     # Tester.test_all()
+    '''
     filepath = r'test\test_screenplays\test_script.txt'
     analyzer = analyzer_proxy.Analyzer_Proxy.get_instance(filepath)
     analyzer.analyze()
@@ -29,6 +35,7 @@ def main():
         translator.translate(text_chunks=curr_chunks, para_attribs=para_attribs)
     else:
         exit()
+        '''
 
 
 if __name__ == '__main__':

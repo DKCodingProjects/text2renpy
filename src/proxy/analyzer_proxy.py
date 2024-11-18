@@ -4,9 +4,11 @@ from src.data.prog.support.doc_extensions import Supported_Document_Extensions
 from pathlib import Path
 
 class Analyzer_Proxy(Proxy):
+    def __init__(self):
+        self.instanceof: analyzer.Analyzer = analyzer.Analyzer('')
+
     def _get_instance_except(self, instance, err):
-        instance = analyzer.Analyzer('')
-        return super()._get_instance_except(self, instance, err)
+        return super()._get_instance_except(self, self.instanceof, err)
 
     def get_instance(read_file: str):
         support = Supported_Document_Extensions()
