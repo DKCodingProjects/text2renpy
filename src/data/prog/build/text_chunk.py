@@ -8,7 +8,7 @@ class Text_Chunk():
         self.underline: bool = None
         self.strike: bool = None
         self.color: str = None
-        self.size: float = None
+        self.size: float = 0.0
         self.has_style = False # set when any other class variable is set to a truthful value
 
     def set_text(self, text: str):

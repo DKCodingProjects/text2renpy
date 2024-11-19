@@ -3,8 +3,6 @@ from src.proxy import *
 from src.translate import *
 from src.format.input.screenplay_input import *
 from src.format.output.renpy_output import *
-from test.tester import Tester
-import xml.etree.ElementTree as et
 ###############################
 import dev.sandbox as dev
 import docx
@@ -18,13 +16,26 @@ def main():
     arg_obj.argparse_populate(args)
     arg_obj.print()
     '''
-    text = r'{i} I am italicized{/i} i am not {i} iam though{/i}{i} me too!{/i}   {i}me three!{/i}'
-    text = RenPy_Output._remove_duplicate_tags(text, 'i')
-    text = RenPy_Output._maintain_spacing(text)
-    print(text)
     # Tester.test_all()
+    chunk1 = Text_Chunk('first chunk! ')
+    chunk1.set_bold(True)
+    chunk1.set_strike(True)
+    chunk1.set_color('fff')
+    chunk2 = Text_Chunk('second chunk!     ')
+    chunk2.set_bold(True)
+    chunk2.set_italic(True)
+    chunk2.set_underline(True)
+    chunk2.set_size(2.0)
+    chunk3 = Text_Chunk('final chunk!')
+    chunk3.set_italic(True)
+    chunk3.set_strike(True)
+    chunk3.set_size(-2.0)
+    chunk3.set_color('eee')
+    chunks = [chunk1, chunk2, chunk3]
+    renpy_out = RenPy_Output.format_say(chunks)
+    print(renpy_out)
     '''
-    filepath = r'test\test_screenplays\test_script.txt'
+    filepath = r'test\test_screenplays\test_script.docx'
     analyzer = analyzer_proxy.Analyzer_Proxy.get_instance(filepath)
     analyzer.analyze()
     reader = reader_proxy.Reader_Proxy.get_instance(filepath)
