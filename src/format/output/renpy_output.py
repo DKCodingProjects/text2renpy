@@ -86,7 +86,7 @@ class RenPy_Output:
             if chunk.has_style:
                 curr_text = RenPy_Output._apply_tags(chunk)
             rtrn_text = rtrn_text+curr_text
-        rtrn_text = RenPy_Output._remove_duplicate_tags(rtrn_text)
+        # rtrn_text = RenPy_Output._remove_duplicate_tags(rtrn_text)
         rtrn_text = RenPy_Output._maintain_spacing(rtrn_text)
         return f'{character}\"{rtrn_text}\"'
 
