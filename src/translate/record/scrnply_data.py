@@ -2,9 +2,6 @@ from .chrctr_info import Character_Information
 
 class Screenplay_Data:
     def __init__(self):
-        self.characters: list[Character_Information] = []
-        self.headers: list[str] = []
-
         self.curr_spkr: str = None
         self.curr_prnth: str = None
         self.curr_trnstn: str = None

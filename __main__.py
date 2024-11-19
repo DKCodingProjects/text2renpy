@@ -17,6 +17,7 @@ def main():
     arg_obj.print()
     '''
     # Tester.test_all()
+    '''
     chunk1 = Text_Chunk('first chunk! ')
     chunk1.set_bold(True)
     chunk1.set_strike(True)
@@ -46,7 +47,6 @@ def main():
         translator.translate(text_chunks=curr_chunks, para_attribs=para_attribs)
     else:
         exit()
-        '''
 
 
 if __name__ == '__main__':

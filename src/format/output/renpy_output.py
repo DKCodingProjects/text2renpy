@@ -77,9 +77,8 @@ class RenPy_Output:
     def abbrev_name(name: str) -> str:
         return name[0:1].lower() if len(name) >= 2 else (name[0]+name[0]).lower()
     
-    def format_say(text_chunks: list[Text_Chunk], character: str = '') -> tuple[str, str]: # statement, abbrev character name
-        if character:
-            character = character+' '
+    def format_say(text_chunks: list[Text_Chunk], character: str = ''): # statement, abbrev character name
+        character = character+' ' if character else ''
         rtrn_text = ''
         for chunk in text_chunks:
             curr_text = chunk.get_text()
@@ -98,7 +97,7 @@ class RenPy_Output:
     def format_scene(name: str, loc: str = '', trans: str = '') -> tuple[str, str]: # statement, image name:
         return RenPy_Output.format_show(name,  loc, trans, 'scene')
     
-    def format_define(name: str, value: str, type: str = 'define',):
+    def format_define(name: str, value: str, type: str = 'define'):
         return type+' '+name+' = '+value
     
     def format_chrctr(self):
