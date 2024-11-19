@@ -7,6 +7,9 @@ from src.data.prog.enum.para_alignment import PARAGRAPH_ALIGNMENT
 class Docx_Analyzer(Analyzer):
     def __init__(self, read_file):
         super().__init__(read_file)
+    
+    def print(self):
+        return super().print(self)
 
     def _analyze_except(self, err):
         return super()._analyze_except(err)
@@ -60,18 +63,18 @@ class Docx_Analyzer(Analyzer):
                 Docx_Analyzer._update_occurence(chunk.get_size(), size_analysis)
             Docx_Analyzer._update_occurence(para_attribs.get_left_indent(), indent_analysis)
             Docx_Analyzer._update_occurence(para_attribs.get_alignment(), alignment_analysis)
-        dominant_size = Docx_Analyzer._get_max(size_analysis)
-        dominant_indent = Docx_Analyzer._get_max(indent_analysis)
-        dominant_alignment = Docx_Analyzer._get_max(alignment_analysis)
+        dom_size = Docx_Analyzer._get_max(size_analysis)
+        dom_indent = Docx_Analyzer._get_max(indent_analysis)
+        dom_alignment = Docx_Analyzer._get_max(alignment_analysis)
         metadata = Document_Metadata(self.file_name)
-        metadata.set_font_size(dominant_size
-                               if type(dominant_size) is float 
+        metadata.set_font_size(dom_size
+                               if type(dom_size) is float 
                                else Default_Document.font_size)
-        metadata.set_left_indent(dominant_indent
-                                 if dominant_indent is float 
+        metadata.set_left_indent(dom_indent
+                                 if dom_indent is float 
                                  else Default_Document.left_indent)
-        metadata.set_alignment(dominant_alignment
-                               if (type(dominant_alignment) is PARAGRAPH_ALIGNMENT 
-                                   and dominant_alignment != PARAGRAPH_ALIGNMENT.NONE) 
+        metadata.set_alignment(dom_alignment
+                               if (type(dom_alignment) is PARAGRAPH_ALIGNMENT 
+                                   and dom_alignment != PARAGRAPH_ALIGNMENT.NONE) 
                                else Default_Document.alignment)
         return metadata

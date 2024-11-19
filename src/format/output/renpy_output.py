@@ -5,7 +5,7 @@ from src.data.prog.build.para_attribs import *
 
 class RenPy_Output:
     def __init__(self):
-        pass # regex for renpy stuff here!
+        self.metadata = None # Document metadata for size and color
 
     def _apply_tag(text, tag):
         start_tag = r'{'+tag+r'}'

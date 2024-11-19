@@ -18,6 +18,8 @@ class Screenplay_to_Renpy(Translator):
     def __init__(self):
         self.input_format: Screenplay_Input = Screenplay_Input(Screenplay_to_Renpy._placeholder_metadata())
         self.output_format: RenPy_Output = RenPy_Output()
+        self.input_tracker = None
+        self.output_recorder = None
 
     def _translate_except(err):
         return super()._translate_except(err)
