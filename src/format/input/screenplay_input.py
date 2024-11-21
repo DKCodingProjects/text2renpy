@@ -1,4 +1,4 @@
-from src.format.default.default_screenplay import Default_Screenplay
+from src.data.prog.default.default_screenplay import Default_Screenplay
 from src.data.prog.build.doc_metadata import Document_Metadata
 from src.format.regex.screenplay_regex import Screenplay_Regex
 from src.data.prog.enum.screenplay_text import SCREENPLAY_TEXT
@@ -18,22 +18,21 @@ class Screenplay_Input:
                     return SCREENPLAY_TEXT.CHRCTR
                 else:
                     return SCREENPLAY_TEXT.TRNSTN
-        elif para_attribs.get_alignment() != PARAGRAPH_ALIGNMENT.NONE:
+        if para_attribs.get_alignment() != PARAGRAPH_ALIGNMENT.NONE:
             if para_attribs.get_alignment() != self.metadata.get_alignment():
                 new_align = para_attribs.get_alignment()
                 if new_align == PARAGRAPH_ALIGNMENT.CENTER:
                     return SCREENPLAY_TEXT.CHRCTR
                 elif new_align == PARAGRAPH_ALIGNMENT.RIGHT:
                     return SCREENPLAY_TEXT.TRNSTN
-        else: # Make a best guess
-            if self.regex.header.match(text):
-                return SCREENPLAY_TEXT.HEADER
-            elif self.regex.transition.match(text):
-                return SCREENPLAY_TEXT.TRNSTN
-            elif self.regex.character.match(text):
-                return SCREENPLAY_TEXT.CHRCTR
-            else:
-                return SCREENPLAY_TEXT.METALN
+        if self.regex.header.match(text):
+            return SCREENPLAY_TEXT.HEADER
+        elif self.regex.transition.match(text):
+            return SCREENPLAY_TEXT.TRNSTN
+        elif self.regex.character.match(text):
+            return SCREENPLAY_TEXT.CHRCTR
+        else:
+            return SCREENPLAY_TEXT.METALN
     
     def _handle_parenthetical(self, text: str) -> SCREENPLAY_TEXT:
         if self.regex.parenthetical.match(text):
@@ -53,7 +52,7 @@ class Screenplay_Input:
                     return SCREENPLAY_TEXT.DIALOG
             else:
                 return SCREENPLAY_TEXT.ACTION
-        elif para_attribs.get_alignment() != PARAGRAPH_ALIGNMENT.NONE:
+        if para_attribs.get_alignment() != PARAGRAPH_ALIGNMENT.NONE:
             if para_attribs.get_alignment() != self.metadata.get_alignment():
                 if rtrn := self._handle_parenthetical(text):
                     return rtrn
@@ -61,11 +60,10 @@ class Screenplay_Input:
                     return SCREENPLAY_TEXT.TEXTLN
             else:
                 return SCREENPLAY_TEXT.ACTION
+        if rtrn := self._handle_parenthetical(text):
+            return rtrn
         else:
-            if rtrn := self._handle_parenthetical(text):
-                return rtrn
-            else:
-                return SCREENPLAY_TEXT.TEXTLN
+            return SCREENPLAY_TEXT.TEXTLN
     
     def match(self, text: str, para_attribs: Paragraph_Attributes) -> SCREENPLAY_TEXT:
         if not isinstance(para_attribs, Paragraph_Attributes):

@@ -2,7 +2,7 @@ from src.data.prog.enum.para_alignment import PARAGRAPH_ALIGNMENT
 
 class Default_Screenplay:
     # Based on industry standards
-    alignment = PARAGRAPH_ALIGNMENT.LEFT
+    alignment: PARAGRAPH_ALIGNMENT = PARAGRAPH_ALIGNMENT.LEFT
     font_size: float = 12.0
     left_indent: float = 1.5 # for actions, headers, subheaders, sluglines, etc.
     chrctr_indent: float = 3.5 # or Center-Alignment

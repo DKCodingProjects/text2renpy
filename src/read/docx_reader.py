@@ -1,7 +1,9 @@
 from .reader import Reader
 import docx
 from src.data.prog.build.text_chunk import Text_Chunk
-from src.data.prog.build.para_attribs import *
+from src.data.prog.build.para_attribs import Paragraph_Attributes
+from src.data.prog.enum.para_alignment import PARAGRAPH_ALIGNMENT
+from src.data.prog.default.default_screenplay import Default_Screenplay
 
 class Docx_Reader(Reader):
     def __init__(self, read_file):
@@ -21,7 +23,7 @@ class Docx_Reader(Reader):
 
     def _find_alignment(alignment: docx.enum.text.WD_ALIGN_PARAGRAPH) -> PARAGRAPH_ALIGNMENT:
         if alignment is None:
-            return PARAGRAPH_ALIGNMENT.NONE
+            return Default_Screenplay.alignment
         elif alignment.value == docx.enum.text.WD_ALIGN_PARAGRAPH.LEFT:
             return PARAGRAPH_ALIGNMENT.LEFT
         elif alignment.value == docx.enum.text.WD_ALIGN_PARAGRAPH.CENTER:
@@ -41,6 +43,13 @@ class Docx_Reader(Reader):
         para_attrib.set_left_indent(paragraph.paragraph_format.left_indent.inches + 1 if paragraph.paragraph_format.left_indent else None)
         return para_attrib
     
+    def _calc_size(size):
+        size_diff = size - Default_Screenplay.font_size
+        if size_diff >= 1.0 or size_diff <= -1.0:
+            return size_diff
+        else:
+            return None
+    
     def _build_chunk(chunk: docx.text.run.Run) -> Text_Chunk:
         chunk_data = Text_Chunk(chunk.text)
         chunk_data.set_bold(True if (chunk.bold) else False)
@@ -48,7 +57,7 @@ class Docx_Reader(Reader):
         chunk_data.set_underline(True if (chunk.underline) else False)
         chunk_data.set_strike(True if (chunk.font.strike) else False)
         chunk_data.set_color(str(chunk.font.color.rgb) if (chunk.font.color and chunk.font.color.rgb) else None)
-        chunk_data.set_size(chunk.font.size.pt if (chunk.font.size) else None)
+        chunk_data.set_size(Docx_Reader._calc_size(chunk.font.size.pt) if (chunk.font.size) else None)
         return chunk_data
 
     def _find_chunks(paragraph: docx.text.paragraph.Paragraph) -> list[Text_Chunk]:

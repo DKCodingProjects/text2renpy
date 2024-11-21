@@ -4,7 +4,7 @@ from src.data.prog.build.para_attribs import *
 from src.data.prog.build.doc_metadata import *
 
 class Translator(ABC):
-    def __init__(self):
+    def __init__(self, doc_metadata: Document_Metadata, ):
         # add variables
         pass
     

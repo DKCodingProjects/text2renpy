@@ -74,6 +74,15 @@ class RenPy_Output:
     def _add_with(name: str) -> str:
         return RenPy_Output._add_at(name, 'with')
     
+    def format_name(*strings):
+        str_list = []
+        for string in strings:
+            curr_string = string.lower()
+            curr_string = re.sub(r'[^\s\d\w]+', ' ', curr_string)
+            curr_string = re.sub(r'\s+', ' ', curr_string).strip()
+            str_list.append(curr_string)
+        return '_'.join(str_list)
+    
     def abbrev_name(name: str) -> str:
         return name[0:1].lower() if len(name) >= 2 else (name[0]+name[0]).lower()
     
