@@ -11,7 +11,7 @@ class Args_Object:
         
         self.character_script_name = 'characters.rpy'
         self.sprite_script_name = 'sprites.rpy'
-        self.location_script_name = 'locations.rpy'
+        self.location_script_name = 'positions.rpy'
         
         self.generate_music: bool = True
         self.generate_voice: bool = True
