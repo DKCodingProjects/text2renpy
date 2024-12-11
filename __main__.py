@@ -6,7 +6,7 @@ from src.format.output.renpy_output import *
 ###############################
 import dev.sandbox as dev
 from test.tester import Tester
-from PySide6.QtWidgets import QApplication, QMainWindow, QPushButton
+from src.gui.app import App
 import sys
 
 def main():
@@ -81,6 +81,7 @@ def main():
     print('tuple access average time = ', tuple_avg/second_num)
     print('dict access average time = ', dict_avg/second_num)
     '''
+    '''
     def button_clicked():
         print("You clicked the button, didn't you!")
 
@@ -94,6 +95,8 @@ def main():
 
     button.show()
     app.exec()
+    '''
+    app = App()
 
 
 if __name__ == '__main__':
