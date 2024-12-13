@@ -7,9 +7,10 @@ import os
 class App():
     def __init__(self):
         self.app = QApplication(sys.argv)
+        self.name = 'Text2Ren\'Py'
         self.icon = QIcon(os.path.join('src', 'gui', 'assets', 'logo.png'))
         # other code here
-        mainwin = MainWindow(self.app, self.icon)
+        mainwin = MainWindow(self.app, self.icon, self.name)
         
         mainwin.show()
 

@@ -4,22 +4,28 @@ from PySide6.QtWidgets import QMainWindow, QToolBar, QPushButton, QStatusBar
 import os
 
 class MainWindow(QMainWindow):
-    def __init__(self, app, icon: QIcon):
+    def __init__(self, app, icon: QIcon, name: str):
         super().__init__()
-        self.setWindowTitle('Text2Ren\'Py')
+        self.setWindowTitle(name+' - Main')
         self.setMinimumSize(QSize(680, 320))
         self.setWindowIcon(icon)
         self.app = app
 
         #Menubar and menus
         menu_bar = self.menuBar()
-        file_menu = menu_bar.addMenu('Start')
+        file_menu = menu_bar.addMenu('&File')
         new_menu = file_menu.addMenu('New...')
-        new_menu.addAction('Script')
-        new_menu.addAction('Project')
+        new_menu.setToolTipsVisible(True)
+        new_script = new_menu.addAction('Run')
+        new_script.setToolTip('Start a new run of the Text2Ren\'Py program')
+        new_project = new_menu.addAction('Project')
+        new_project.setToolTip('Create a new Ren\'Py project to work in')
         edit_menu = file_menu.addMenu('Edit...')
-        edit_menu.addAction('Project')
-        edit_menu.addAction('Settings')
+        edit_menu.setToolTipsVisible(True)
+        edit_project = edit_menu.addAction('Project')
+        edit_project.setToolTip('Edit program variables for existing Ren\'Py projects')
+        edit_settings = edit_menu.addAction('Settings')
+        edit_settings.setToolTip('Edit Text2Ren\'Py program settings and default behaviors')
 
         help_menu = menu_bar.addMenu('Help')
         gstarted_menu = help_menu.addAction('Getting Started')
@@ -34,7 +40,7 @@ class MainWindow(QMainWindow):
 
         '''
         action2 = QAction('Some other action', self)
-        action2.setStatusTip('Status message for some other action')
+        action2.setToolTip('Status message for some other action')
         action2.triggered.connect(self.toolbar_button_click)
         #action2.setCheckable(True)
         menu_bar.addAction(action2)
@@ -48,12 +54,12 @@ class MainWindow(QMainWindow):
         toolbar.addAction(quit_action)
 
         action1 = QAction('Some Action', self)
-        action1.setStatusTip('Status message for some action')
+        action1.setToolTip('Status message for some action')
         action1.triggered.connect(self.toolbar_button_click)
         toolbar.addAction(action1)
 
         action2 = QAction(QIcon('start.png'), 'Some other action', self)
-        action2.setStatusTip('Status message for some other action')
+        action2.setToolTip('Status message for some other action')
         action2.triggered.connect(self.toolbar_button_click)
         #action2.setCheckable(True)
         toolbar.addAction(action2)
