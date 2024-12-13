@@ -28,9 +28,13 @@ class MainWindow(QMainWindow):
         edit_settings.setToolTip('Edit Text2Ren\'Py program settings and default behaviors')
 
         help_menu = menu_bar.addMenu('Help')
+        help_menu.setToolTipsVisible(True)
         gstarted_menu = help_menu.addAction('Getting Started')
+        gstarted_menu.setToolTip('Learn the basics of Text2Ren\'Py to help you get started!')
         doc_menu = help_menu.addAction('Documentation')
+        doc_menu.setToolTip('Look at the offical documentation for more information')
         contact_menu = help_menu.addAction('Contact')
+        contact_menu.setToolTip('Contact infomation if you have any questions or experience bugs')
         
         settings_menu = menu_bar.addMenu('Settings')
         settings_menu.addAction('Defaults')
