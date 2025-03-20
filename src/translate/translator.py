@@ -1,6 +1,5 @@
 from abc import ABC, abstractmethod
 from src.data.prog.build.text_chunk import *
-from src.data.prog.build.para_attribs import *
 from src.data.prog.build.doc_metadata import *
 
 class Translator(ABC):
@@ -18,5 +17,5 @@ class Translator(ABC):
         return consolid_text
     
     @abstractmethod
-    def translate(self, text_chunks: list[Text_Chunk], para_attribs: Paragraph_Attributes) -> str:
+    def translate(self, text_chunks: list[Text_Chunk]) -> str:
         pass

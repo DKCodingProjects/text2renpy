@@ -15,11 +15,6 @@ class Reader_Proxy(Proxy):
         extension = Path(read_file).suffix
         if extension in support.doc_files:
             return docx_reader.Docx_Reader(read_file)
-        elif extension in support.fdx_files:
-            return fdx_reader.Fdx_Reader(read_file)
-        elif extension in support.md_files:
-            raise TypeError('class \'Markdown_Reader\' is still being developed! Update to latest version or wait for a working release!')
-            return md_reader.Markdown_Reader(read_file)
         elif extension in support.raw_files:
             return raw_reader.Raw_Reader(read_file)
         else:

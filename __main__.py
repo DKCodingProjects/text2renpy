@@ -7,6 +7,7 @@ from test.tester import Tester
 import sys
 
 def main():
+    print('Hello World!')
     '''
     print('starting program...')
     argv = argv_parse.Argv_Parser()
@@ -48,7 +49,6 @@ def main():
     button.show()
     app.exec()
     '''
-    app = App()
 
 
 if __name__ == '__main__':
