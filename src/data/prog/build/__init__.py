@@ -1,1 +1,0 @@
-__all__ = ['doc_metadata', 'para_attribs', 'text_chunk']

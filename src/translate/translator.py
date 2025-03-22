@@ -1,9 +1,8 @@
 from abc import ABC, abstractmethod
-from src.data.prog.build.text_chunk import *
-from src.data.prog.build.doc_metadata import *
+from src.general.text_chunk import Text_Chunk
 
 class Translator(ABC):
-    def __init__(self, doc_metadata: Document_Metadata, ):
+    def __init__(self):
         # add variables
         pass
     
@@ -17,5 +16,5 @@ class Translator(ABC):
         return consolid_text
     
     @abstractmethod
-    def translate(self, text_chunks: list[Text_Chunk]) -> str:
+    def translate(self, input: any) -> str:
         pass

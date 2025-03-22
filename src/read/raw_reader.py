@@ -1,5 +1,5 @@
 from .reader import Reader
-from src.data.prog.build.text_chunk import Text_Chunk
+from src.general.text_chunk import Text_Chunk
 
 class Raw_Reader(Reader):
     def __init__(self, read_file: str):

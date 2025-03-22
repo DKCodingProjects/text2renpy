@@ -1,6 +1,6 @@
 from .reader import Reader
 import docx
-from src.data.prog.build.text_chunk import Text_Chunk
+from src.general.text_chunk import Text_Chunk
 
 class Docx_Reader(Reader):
     def __init__(self, read_file):
