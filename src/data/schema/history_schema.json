@@ -1,6 +1,7 @@
 {
     "history" : {
         "type" : "array",
+        "uniqueItems": true,
         "project" :{
             "type" : "object",
             "properties" : {

@@ -11,14 +11,14 @@ class RenPy_Character_Object:
     def get_abbrev(self):
         return self.abbrev_name
     
-    def get_obj(self):
-        return self.obj_str
-    
-    def has_obj_str(self) -> bool:
+    def has_obj(self) -> bool:
         if self.obj_str:
             return True
         else:
             return False
+    
+    def get_obj(self):
+        return self.obj_str
 
     def add_sprite(self, new_sprite: str):
         self.sprites.append(new_sprite)

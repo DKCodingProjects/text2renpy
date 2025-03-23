@@ -1,6 +1,7 @@
 {
     "allProjects" : {
         "type" : "array",
+        "uniqueItems": true,
         "project" :{
             "type" : "object",
             "properties" : {
@@ -20,6 +21,7 @@
                 },
                 "version" : {
                     "type" : "number",
+                    "multipleOf" : 0.01,
                     "minimum" : 0.0
                 },
                 "imageFormat" : {
