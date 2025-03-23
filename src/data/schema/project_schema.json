@@ -1,0 +1,43 @@
+{
+    "allProjects" : {
+        "type" : "array",
+        "project" :{
+            "type" : "object",
+            "properties" : {
+                "projId" : {
+                    "type" : "integer",
+                    "minimum" : 0
+                },
+                "projName" : {
+                    "type" : "string"
+                },
+                "projPath" : {
+                    "type" : "string"
+                },
+                "projDesc" : {
+                    "type" : "string",
+                    "default" : ""
+                },
+                "version" : {
+                    "type" : "number",
+                    "minimum" : 0.0
+                },
+                "imageFormat" : {
+                    "type" : "string",
+                    "pattern" : "^[a-z]+$",
+                    "default" : "png"
+                },
+                "chrctrFile" : {
+                    "type" : "string",
+                    "default" : "characters"
+                }
+            },
+            "required": [ 
+                "projId", 
+                "projName", 
+                "projPath", 
+                "version" 
+            ]
+        }
+    }
+}
