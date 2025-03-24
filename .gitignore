@@ -1,5 +1,6 @@
 proj_venv
 dev
+src/data
 output.txt
 IP_README.md
 __pycache__
