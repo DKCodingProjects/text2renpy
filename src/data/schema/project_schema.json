@@ -2,6 +2,7 @@
     "allProjects" : {
         "type" : "array",
         "uniqueItems": true,
+        "maxItems" : 50,
         "project" :{
             "type" : "object",
             "properties" : {
@@ -10,35 +11,52 @@
                     "minimum" : 0
                 },
                 "projName" : {
-                    "type" : "string"
+                    "type" : "string",
+                    "minLength" : 1
                 },
                 "projPath" : {
-                    "type" : "string"
+                    "type" : "string",
+                    "minLength" : 1
                 },
                 "projDesc" : {
                     "type" : "string",
+                    "minLength" : 1,
                     "default" : ""
-                },
-                "version" : {
-                    "type" : "number",
-                    "multipleOf" : 0.01,
-                    "minimum" : 0.0
                 },
                 "imageFormat" : {
                     "type" : "string",
+                    "minLength" : 1,
                     "pattern" : "^[a-z]+$",
                     "default" : "png"
                 },
                 "chrctrFile" : {
                     "type" : "string",
+                    "minLength" : 1,
                     "default" : "characters"
+                },
+                "chrctrAppearances" : {
+                    "type" : "array",
+                    "maxItems" : 50,
+                    "uniqueItems" : true,
+                    "chrctr" : {
+                        "type" : "object",
+                        "properties" : {
+                            "chrctrName" : {
+                                "type" : "string",
+                                "minLength" : 1
+                            },
+                            "firstAppearance" : {
+                                "type" : "string",
+                                "minLength" : 1
+                            }
+                        }
+                    }
                 }
             },
             "required": [ 
                 "projId", 
                 "projName", 
-                "projPath", 
-                "version" 
+                "projPath"
             ]
         }
     }
