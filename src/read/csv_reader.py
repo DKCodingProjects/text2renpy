@@ -18,10 +18,7 @@ class Cav_Reader(Reader):
         return super()._readpart_except(err)
 
     def readpart(self) -> list[str]:
-        return self._readpart_except(Exception("There is no 'readpart' method for "+self.__class__.__name__+" : please use 'readrow' instead"))
-    
-    def _readrow_except(self, err: Exception):
-        raise Exception('An error occured in {0} while reading row \'{1}\' ({2})'.format(self.__class__.__name__, self.file_name, f"{type(err).__name__}: {err}"))
+        pass
     
     def readrow(self):
-        pass
+        return self.readpart()
