@@ -9,16 +9,19 @@ class Cav_Reader(Reader):
         # self.analyzer = None
     
     def _open_except(self, err: Exception):
-        raise Exception('An error occured in {0} while opening file \'{1}\' ({2})'.format(self.__class__.__name__, self.file_name, f"{type(err).__name__}: {err}"))
+        return super()._open_except(err)
 
     def open(self):
         pass
 
-    def _readpart_except(self, err: Exception):
-        raise Exception('Something went wrong with {0} in method \'readpart\' ({1})'.format(self.__class__.__name__, f"{type(err).__name__}: {err}"))
+    def _readpart_except(self, err):
+        return super()._readpart_except(err)
 
     def readpart(self) -> list[str]:
-        pass
-
+        return self._readpart_except(Exception("There is no 'readpart' method for "+self.__class__.__name__+" : please use 'readrow' instead"))
+    
+    def _readrow_except(self, err: Exception):
+        raise Exception('An error occured in {0} while reading row \'{1}\' ({2})'.format(self.__class__.__name__, self.file_name, f"{type(err).__name__}: {err}"))
+    
     def readrow(self):
         pass
