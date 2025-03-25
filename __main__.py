@@ -24,6 +24,12 @@ def main():
     arg_obj.argparse_populate(args)
     arg_obj.print()
     '''
+    csv = csv_reader.Csv_Reader(r'src\data\characters.csv')
+    csv.open()
+    print(csv.headers)
+    print(csv.readpart(), csv.is_eof)
+    print(csv.readpart(), csv.is_eof)
+    print(csv.readpart(), csv.is_eof)
     # GUI/ Command-line interface
     # Pass project info to program
     # Tester.test_all()
