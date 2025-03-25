@@ -30,7 +30,24 @@ class Argv_Parser:
         self.parser._optionals.title = 'arguments' # risky line of code, can break ArgumentParser in a future update
         
         # flags for file arguments, stored as string values
-        self.parser.add_argument('-g', '--game-directory', dest='GAME', help='(REQUIRED) set the Ren\'Py project game directory program will operate in', required=True)
-        self.parser.add_argument('-w', '--write-file', dest='WRITE', help='(REQUIRED) set file program will write to AND label code (must be unique)', required=True)
-        self.parser.add_argument('-r', '--read-file', dest='READ', help='(REQUIRED) set file program will read from', required=True)
+        # BASIC FLAGS
+        self.parser.add_argument('-p', '--project', dest='PROJ', help='Set Ren\'Py project program will pull from')
+        self.parser.add_argument('-r', '--readfile', dest='READ', help='Set file program will read from')
+        self.parser.add_argument('-w', '--writefile', dest='WRITE', help='Set file program will write to AND set script label (must be unique!)')
+        self.parser.add_argument('--delete-all', help='Delete all data (besides headers) stored in src/data. Yes, that means ALL data!')
+        self.parser.add_argument('--cp', '--delete-project', dest='DELPROJ', help='Find Ren\'Py project via name. If found, delete all project data stored in projects, history, and characters.')
+        
+        # PROJECT FLAGS
+        self.parser.add_argument('--cp', '--create-project', dest='NEWPROJ', help='Set Ren\'Py project name and create new project')
+        self.parser.add_argument('--rp', '--rename-project', dest='NEWNAME', help='Rename Ren\'Py project that already exists')
+        self.parser.add_argument('--ap', '--all-projects', help='Returns all project names currently stored')
+        self.parser.add_argument('--fp', '--find-project', dest='FINDPROJ', help='Search for a Ren\'Py project by name. If found, set as project to manipulate.')
+        self.parser.add_argument('--pd', '--project-directory', dest='PROJDIR', help='Set the Ren\'Py project game directory program will operate in')
+        
+        # HISTORY FLAGS
+        self.parser.add_argument('--repeat', '--repeat-run', help='Repeat the latest run of text2renpy stored in the history')
+        self.parser.add_argument('--dh', '--delete-history', help='Delete all data (besides headers) in project history')
+        
+        # CHARACTER FLAGS
+        self.parser.add_argument('--ac', '--add-character', help='Repeat the latest run of text2renpy stored in the history')
         
