@@ -24,12 +24,19 @@ def main():
     arg_obj.argparse_populate(args)
     arg_obj.print()
     '''
-    csv = csv_reader.Csv_Reader(r'src\data\characters.csv')
-    csv.open()
-    print(csv.headers)
-    print(csv.readpart(), csv.is_eof)
-    print(csv.readpart(), csv.is_eof)
-    print(csv.readpart(), csv.is_eof)
+    proj_data = proj_data_handler.Project_Data_Handler()
+    proj_data.create_proj('some_project','./test/test_project')
+    proj_data.create_proj('another_project','./test/test_project')
+    proj_data.delete_proj('some_project')
+    proj_data.create_proj('a_third_project','./test/test_project')
+    # proj_data.delete_proj('another_project')
+    proj_data.rename_proj('another_project', 'new_name')
+    proj_data.delete_proj('a_third_project')
+    try:
+        proj_data.delete_proj('another_project')
+    except Exception as err:
+        print(err)
+    proj_data.delete_proj('new_name')
     # GUI/ Command-line interface
     # Pass project info to program
     # Tester.test_all()
