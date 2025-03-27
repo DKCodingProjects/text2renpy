@@ -109,7 +109,7 @@ class Project_Data_Handler():
             project_index = self.find_project_index('name', proj_name)
             self.content.pop(project_index)
             self.write_projects()
-        
+
     def rename_proj(self, proj_name : str, new_name : str):
         if not self.name_exists(proj_name):
             raise Exception('Project \''+proj_name+'\' DOESN\'T EXIST. Try a different name instead.')
