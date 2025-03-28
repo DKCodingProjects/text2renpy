@@ -13,9 +13,6 @@ class Project_Data_Handler():
             if row:
                 self.content.append(row)
     
-    def sort_content(self):
-        self.content.sort(key=lambda row_list : row_list[self.id_index])
-    
     def format_row(row_list : list) -> str:
         row_str = ''
         for i in range(0,len(row_list)):
@@ -38,7 +35,6 @@ class Project_Data_Handler():
         return project_index
     
     def write_projects(self):
-        self.sort_content()
         with open(os.path.join('src', 'data', 'projects.csv'), 'w', newline='') as new_project:
             new_project.write(Project_Data_Handler.format_row(self.headers))
             for row in self.content:
@@ -66,12 +62,13 @@ class Project_Data_Handler():
         return new_id
     
     def validate_proj(proj_path : str):
-        # COMPLETE!
-        # COMPLETE!
-        # COMPLETE!
-        # COMPLETE!
-        # COMPLETE!
-        return True # navigate directory to look for desirable files in game directory
+        head, tail = os.path.split(proj_path)
+        if tail != 'game':
+            return False
+        elif not os.access(os.path.join(proj_path, 'gui.rpy'), os.F_OK):
+            return False
+        else:
+            return True
     
     def default_proj(self, proj_name : str, proj_dir : str) -> list:
         return [str(self.create_id()), proj_name, proj_dir, '', '.png', 'characters.rpy']
@@ -97,7 +94,7 @@ class Project_Data_Handler():
         if not os.access(proj_path, os.F_OK):
             raise Exception('INVALID project path \''+proj_path+'\'! Path either doesn\'t exist, or lacks permissions to access.')
         if not Project_Data_Handler.validate_proj(proj_path):
-            raise Exception('INVALID project path \''+proj_path+'\'! Path does not lead to a Ren\'Py project directory!')
+            raise Exception('INVALID project path \''+proj_path+'\'! Path does not lead to a Ren\'Py project\'s game directory!')
         new_row = self.default_proj(proj_name, proj_path)
         self.content.append(new_row)
         self.write_projects()

@@ -25,10 +25,10 @@ def main():
     arg_obj.print()
     '''
     proj_data = proj_data_handler.Project_Data_Handler()
-    proj_data.create_proj('some_project','./test/test_project')
-    proj_data.create_proj('another_project','./test/test_project')
+    proj_data.create_proj('some_project','C:\\Users\\Dependent User\\OneDrive\\Documents\\Ren\'Py Projects\\Ren\'Py Games\\check\\game')
+    proj_data.create_proj('another_project','C:\\Users\\Dependent User\\OneDrive\\Documents\\Ren\'Py Projects\\Ren\'Py Games\\check\\game')
     proj_data.delete_proj('some_project')
-    proj_data.create_proj('a_third_project','./test/test_project')
+    proj_data.create_proj('a_third_project','C:\\Users\\Dependent User\\OneDrive\\Documents\\Ren\'Py Projects\\Ren\'Py Games\\check\\game')
     # proj_data.delete_proj('another_project')
     proj_data.rename_proj('another_project', 'new_name')
     proj_data.delete_proj('a_third_project')
@@ -40,7 +40,7 @@ def main():
     # GUI/ Command-line interface
     # Pass project info to program
     # Tester.test_all()
-    # filepath = r'test\test_documents\test_script.docx'
+    # filepath = r'test\\test_documents\\test_script.docx'
     # reader = reader_proxy.Reader_Proxy.get_instance(filepath)
     # reader.open()
     # # Create translator proxy

@@ -34,15 +34,15 @@ class Argv_Parser:
         self.parser.add_argument('-p', '--project', dest='PROJ', help='Set Ren\'Py project program will pull from')
         self.parser.add_argument('-r', '--readfile', dest='READ', help='Set file program will read from')
         self.parser.add_argument('-w', '--writefile', dest='WRITE', help='Set file program will write to AND set script label (must be unique!)')
-        self.parser.add_argument('--delete-all', help='Delete all data (besides headers) stored in src/data. Yes, that means ALL data!')
-        self.parser.add_argument('--cp', '--delete-project', dest='DELPROJ', help='Find Ren\'Py project via name. If found, delete all project data stored in projects, history, and characters.')
+        self.parser.add_argument('--da', '--delete-all', help='Delete all project data stored in program. Yes, that means ALL data!')
+        self.parser.add_argument('--dp', '--delete-project', dest='DELPROJ', help='Find Ren\'Py project via name. If found, delete all program project data everywhere it is found.')
         
         # PROJECT FLAGS
         self.parser.add_argument('--cp', '--create-project', dest='NEWPROJ', help='Set Ren\'Py project name and create new project')
         self.parser.add_argument('--rp', '--rename-project', dest='NEWNAME', help='Rename Ren\'Py project that already exists')
         self.parser.add_argument('--ap', '--all-projects', help='Returns all project names currently stored')
         self.parser.add_argument('--fp', '--find-project', dest='FINDPROJ', help='Search for a Ren\'Py project by name. If found, set as project to manipulate.')
-        self.parser.add_argument('--pd', '--project-directory', dest='PROJDIR', help='Set the Ren\'Py project game directory program will operate in')
+        self.parser.add_argument('--pd', '--project-directory', dest='PROJDIR', help='Set the Ren\'Py project game directory program will operate in. Check documentation for further details!')
         
         # HISTORY FLAGS
         self.parser.add_argument('--repeat', '--repeat-run', help='Repeat the latest run of text2renpy stored in the history')
