@@ -37,6 +37,11 @@ def main():
     except Exception as err:
         print(err)
     proj_data.delete_proj('new_name')
+    hist_data = hist_data_handler.History_Data_Handler()
+    hist_data.add_history(1, 'writefile', 'readfile')
+    hist_data.add_history(1, 'writefile', 'readfile')
+    hist_data.add_history(2, 'writefile', 'readfile')
+    hist_data.delete_history(1)
     # GUI/ Command-line interface
     # Pass project info to program
     # Tester.test_all()
