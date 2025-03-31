@@ -28,9 +28,13 @@ class History_Data_Handler():
             for row in self.content:
                 row_str = History_Data_Handler.format_row(row)
                 new_project.write(f'\n'+row_str)
+
+    def format_date():
+        date = datetime.now()
+        return date.strftime('%Y-%m-%d %H:%M:%S')
     
     def add_history(self, proj_id : int, write_file : str, read_file : str):
-        self.content.insert(0, [proj_id,datetime.now(),write_file,read_file])
+        self.content.insert(0, [proj_id,History_Data_Handler.format_date(),write_file,read_file])
         self.write_history()
     
     def delete_history(self, proj_id : int):
@@ -38,15 +42,15 @@ class History_Data_Handler():
         i = 0
         while True:
             if self.content:
-                if i > len(self.content):
-                    break
-                elif self.content[i][id_index] == proj_id:
-                    self.content.pop(i)
+                was_pop = False
+                for i in range(0,len(self.content)):
+                    if self.content[i][id_index] == proj_id:
+                        was_pop = True
+                        self.content.pop(i)
+                        break
+                if was_pop:
                     continue
-                else:
-                    i += 1
-            else:
-                break
+            break
         self.write_history()
     
     def delete_all_history(self):

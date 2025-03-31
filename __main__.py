@@ -42,6 +42,7 @@ def main():
     hist_data.add_history(1, 'writefile', 'readfile')
     hist_data.add_history(2, 'writefile', 'readfile')
     hist_data.delete_history(1)
+    hist_data.delete_all_history()
     # GUI/ Command-line interface
     # Pass project info to program
     # Tester.test_all()
