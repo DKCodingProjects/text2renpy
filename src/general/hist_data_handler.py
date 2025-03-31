@@ -25,7 +25,7 @@ class History_Data_Handler():
     def write_history(self):
         with open(os.path.join('src', 'data', 'history.csv'), 'w', newline='') as new_project:
             new_project.write(History_Data_Handler.format_row(self.headers))
-            for row in self.content:
+            for row in self.content[:100]:
                 row_str = History_Data_Handler.format_row(row)
                 new_project.write(f'\n'+row_str)
 

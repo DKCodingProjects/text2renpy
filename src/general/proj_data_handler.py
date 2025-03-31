@@ -37,7 +37,7 @@ class Project_Data_Handler():
     def write_projects(self):
         with open(os.path.join('src', 'data', 'projects.csv'), 'w', newline='') as new_project:
             new_project.write(Project_Data_Handler.format_row(self.headers))
-            for row in self.content:
+            for row in self.content[:25]:
                 row_str = Project_Data_Handler.format_row(row)
                 new_project.write(f'\n'+row_str)
     
