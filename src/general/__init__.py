@@ -1,1 +1,1 @@
-__all__ = ['rpy_chrctr_data', 'rpy_chrctr_obj', 'text_chunk', 'proj_data_handler', 'hist_data_handler']
+__all__ = ['rpy_chrctr_data', 'rpy_chrctr_obj', 'text_chunk']
