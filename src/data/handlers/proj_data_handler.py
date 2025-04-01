@@ -1,27 +1,14 @@
 from src.read.csv_reader import Csv_Reader
+from .data_handler import Data_Handler
 from .hist_data_handler import History_Data_Handler
 from .char_data_handler import Character_Data_Handler
 import os
 
-class Project_Data_Handler():
-    def __init__(self, id_column = 'project_id'):
-        data = Csv_Reader(os.path.join('src', 'data', 'projects.csv'))
-        data.open()
-        self.headers = data.headers
-        self.id_index = self.headers.index(id_column)
-        self.content = []
-        while not data.is_eof:
-            row = data.readpart()
-            if row:
-                self.content.append(row)
-    
-    def format_row(row_list : list) -> str:
-        row_str = ''
-        for i in range(0,len(row_list)):
-            row_str = row_str+row_list[i]
-            if i != len(row_list)-1:
-                row_str = row_str+','
-        return row_str
+class Project_Data_Handler(Data_Handler):
+    def __init__(self):
+        super().__init__(os.path.join('src', 'data', 'projects.csv'))
+        self.id_index = self.headers.index('project_id')
+        self.limit = 25
     
     def find_project_index(self, column_name : str, value : str) -> int:
         value = value.lower()
@@ -37,17 +24,14 @@ class Project_Data_Handler():
         return project_index
     
     def write_projects(self):
-        with open(os.path.join('src', 'data', 'projects.csv'), 'w', newline='') as new_project:
-            new_project.write(Project_Data_Handler.format_row(self.headers))
-            for row in self.content[:25]:
-                row_str = Project_Data_Handler.format_row(row)
-                new_project.write(f'\n'+row_str)
+        if len(self.content) >= self.limit and self.limit > 0:
+            raise Exception('FAILED WRITE in '+self.__class__.__name__+'! If written, '+self.path+' will exceed row limit of '+str(self.limit)+' stored rows!')
+        super()._write(self.limit)
     
     def create_id(self) -> int:
         id_index = self.id_index
         taken_id = set()
-        for i in range(0, len(self.content)):
-            row = self.content[i]
+        for row in self.content:
             if row[id_index]:
                 curr_id = int(row[id_index])
                 if curr_id not in taken_id:
@@ -55,12 +39,12 @@ class Project_Data_Handler():
                 else:
                     raise Exception('project_id \''+curr_id+'\' is present more than once in projects.csv. All projects must have a unique proj_id!')
             else:
-                raise Exception('INVALID project_id! A project\'s id must be present!')
+                raise Exception('EMPTY project_id! A project\'s id must be present!')
         new_id = 0
         while True:
             new_id += 1
             if new_id not in taken_id:
-                break 
+                break
         return new_id
     
     def validate_proj(proj_path : str):
