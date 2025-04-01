@@ -25,6 +25,7 @@ def main():
     arg_obj.argparse_populate(args)
     arg_obj.print()
     '''
+    '''
     proj_data = proj_data_handler.Project_Data_Handler()
     proj_data.create_proj('some_project','C:\\Users\\Dependent User\\OneDrive\\Documents\\Ren\'Py Projects\\Ren\'Py Games\\check\\game')
     proj_data.create_proj('another_project','C:\\Users\\Dependent User\\OneDrive\\Documents\\Ren\'Py Projects\\Ren\'Py Games\\check\\game')
@@ -42,8 +43,16 @@ def main():
     hist_data.add_history(1, 'writefile', 'readfile')
     hist_data.add_history(1, 'writefile', 'readfile')
     hist_data.add_history(2, 'writefile', 'readfile')
-    hist_data.delete_history(1)
-    hist_data.delete_all_history()
+    hist_data.delete_project(1)
+    hist_data.delete_history()'
+    '''
+    proj_data = proj_data_handler.Project_Data_Handler()
+    proj_data.create_proj('some_project','C:\\Users\\Dependent User\\OneDrive\\Documents\\Ren\'Py Projects\\Ren\'Py Games\\check\\game')
+    hist_data = hist_data_handler.History_Data_Handler()
+    hist_data.add_history(1, 'writefile', 'readfile')
+    char_data = char_data_handler.Character_Data_Handler()
+    char_data.add_character(1,'nm','Name','label')
+    proj_data.delete_proj('some_project')
     # GUI/ Command-line interface
     # Pass project info to program
     # Tester.test_all()
