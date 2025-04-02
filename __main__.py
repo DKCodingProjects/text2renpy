@@ -8,6 +8,7 @@ from src.data.handlers import *
 import dev.sandbox as dev
 from test.tester import Tester
 import sys
+import os
 
 def _consolidate_chunks(text_chunks: list[Text_Chunk]) -> str:
         consolid_text: str = ''
@@ -46,13 +47,30 @@ def main():
     hist_data.delete_project(1)
     hist_data.delete_history()'
     '''
+    proj_data = data_handler.Data_Handler(os.path.join('src', 'data', 'projects.csv'))
+    hist_data = data_handler.Data_Handler(os.path.join('src', 'data', 'history.csv'))
+    char_data = data_handler.Data_Handler(os.path.join('src', 'data', 'characters.csv'))
+
+    proj_data._add_row(['1','name','path','description','img_format','chrctr_filename'])
+    proj_data._add_row(['1','name1','path','description','img_format','chrctr_filename'])
+    proj_data._add_row(['2','name2','path','description','img_format','chrctr_filename'])
+    proj_data._add_row(['2','name3 3','path','description','img_format','chrctr_filename'])
+    print(proj_data.content)
+    proj_data._remove_rows('project_id', '1')
+    print(proj_data.content)
+    proj_data._delete_row('project_id', '2')
+    print(proj_data.content)
+    proj_data._remove_all()
+    proj_data._write()
+    '''
     proj_data = proj_data_handler.Project_Data_Handler()
     proj_data.create_proj('some_project','C:\\Users\\Dependent User\\OneDrive\\Documents\\Ren\'Py Projects\\Ren\'Py Games\\check\\game')
     hist_data = hist_data_handler.History_Data_Handler()
     hist_data.add_history(1, 'writefile', 'readfile')
     char_data = char_data_handler.Character_Data_Handler()
     char_data.add_character(1,'nm','Name','label')
-    proj_data.delete_proj('some_project')
+    proj_data.delete_proj('some_project')'
+    '''
     # GUI/ Command-line interface
     # Pass project info to program
     # Tester.test_all()

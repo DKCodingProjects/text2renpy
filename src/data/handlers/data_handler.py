@@ -1,7 +1,8 @@
 from src.read.csv_reader import Csv_Reader
+import csv
 
 class Data_Handler():
-    def ___init__(self, path : str):
+    def __init__(self, path : str):
         self.path = path
         data = Csv_Reader(path)
         data.open()
@@ -52,6 +53,9 @@ class Data_Handler():
     
     def _remove_rows(self, column_name : str, row_value : str):
         self._delete_row(column_name, row_value, False)
+
+    def _remove_all(self):
+        self.content = []
     
     def _update_row(self, column_name : str, row_value : str, new_value : str, only_first : bool = True):
         if self.content:
@@ -75,10 +79,10 @@ class Data_Handler():
         for row in rows:
             self._add_row(row,index)
     
-    def _write(self, limit : int):
-        if limit > 0:
+    def _write(self, limit : int = 0):
             with open(self.path, 'w', newline='') as new_project:
-                new_project.write(Data_Handler._format_row(self.headers))
-                for row in self.content[:limit]:
-                    row_str = Data_Handler._format_row(row)
-                    new_project.write(f'\n'+row_str)
+                csv_writer = csv.writer(new_project, quoting=csv.QUOTE_MINIMAL)
+                csv_writer.writerow(self.headers)
+                write_limit = limit if limit > 0 else len(self.content)
+                for row in self.content[:write_limit]:
+                    csv_writer.writerow(row)
