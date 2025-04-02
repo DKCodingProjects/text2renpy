@@ -1,7 +1,8 @@
+from abc import ABC, abstractmethod
 from src.read.csv_reader import Csv_Reader
 import csv
 
-class Data_Handler():
+class Data_Handler(ABC):
     def __init__(self, path : str):
         self.path = path
         data = Csv_Reader(path)
@@ -12,14 +13,17 @@ class Data_Handler():
             row = data.readpart()
             if row:
                 self.content.append(row)
-        
-    def _format_row(row_list : list) -> str:
-        row_str = ''
-        for i in range(0,len(row_list)):
-            row_str = row_str+str(row_list[i])
-            if i != len(row_list)-1:
-                row_str = str(row_str)+','
-        return row_str
+    
+    @abstractmethod 
+    def _upgrade_content(self, const_headers : list):
+        # method to update pre-existing csv files to current format
+        # take current headers and compare them to desired headers
+        # if a current header matches a desired header, record its original index and its desired index
+        # if a current header doesn't exist, remove it and ignore its contents
+        # for each row in self.content, update row format to keep old values while adding new values where needed
+        # set self.headers to const_headers
+        # write the file once again
+        pass
     
     def _get_row(self, column_name : str, row_value : str, only_first : bool = True) -> list:
         row = []
@@ -32,9 +36,12 @@ class Data_Handler():
                         break
         return row
     
-    def _find_rows(self, column_name : str, row_value : str) -> list[list]:
+    def _search_rows(self, column_name : str, row_value : str) -> list[list]:
         rows = self._get_row(column_name, row_value, False)
         return rows
+    
+    def _search_all(self):
+        return self.content
 
     def _delete_row(self, column_name : str, row_value : str, only_first : bool = True):
         if self.content:

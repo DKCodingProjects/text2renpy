@@ -55,6 +55,7 @@ def main():
     proj_data._add_row(['1','name1','path','description','img_format','chrctr_filename'])
     proj_data._add_row(['2','name2','path','description','img_format','chrctr_filename'])
     proj_data._add_row(['2','name3 3','path','description','img_format','chrctr_filename'])
+    proj_data._update_row('project_id', '1', '3')
     print(proj_data.content)
     proj_data._remove_rows('project_id', '1')
     print(proj_data.content)
