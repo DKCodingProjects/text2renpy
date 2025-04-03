@@ -23,6 +23,7 @@ class Project_Data_Handler(Data_Handler):
                     raise Exception('INVALID ROW! Column \''+self.const_headers[i]+'\' on row \''+str(row_number if row_number >= 0 else 'N/A')+'\' should be set by the user! ')
         return row
     
+    ### TEST ###
     def upgrade_content(self):
         class Header_Transform():
             def __init__(self, old_index : int, new_index : int):
