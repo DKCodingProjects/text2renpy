@@ -15,8 +15,8 @@ class Data_Handler(ABC):
                 self.content.append(row)
     
     @abstractmethod 
-    def _upgrade_content(self, const_headers : list):
-        # method to update pre-existing csv files to current format
+    def upgrade_content(self):
+        # method to update pre-existing csv file columns to current format
         # take current headers and compare them to desired headers
         # if a current header matches a desired header, record its original index and its desired index
         # if a current header doesn't exist, remove it and ignore its contents
