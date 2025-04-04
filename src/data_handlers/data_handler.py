@@ -1,8 +1,7 @@
-from abc import ABC, abstractmethod
 from src.read.csv_reader import Csv_Reader
 import csv
 
-class Data_Handler(ABC):
+class Data_Handler():
     def __init__(self, path : str):
         self.path = path
         data = Csv_Reader(path)
@@ -14,16 +13,31 @@ class Data_Handler(ABC):
             if row:
                 self.content.append(row)
     
-    @abstractmethod 
-    def upgrade_content(self):
-        # method to update pre-existing csv file columns to current format
-        # take current headers and compare them to desired headers
-        # if a current header matches a desired header, record its original index and its desired index
-        # if a current header doesn't exist, remove it and ignore its contents
-        # for each row in self.content, update row format to keep old values while adding new values where needed
-        # set self.headers to const_headers
-        # write the file once again
-        pass
+    def _add_defaults(self, row : list, const_headers : list, default_values : list, row_number : int = -1):
+        for i in range(0,len(default_values)):
+            if default_values[i] is not None:
+                if not row[i]:
+                    row[i] = default_values[i]
+            elif not row[i]:
+                    raise Exception('INVALID ROW! Column \''+const_headers[i]+'\' on row \''+str(row_number)+'\' should be set by the user! ')
+        return row
+    
+    def _upgrade_content(self, const_headers : list, default_values : list):
+        class Header_Transform():
+            def __init__(self, old_index : int, new_index : int):
+                self.old_index = old_index
+                self.new_index = new_index
+        transforms : list[Header_Transform] = []
+        for header in const_headers:
+            if header in self.headers:
+                transforms.append(Header_Transform(self.headers.index(header),const_headers.index(header)))
+        for i in range(0,len(self.content)):
+            new_row = ['' for _ in range(len(const_headers))]
+            for trans in transforms:
+                new_row[trans.new_index] = self.content[i][trans.old_index]
+            self.content[i] = self._add_defaults(new_row,const_headers,default_values,i)
+        self.headers = const_headers
+        self._write()
     
     def _get_row(self, column_name : str, row_value : str, only_first : bool = True) -> list:
         row = []
@@ -87,8 +101,8 @@ class Data_Handler(ABC):
             self._add_row(row,index)
     
     def _write(self, limit : int = 0):
-            with open(self.path, 'w', newline='') as new_project:
-                csv_writer = csv.writer(new_project, quoting=csv.QUOTE_MINIMAL)
+            with open(self.path, 'w', newline='') as write_project:
+                csv_writer = csv.writer(write_project, quoting=csv.QUOTE_MINIMAL)
                 csv_writer.writerow(self.headers)
                 write_limit = limit if limit > 0 else len(self.content)
                 for row in self.content[:write_limit]:

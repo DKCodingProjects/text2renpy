@@ -9,39 +9,11 @@ class Project_Data_Handler(Data_Handler):
         super().__init__(os.path.join('data', 'projects.csv'))
         self.id_index = self.headers.index('project_id')
         self.limit = 25
-        self.const_headers = ['project_id','name','path','description']
-    
-    def _add_defaults(self, row : list, row_number : int = -1):
-        # if a value requires user input, set value to None
-        default_values = [None, None, None, '']
-        for i in range(0,len(default_values)):
-            if default_values[i] is not None:
-                if not row[i]:
-                    row[i] = default_values[i]
-            else:
-                if not row[i]:
-                    raise Exception('INVALID ROW! Column \''+self.const_headers[i]+'\' on row \''+str(row_number if row_number >= 0 else 'N/A')+'\' should be set by the user! ')
-        return row
-    
-    ### TEST ###
-    def upgrade_content(self):
-        class Header_Transform():
-            def __init__(self, old_index : int, new_index : int):
-                self.old_index = old_index
-                self.new_index = new_index
-        transforms : list[Header_Transform] = []
-        for header in self.const_headers:
-            if header in self.headers:
-                transforms.append(Header_Transform(self.headers.index(header),self.const_headers.index(header)))
-        new_content = []
-        for i in range(0,len(self.content)):
-            new_row = ['' for _ in range(len(self.const_headers))]
-            for trans in transforms:
-                new_row[trans.new_index] = self.content[i][trans.old_index]
-            self.content[i] = self._add_defaults(new_row,i)
+        self.const_headers =  ['project_id','name','path','description']
+        self.default_values = [ None       , None , None , ''          ] # if a value requires user input, set value to None
 
-        self.content = new_content
-        self._write()
+    def upgrade_content(self):
+        super()._upgrade_content(self.const_headers, self.default_values)
     
     def find_project_index(self, column_name : str, value : str) -> int:
         value = value.lower()
