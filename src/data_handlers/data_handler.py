@@ -24,7 +24,7 @@ class Data_Handler():
     
     def _upgrade_content(self, const_headers : list, default_values : list):
         class Header_Transform():
-            def __init__(self, old_index : int, new_index : int):
+            def __init__(self, old_index : int, new_index : int):  
                 self.old_index = old_index
                 self.new_index = new_index
         transforms : list[Header_Transform] = []
@@ -34,7 +34,8 @@ class Data_Handler():
         for i in range(0,len(self.content)):
             new_row = ['' for _ in range(len(const_headers))]
             for trans in transforms:
-                new_row[trans.new_index] = self.content[i][trans.old_index]
+                if trans.old_index < len(self.content[i]):
+                    new_row[trans.new_index] = self.content[i][trans.old_index]
             self.content[i] = self._add_defaults(new_row,const_headers,default_values,i)
         self.headers = const_headers
         self._write()
