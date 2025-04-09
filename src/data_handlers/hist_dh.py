@@ -15,7 +15,9 @@ class History_DH(Data_Handler):
     
     def write_history(self):
         self._write(self.limit)
-
+        if len(self.content) > self.limit:
+            raise Warning(f'FILE LIMIT REACHED! File limit of '+str(self.limit)+'\' rows history.csv reached! Oldest history will be deleted!')
+            
     def _format_date():
         date = datetime.now()
         return date.strftime('%Y-%m-%d %H:%M:%S')

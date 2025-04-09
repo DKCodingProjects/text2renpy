@@ -13,7 +13,10 @@ class Project_DH(Data_Handler):
         self._upgrade_content(const_headers, default_values)
     
     def write_projects(self):
-        self._write(self.limit)
+        if len(self.content) <= self.limit:
+            self._write(self.limit)
+        else:
+            raise Exception(f'FILE LIMIT REACHED! File limit of '+str(self.limit)+'\' rows in projects.csv reached! Delete a project to make room for more!\n\t(You can adjust the limit in src.data_handers.proj_dh if you want!)')
     
     def create_id(self) -> int:
         id_index = self.id_index
