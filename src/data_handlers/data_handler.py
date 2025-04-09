@@ -13,7 +13,7 @@ class Data_Handler():
             if row:
                 self.content.append(row)
     
-    def _add_defaults(self, row : list, const_headers : list, default_values : list, row_number : int = -1):
+    def _add_upgrade_defaults(self, row : list, const_headers : list, default_values : list, row_number : int = -1):
         for i in range(0,len(default_values)):
             if default_values[i] is not None:
                 if not row[i]:
@@ -36,7 +36,7 @@ class Data_Handler():
             for trans in transforms:
                 if trans.old_index < len(self.content[i]):
                     new_row[trans.new_index] = self.content[i][trans.old_index]
-            self.content[i] = self._add_defaults(new_row,const_headers,default_values,i)
+            self.content[i] = self._add_upgrade_defaults(new_row,const_headers,default_values,i)
         self.headers = const_headers
         self._write()
     
@@ -96,7 +96,7 @@ class Data_Handler():
         self._update_row(column_name, row_value, new_value, -1)
     
     def _add_row(self, row : list, index : int = None):
-        if index != None:
+        if index != None and index >= 0:
             self.content.insert(index, row)
         else:
             self.content.append(row)
