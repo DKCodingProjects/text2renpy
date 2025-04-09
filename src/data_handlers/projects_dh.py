@@ -1,7 +1,7 @@
 from .data_handler import Data_Handler
 import os
 
-class Project_DH(Data_Handler):
+class Projects_DH(Data_Handler):
     def __init__(self):
         super().__init__(os.path.join('data', 'projects.csv'))
         self.id_index = self.headers.index('project_id')
