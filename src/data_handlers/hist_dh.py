@@ -22,7 +22,7 @@ class History_DH(Data_Handler):
         date = datetime.now()
         return date.strftime('%Y-%m-%d %H:%M:%S')
     
-    def _default_hist(self, proj_id : int, write_file : str, read_file : str) -> list:
+    def _default_hist(proj_id : str, write_file : str, read_file : str) -> list:
         return [proj_id,History_DH._format_date(),write_file,read_file]
     
     def get_recent(self):
@@ -31,10 +31,10 @@ class History_DH(Data_Handler):
         else:
             raise Exception('EMPTY CONTENT! File \'history.csv\' has no data in it to search!')
     
-    def add_history(self, proj_id : int, write_file : str, read_file : str):
+    def add_history(self, proj_id : str, write_file : str, read_file : str):
         self._add_row(History_DH._default_hist(proj_id, write_file, read_file),0)
     
-    def delete_history(self, proj_id : int):
+    def delete_history(self, proj_id : str):
         if self._get_row('project_id',str(proj_id)):
             self._remove_rows('project_id',str(proj_id))
         else: 

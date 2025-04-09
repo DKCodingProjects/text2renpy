@@ -51,7 +51,7 @@ def main():
     hist_data = data_handler.Data_Handler(os.path.join('data', 'history.csv'))
     char_data = data_handler.Data_Handler(os.path.join('data', 'characters.csv'))
     '''
-
+    '''
     with open('data\\projects.csv', 'w', newline='') as bad_project:
         writer = csv.writer(bad_project)
         writer.writerow(['project_id','name','path','description','bad_header'])
@@ -99,7 +99,7 @@ def main():
     proj_data = data_handler.Data_Handler(os.path.join('data', 'projects.csv'))
     proj_data._remove_all()
     proj_data._write()
-    
+    '''
     '''
     proj_data._add_row(['1','name','path','description','img_format','chrctr_filename'])
     proj_data._add_row(['1','name1','path','description','img_format','chrctr_filename'])
@@ -114,15 +114,18 @@ def main():
     proj_data._remove_all()
     proj_data._write()
     '''
-    '''
-    proj_data = proj_data_handler.Project_Data_Handler()
+    proj_data = proj_dh.Project_DH()
     proj_data.create_proj('some_project','C:\\Users\\Dependent User\\OneDrive\\Documents\\Ren\'Py Projects\\Ren\'Py Games\\check\\game')
-    hist_data = hist_data_handler.History_Data_Handler()
-    hist_data.add_history(1, 'writefile', 'readfile')
-    char_data = char_data_handler.Character_Data_Handler()
-    char_data.add_character(1,'nm','Name','label')
-    proj_data.delete_proj('some_project')'
-    '''
+    print(proj_data.content)
+    hist_data = hist_dh.History_DH()
+    hist_data.add_history('1', 'writefile', 'readfile')
+    print(hist_data.content)
+    # char_data = char_data_handler.Character_Data_Handler()
+    # char_data.add_character(1,'nm','Name','label')
+    proj_data.delete_proj('some_project')
+    print(proj_data.content)
+    hist_data.delete_history(1)
+    print(hist_data.content)
     # GUI/ Command-line interface
     # Pass project info to program
     # Tester.test_all()
