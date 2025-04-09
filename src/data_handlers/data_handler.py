@@ -40,25 +40,26 @@ class Data_Handler():
         self.headers = const_headers
         self._write()
     
-    def _get_row(self, column_name : str, row_value : str, only_first : bool = True) -> list:
+    def _get_row(self, column_name : str, row_value : str, count : int = 1) -> list:
         row = []
         if self.content:
             column_index = self.headers.index(column_name)
             for i in range(0,len(self.content)):
                 if self.content[i][column_index] == row_value:
                     row.append(self.content[i])
-                    if only_first:
+                    count -= 1
+                    if count == 0:
                         break
         return row
     
     def _search_rows(self, column_name : str, row_value : str) -> list[list]:
-        rows = self._get_row(column_name, row_value, False)
+        rows = self._get_row(column_name, row_value, -1)
         return rows
     
     def _search_all(self):
         return self.content
 
-    def _delete_row(self, column_name : str, row_value : str, only_first : bool = True):
+    def _delete_row(self, column_name : str, row_value : str, count : int = 1):
         if self.content:
             column_index = self.headers.index(column_name)
             pop_index = []
@@ -66,30 +67,33 @@ class Data_Handler():
             for i in range(0,len(self.content)):
                 if self.content[i][column_index] == row_value:
                     pop_index.append(i)
-                    if only_first:
+                    count -= 1
+                    if count == 0:
                         break
+                    
             if pop_index:
                 for index in pop_index:
                     self.content.pop(index - pop_offset)
                     pop_offset += 1
     
     def _remove_rows(self, column_name : str, row_value : str):
-        self._delete_row(column_name, row_value, False)
+        self._delete_row(column_name, row_value, -1)
 
     def _remove_all(self):
         self.content = []
     
-    def _update_row(self, column_name : str, row_value : str, new_value : str, only_first : bool = True):
+    def _update_row(self, column_name : str, row_value : str, new_value : str, count : int = 1):
         if self.content:
             column_index = self.headers.index(column_name)
             for i in range(0,len(self.content)):
                 if self.content[i][column_index] == row_value:
                     self.content[i][column_index] = new_value
-                    if only_first:
+                    count -= 1
+                    if count == 0:
                         break
 
     def _revise_rows(self, column_name : str, row_value : str, new_value : str):
-        self._update_row(column_name, row_value, new_value, False)
+        self._update_row(column_name, row_value, new_value, -1)
     
     def _add_row(self, row : list, index : int = None):
         if index != None:
