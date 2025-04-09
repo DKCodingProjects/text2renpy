@@ -1,1 +1,1 @@
-__all__ = ['data_handler', 'proj_dh', 'hist_dh', 'char_data_handler']
+__all__ = ['data_handler', 'projects_dh', 'history_dh', 'characters_dh']

@@ -114,10 +114,10 @@ def main():
     proj_data._remove_all()
     proj_data._write()
     '''
-    proj_data = proj_dh.Project_DH()
+    proj_data = projects_dh.Project_DH()
     proj_data.create_proj('some_project','C:\\Users\\Dependent User\\OneDrive\\Documents\\Ren\'Py Projects\\Ren\'Py Games\\check\\game')
     print(proj_data.content)
-    hist_data = hist_dh.History_DH()
+    hist_data = history_dh.History_DH()
     hist_data.add_history('1', 'writefile', 'readfile')
     print(hist_data.content)
     # char_data = char_data_handler.Character_Data_Handler()
