@@ -10,6 +10,7 @@ class Csv_Reader(Reader):
         return super()._open_except(err)
 
     def open(self, has_headers = True):
+        # open with dictreader instead?
         try:
             csvfile = open(self.file_name, newline='')
             self.open_file = csv.reader(csvfile)
