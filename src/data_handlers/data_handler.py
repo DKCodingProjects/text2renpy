@@ -1,6 +1,10 @@
 from src.read.csv_reader import Csv_Reader
 import csv
 
+# add dictionary based _get_row to find rows that require multi column value matching
+# add dictionary based _delete_row to delete rows that require multi column value matching
+# add dictionary based _update_row to delete rows that require multi column value matching
+
 class Data_Handler():
     def __init__(self, path : str):
         self.path = path

@@ -5,7 +5,6 @@ import os
 class History_DH(Data_Handler):
     def __init__(self):
         super().__init__(os.path.join('data', 'history.csv'))
-        self.id_index = self.headers.index('project_id')
         self.limit = 100
     
     def upgrade_content(self):

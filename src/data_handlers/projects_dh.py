@@ -19,13 +19,12 @@ class Projects_DH(Data_Handler):
             raise Exception(f'FILE LIMIT REACHED! File limit of '+str(self.limit)+'\' rows in projects.csv reached! Delete a project to make room for more!\n\t(You can adjust the limit in src.data_handers.proj_dh if you want!)')
     
     def create_id(self) -> int:
-        id_index = self.id_index
         taken_id = set()
         for row in self.content:
-            if row[id_index]:
-                curr_id = int(row[id_index])
+            if row[self.id_index]:
+                curr_id = int(row[self.id_index])
                 if curr_id not in taken_id:
-                    taken_id.add(int(row[id_index]))
+                    taken_id.add(int(row[self.id_index]))
                 else:
                     raise Exception('project_id \''+curr_id+'\' is present more than once in projects.csv. All projects must have a unique project_id!')
             else:
@@ -64,7 +63,7 @@ class Projects_DH(Data_Handler):
             raise Exception('EMPTY project path! All project paths must be longer than 1 character!')
         if not os.access(proj_path, os.F_OK):
             raise Exception('INVALID project path \''+proj_path+'\'! Path either doesn\'t exist, or lacks permissions to access.')
-        if not Project_DH.validate_proj(proj_path):
+        if not Projects_DH.validate_proj(proj_path):
             raise Exception('INVALID project path \''+proj_path+'\'! Path does not lead to a Ren\'Py project\'s game directory!')
         new_row = self._default_proj(proj_name, proj_path)
         self._add_row(new_row)

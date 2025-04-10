@@ -1,133 +1,60 @@
-from src.read.csv_reader import Csv_Reader
+from .data_handler import Data_Handler
 import os
 
-class Character_Data_Handler():
-    def __init__(self, date_column = 'project_id'):
-        data = Csv_Reader(os.path.join('src', 'data', 'characters.csv'))
-        data.open()
-        self.headers = data.headers
-        self.date_index = self.headers.index(date_column)
-        self.content = []
-        while not data.is_eof:
-            row = data.readpart()
-            if row:
-                self.content.append(row)
-    
-    def format_row(row_list : list) -> str:
-        row_str = ''
-        for i in range(0,len(row_list)):
-            row_str = row_str+str(row_list[i])
-            if i != len(row_list)-1:
-                row_str = str(row_str)+','
-        return row_str
+class Characters_DH(Data_Handler):
+    def __init__(self):
+        super().__init__(os.path.join('data', 'characters.csv'))
+        self.id_index = self.headers.index('project_id')
+        self.name_index = self.headers.index('abbrev_name')
+        self.limit = 1000
     
     def write_characters(self):
-        with open(os.path.join('src', 'data', 'characters.csv'), 'w', newline='') as new_characters:
-            new_characters.write(Character_Data_Handler.format_row(self.headers))
-            for row in self.content[:1000]:
-                row_str = Character_Data_Handler.format_row(row)
-                new_characters.write(f'\n'+row_str)
+        self._write(self.limit)
+        if len(self.content) > self.limit:
+            raise Warning(f'FILE LIMIT REACHED! File limit of '+str(self.limit)+'\' rows in characters.csv reached! Deleting oldest rows in history.csv...')
 
-    def if_exists(self, proj_id : int = None, abbrev_name : str = '', full_name : str = '', label : str = ''):
-        if proj_id and abbrev_name:
-            if int(proj_id) <= 0:
-                raise Exception('INVALID Project ID! All Project IDs must be greater than 0')
-            else:
-                id_index = self.headers.index('project_id')
-                name_index = self.headers.index('abbrev_name')
-                for row in self.content:
-                    if (row[id_index] == proj_id) and (row[name_index].lower() == abbrev_name.lower()):
-                        return True
-            return False
-        elif proj_id:
-            if int(proj_id) <= 0:
-                raise Exception('INVALID Project ID! All Project IDs must be greater than 0')
-            else:
-                id_index = self.headers.index('project_id')
-                for row in self.content:
-                    if row[id_index] == proj_id:
-                        return True
-            return False
-        elif abbrev_name:
-            name_index = self.headers.index('abbrev_name')
-            for row in self.content:
-                if row[name_index].lower() == abbrev_name.lower():
-                    return True
-            return False
-        elif full_name:
-            name_index = self.headers.index('full_name')
-            for row in self.content:
-                if row[name_index].lower() == full_name.lower():
-                    return True
-            return False
-        elif label:
-            label_index = self.headers.index('first_label')
-            for row in self.content:
-                if row[label_index].lower() == label.lower():
-                    return True
-            return False
-        else:
-            raise Exception('EMPTY METHOD CALL! Method \'if_exists\' in '+self.__class__.__name__+' requires at least one parameter')
+    def _character_exists(self, proj_id : str, abbrev_name : str):
+        for row in self.content:
+            if (row[self.id_index] == proj_id) and (row[self.name_index].lower() == abbrev_name.lower()):
+                return True
+        return False
     
-    def add_character(self, proj_id : int, abbrev_name : str, full_name : str, label):
-        self.content.insert(0, [proj_id,abbrev_name,full_name,label])
-        self.write_characters()
+    def add_character(self, proj_id : str, abbrev_name : str, full_name : str, label):
+        self._add_row([proj_id,abbrev_name,full_name,label], 0)
     
-    def delete_project(self, proj_id : int):
-        if not self.if_exists(proj_id=proj_id):
+    def delete_project(self, proj_id : str):
+        if not self._get_row('project_id', proj_id):
             raise Exception('NONEXISTANT Project ID! There is no row with Project ID = '+str(proj_id)+' in characters.csv')
-        id_index = self.headers.index('project_id')
-        i = 0
-        while True:
-            if self.content:
-                was_pop = False
-                for i in range(0,len(self.content)):
-                    if self.content[i][id_index] == proj_id:
-                        was_pop = True
-                        self.content.pop(i)
-                        break
-                if was_pop:
-                    continue
-            break
-        self.write_characters()
+        self._delete_row('project_id', proj_id, -1)
 
-    def delete_character(self, abbrev_name : str, proj_id : int):
-        if not self.if_exists(proj_id=proj_id, abbrev_name=abbrev_name):
+    def _double_delete(self, column_name1 : str, row_value1 : str, column_name2 : str, row_value2 : str, count : int = 1):
+        if self.content:
+            column_index1 = self.headers.index(column_name1)
+            column_index2 = self.headers.index(column_name2)
+            pop_index = []
+            pop_offset = 0
+            for i in range(0,len(self.content)):
+                if (self.content[i][column_index1] == row_value1) and (self.content[i][column_index2] == row_value2):
+                    pop_index.append(i)
+                    count -= 1
+                    if count == 0:
+                        break
+            if pop_index:
+                for index in pop_index:
+                    self.content.pop(index - pop_offset)
+                    pop_offset += 1
+
+    def delete_character(self, abbrev_name : str, proj_id : str):
+        if not self._character_exists(proj_id=proj_id, abbrev_name=abbrev_name):
             raise Exception('NONEXISTANT Character! There is no abbreviated character name \''+abbrev_name.lower()+'\' with Project ID = '+str(proj_id)+' in characters.csv')
-        id_index = self.headers.index('project_id')
-        name_index = self.headers.index('abbrev_name')
-        i = 0
-        while True:
-            if self.content:
-                was_pop = False
-                for i in range(0,len(self.content)):
-                    if (self.content[i][id_index] == proj_id) and (self.content[i][name_index] == abbrev_name):
-                        was_pop = True
-                        self.content.pop(i)
-                        break
-                if was_pop:
-                    continue
-            break
-        self.write_characters()
+        else:
+            self._double_delete('project_id', proj_id, 'abbrev_name', abbrev_name)
     
-    def delete_label (self, label : str):
-        if not self.if_exists(label=label):
-            raise Exception('NONEXISTANT Label! There is no row with First Label = '+str(label)+' in characters.csv')
-        label_index = self.headers.index('first_label')
-        i = 0
-        while True:
-            if self.content:
-                was_pop = False
-                for i in range(0,len(self.content)):
-                    if self.content[i][label_index] == label:
-                        was_pop = True
-                        self.content.pop(i)
-                        break
-                if was_pop:
-                    continue
-            break
-        self.write_characters()
+    # needs proj_id to be useful; different projects can have the same labels in their code
+    # def delete_label(self, label : str):
+    #     if not self._get_row('first_label', label):
+    #         raise Exception('NONEXISTANT label! There is no row with First Label = '+str(label)+' in characters.csv')
+    #     self._double_delete('project_id', proj_id, 'first_label', label, -1)
     
-    def delete_all_characters(self):
-        self.content = []
-        self.write_characters()
+    def remove_all(self):
+        self._remove_all()
