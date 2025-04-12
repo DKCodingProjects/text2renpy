@@ -28,7 +28,7 @@ class History_DH(Data_Handler):
         if self.content:
             return self.content[0]
         else:
-            raise Exception('MISSING HISTORY: Cannot repeat recent run because file \'history.csv\' has no data!')
+            raise Exception('MISSING HISTORY: Cannot get latest run because file \'history.csv\' has no data!')
     
     def add_history(self, proj_id : str, write_file : str, read_file : str):
         self._add_row(History_DH._default_hist(proj_id, write_file, read_file),0)

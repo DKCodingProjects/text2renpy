@@ -16,7 +16,7 @@ class Projects_DH(Data_Handler):
         if len(self.content) <= self.limit:
             self._write(self.limit)
         else:
-            raise Exception(f'FILE LIMIT REACHED! File limit of '+str(self.limit)+'\' rows in projects.csv reached! Delete a project to make room for more!\n\t(You can adjust the limit in src.data_handers.proj_dh if you want!)')
+            raise Exception(f'FILE LIMIT REACHED! File limit of '+str(self.limit)+'\' rows in projects.csv reached! Delete a project to make room for more!\n\t(You can adjust the limit in src.data_handers.projects_dh if you want!)')
     
     def create_id(self) -> int:
         taken_id = set()

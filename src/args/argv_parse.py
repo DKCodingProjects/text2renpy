@@ -6,7 +6,7 @@ import sys
 The Help_Formatter class changes the format of the 
 ArgumentParser's help menu (accessed via -h) to NOT show the 
 metavar instead of showing it after every flag. Useful for visual 
-clarity, and maintains metavar for access.
+clarity, and maintains metavar.
 '''
 class Help_Formatter(argparse.HelpFormatter):
     def _format_action_invocation(self, action):
@@ -26,28 +26,37 @@ class Argv_Parser:
     def __init__(self):
         # lambda for formatting help menu in argparser
         fmt = lambda prog: Help_Formatter(prog)
-        self.parser = argparse.ArgumentParser(usage=sys.argv[0] + ' -r [file options] -t [prog params] [prog options]', description='A collection of flags used by ' + sys.argv[0] + ' for the command line interface.', formatter_class=fmt)
+        self.parser = argparse.ArgumentParser(description='A collection of flags used by ' + sys.argv[0] + ' for the command line interface.', formatter_class=fmt)
         self.parser._optionals.title = 'arguments' # risky line of code, can break ArgumentParser in a future update
+        self.subparsers = self.parser.add_subparsers()
         
         # flags for file arguments, stored as string values
-        # BASIC FLAGS
-        self.parser.add_argument('-p', '--project', dest='PROJ', help='Set Ren\'Py project program will pull from')
-        self.parser.add_argument('-r', '--readfile', dest='READ', help='Set file program will read from')
-        self.parser.add_argument('-w', '--writefile', dest='WRITE', help='Set file program will write to AND set script label (must be unique!)')
-        self.parser.add_argument('--da', '--delete-all', help='Delete all project data stored in program. Yes, that means ALL data!')
-        self.parser.add_argument('--dp', '--delete-project', dest='DELPROJ', help='Find Ren\'Py project via name. If found, delete all program project data everywhere it is found.')
+        # RUN FLAGS
+        self.run_parser = self.subparsers.add_parser('run', help='Run the text2renpy program', formatter_class=fmt)
+        self.run_parser.add_argument('-p', '--project', dest='PROJECT', metavar=('project_name'), help='enter the name of the text2renpy project to use during run', required=True)
+        self.run_parser.add_argument('-r', '--read', dest='READ', metavar=('read_file'), help='enter a realtive/full path to reading file text2renpy will use to generate the Ren\'Py script', required=True)
+        self.run_parser.add_argument('-w', '--write', dest='WRITE', metavar=('write_file'), help='enter the writing file\'s name that text2renpy will write output to; no path is required, just provide a valid filename', required=True)
+        self.run_parser.add_argument('-l', '--label', dest='LABEL', metavar=('renpy_label'), help='set Ren\'Py script\'s code label. Optional, but (if not provided) the program uses the writefile\'s name as the label by default!')
         
         # PROJECT FLAGS
-        self.parser.add_argument('--cp', '--create-project', dest='NEWPROJ', help='Set Ren\'Py project name and create new project')
-        self.parser.add_argument('--rp', '--rename-project', dest='NEWNAME', help='Rename Ren\'Py project that already exists')
-        self.parser.add_argument('--ap', '--all-projects', help='Returns all project names currently stored')
-        self.parser.add_argument('--fp', '--find-project', dest='FINDPROJ', help='Search for a Ren\'Py project by name. If found, set as project to manipulate.')
-        self.parser.add_argument('--pd', '--project-directory', dest='PROJDIR', help='Set the Ren\'Py project game directory program will operate in. Check documentation for further details!')
+        self.projects_parser = self.subparsers.add_parser('project', help='access/configure text2renpy\'s project settings data', formatter_class=fmt)
+        self.projects_parser.add_argument('--create', dest='SETPROJ', nargs=2, metavar=('project_name', 'project_directory'), help='create a text2renpy project; provide a unique project name and supply the full/realtive path to a Ren\'Py project\'s \'game\' directory')
+        self.projects_parser.add_argument('--delete', dest='DELPROJ', metavar=('project_name'), help='delete a text2renpy project via name; this action deletes all data relating to the project')
+        self.projects_parser.add_argument('--delete-all', dest='DELALLPROJ', action='store_true', help='delete all data stored in text2renpy; remeber, this action deletes ALL data')
+        self.projects_parser.add_argument('--get', dest='GETPROJ', metavar=('project_name'), help='search for a text2renpy project by name')
+        self.projects_parser.add_argument('--get-all', action='store_true', help='returns all project names currently stored')
+        self.projects_parser.add_argument('--rename', dest='SETNAME', nargs=2, metavar=('project_name', 'new_name'), help='rename a text2renpy project that already exists')
+        self.projects_parser.add_argument('--set-directory', dest='SETDIR', nargs=2, metavar=('project_name', 'new_directory'),help='set a text2renpy project\'s \'game\' directory')
         
         # HISTORY FLAGS
-        self.parser.add_argument('--repeat', '--repeat-run', help='Repeat the latest run of text2renpy stored in the history')
-        self.parser.add_argument('--dh', '--delete-history', help='Delete all data (besides headers) in project history')
+        self.history_parser = self.subparsers.add_parser('history', help='access text2renpy\'s run history data', formatter_class=fmt)
+        self.history_parser.add_argument('--show', dest='SHOW', action='store_true', help='show all data stored in text2renpy\'s run history')
+        self.history_parser.add_argument('--repeat', dest='REPEAT', action='store_true', help='repeat the latest run of text2renpy stored in the history')
+        self.history_parser.add_argument('--clear', dest='CLEARHIST', action='store_true', help='delete all data stored in text2renpy\'s history data')
         
         # CHARACTER FLAGS
-        self.parser.add_argument('--ac', '--add-character', help='Repeat the latest run of text2renpy stored in the history')
+        self.characters_parser = self.subparsers.add_parser('character', help='configure a text2renpy project\'s Ren\'Py character data', formatter_class=fmt)
+        self.characters_parser.add_argument('--add', dest='ADDCHRCTR', nargs=2, metavar=('project_name', 'character_name'), help='add a new character to text2renpy\'s characters data')
+        self.characters_parser.add_argument('--delete', dest='DELCHRCTR', nargs=2, metavar=('project_name', 'character_name'), help='delete a character in text2renpy\'s characters data')
+        self.characters_parser.add_argument('--delete-all', dest='DELALLCHRCTR', action='store_true', help='delete all data stored in text2renpy\'s characters data')
         

@@ -11,22 +11,11 @@ import csv
 import sys
 import os
 
-def _consolidate_chunks(text_chunks: list[Text_Chunk]) -> str:
-        consolid_text: str = ''
-        for chunk in text_chunks:
-            consolid_text = consolid_text + chunk.get_text()
-        return consolid_text
-
 def main():
-    print('Hello World!')
-    '''
     print('starting program...')
     argv = argv_parse.Argv_Parser()
     args = argv.parser.parse_args()
-    arg_obj = args_obj.Args_Object()
-    arg_obj.argparse_populate(args)
-    arg_obj.print()
-    '''
+    print(args._get_args)
     '''
     proj_data = proj_data_handler.Project_Data_Handler()
     proj_data.create_proj('some_project','C:\\Users\\Dependent User\\OneDrive\\Documents\\Ren\'Py Projects\\Ren\'Py Games\\check\\game')
@@ -114,6 +103,7 @@ def main():
     proj_data._remove_all()
     proj_data._write()
     '''
+    '''
     proj_data = projects_dh.Projects_DH()
     proj_data.create_proj('some_project','C:\\Users\\Dependent User\\OneDrive\\Documents\\Ren\'Py Projects\\Ren\'Py Games\\check\\game')
     proj_data.create_proj('some_project2','C:\\Users\\Dependent User\\OneDrive\\Documents\\Ren\'Py Projects\\Ren\'Py Games\\check\\game')
@@ -134,6 +124,17 @@ def main():
     print(proj_data.content)
     hist_data.delete_history('1')
     print(hist_data.content)
+    char_data = characters_dh.Characters_DH()
+    char_data.add_character('1', 'bi', 'BigDick', 'label')
+    char_data.add_character('1', 'bi', 'BigDick', 'label')
+    char_data.add_character('2', 'bi3', 'BigDick3', 'label')
+    char_data.add_character('1', 'bi', 'BigDick', 'label')
+    print(char_data.content)
+    char_data.delete_character('1', 'bi')
+    print(char_data.content)
+    char_data.delete_project('1')
+    print(char_data.content)
+    '''
     # GUI/ Command-line interface
     # Pass project info to program
     # Tester.test_all()

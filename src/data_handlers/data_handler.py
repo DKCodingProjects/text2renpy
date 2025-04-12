@@ -44,7 +44,6 @@ class Data_Handler():
                     new_row[trans.new_index] = self.content[i][trans.old_index]
             self.content[i] = self._add_upgrade_defaults(new_row,const_headers,default_values,i)
         self.headers = const_headers
-        self._write()
     
     def _search(self, search_dict : dict, count : int = 1):
         indexes = []
