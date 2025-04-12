@@ -46,41 +46,43 @@ class Data_Handler():
         self.headers = const_headers
         self._write()
     
-    def _get_row(self, column_name : str, row_value : str, count : int = 1) -> list:
-        row = []
+    def _search(self, search_dict : dict, count : int = 1):
+        indexes = []
         if self.content:
-            column_index = self.headers.index(column_name)
             for i in range(0,len(self.content)):
-                if self.content[i][column_index] == row_value:
-                    row.append(self.content[i])
-                    count -= 1
-                    if count == 0:
+                if count == 0:
+                    break
+                curr_row : list = self.content[i]
+                meet_cond = True
+                for key in search_dict.keys():
+                    if curr_row[self.headers.index(key)] != search_dict[key]:
+                        meet_cond = False
                         break
+                if meet_cond:
+                    indexes.append(i)
+                    count -= 1
+        return indexes
+
+    def _find_row(self, column_name : str, row_value : str, count : int = 1) -> list:
+        row = []
+        find_index = self._search({column_name : row_value}, count)
+        for index in find_index:
+            row.append(self.content[index])
         return row
     
-    def _search_rows(self, column_name : str, row_value : str) -> list[list]:
-        rows = self._get_row(column_name, row_value, -1)
+    def _get_rows(self, column_name : str, row_value : str) -> list[list]:
+        rows = self._find_row(column_name, row_value, -1)
         return rows
     
-    def _search_all(self):
+    def _get_all(self):
         return self.content
 
     def _delete_row(self, column_name : str, row_value : str, count : int = 1):
-        if self.content:
-            column_index = self.headers.index(column_name)
-            pop_index = []
-            pop_offset = 0
-            for i in range(0,len(self.content)):
-                if self.content[i][column_index] == row_value:
-                    pop_index.append(i)
-                    count -= 1
-                    if count == 0:
-                        break
-                    
-            if pop_index:
-                for index in pop_index:
-                    self.content.pop(index - pop_offset)
-                    pop_offset += 1
+        pop_index = self._search({column_name : row_value}, count) 
+        pop_offset = 0
+        for index in pop_index:
+            self.content.pop(index - pop_offset)
+            pop_offset += 1
     
     def _remove_rows(self, column_name : str, row_value : str):
         self._delete_row(column_name, row_value, -1)
@@ -89,14 +91,10 @@ class Data_Handler():
         self.content = []
     
     def _update_row(self, column_name : str, row_value : str, new_value : str, count : int = 1):
-        if self.content:
-            column_index = self.headers.index(column_name)
-            for i in range(0,len(self.content)):
-                if self.content[i][column_index] == row_value:
-                    self.content[i][column_index] = new_value
-                    count -= 1
-                    if count == 0:
-                        break
+        update_index = self._search({column_name : row_value}, count)
+        column_index = self.headers.index(column_name)
+        for index in update_index:
+            self.content[index][column_index] = new_value
 
     def _revise_rows(self, column_name : str, row_value : str, new_value : str):
         self._update_row(column_name, row_value, new_value, -1)

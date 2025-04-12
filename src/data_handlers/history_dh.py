@@ -15,7 +15,7 @@ class History_DH(Data_Handler):
     def write_history(self):
         self._write(self.limit)
         if len(self.content) > self.limit:
-            raise Warning(f'FILE LIMIT REACHED! File limit of '+str(self.limit)+'\' rows in history.csv reached! Deleting oldest row in history.csv...')
+            raise Warning(f'FILE LIMIT REACHED: File limit of '+str(self.limit)+'\' rows in history.csv reached! Deleting oldest row in history.csv...')
             
     def _format_date():
         date = datetime.now()
@@ -28,16 +28,16 @@ class History_DH(Data_Handler):
         if self.content:
             return self.content[0]
         else:
-            raise Exception('EMPTY CONTENT! File \'history.csv\' has no data in it to search!')
+            raise Exception('MISSING HISTORY: Cannot repeat recent run because file \'history.csv\' has no data!')
     
     def add_history(self, proj_id : str, write_file : str, read_file : str):
         self._add_row(History_DH._default_hist(proj_id, write_file, read_file),0)
     
     def delete_history(self, proj_id : str):
-        if self._get_row('project_id',str(proj_id)):
+        if self._find_row('project_id',str(proj_id)):
             self._remove_rows('project_id',str(proj_id))
         else: 
-            raise Exception('MISSING HISTORY! Program attempted to delete all rows with project_id \''+str(proj_id)+'\' but found nothing to delete!')
+            raise Warning('REDUNDANT TASK: Program attempted to delete all rows with project_id \''+str(proj_id)+'\' but found nothing to delete...')
     
     def remove_all(self):
         self._remove_all()

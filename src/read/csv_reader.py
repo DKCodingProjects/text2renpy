@@ -13,9 +13,9 @@ class Csv_Reader(Reader):
         # open with dictreader instead?
         try:
             csvfile = open(self.file_name, newline='')
-            self.open_file = csv.reader(csvfile)
+            self.open_file : csv.DictReader = csv.DictReader(csvfile)
             if has_headers:
-                self.headers = next(self.open_file)
+                self.headers = self.open_file.fieldnames
         except Exception as err:
             self._open_except(err)
 

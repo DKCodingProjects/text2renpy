@@ -51,26 +51,26 @@ class Projects_DH(Data_Handler):
     def find_project(self, proj_name : str) -> list:
         if not proj_name:
             raise Exception('EMPTY project name! All project names must be longer than 1 character!')
-        row = self._get_row('name', proj_name)
+        row = self._find_row('name', proj_name)
         return row
 
     def create_proj(self, proj_name : str, proj_path : str):
         if not proj_name:
-            raise Exception('EMPTY project name! All project names must be longer than 1 character!')
+            raise Exception('EMPTY project name: All project names must be longer than 1 character!')
         if self.find_project(proj_name):
-            raise Exception('Project \''+proj_name+'\' ALREADY EXISTS. Choose a different name, or rename the old project')
+            raise Exception('Project \''+proj_name+'\' ALREADY EXISTS: Choose a different name, or rename the old project')
         if not proj_path:
-            raise Exception('EMPTY project path! All project paths must be longer than 1 character!')
+            raise Exception('EMPTY project path: All project paths must be longer than 1 character!')
         if not os.access(proj_path, os.F_OK):
-            raise Exception('INVALID project path \''+proj_path+'\'! Path either doesn\'t exist, or lacks permissions to access.')
+            raise Exception('INVALID project path \''+proj_path+'\': Path either doesn\'t exist, or lacks permissions to access.')
         if not Projects_DH.validate_proj(proj_path):
-            raise Exception('INVALID project path \''+proj_path+'\'! Path does not lead to a Ren\'Py project\'s game directory!')
+            raise Exception('INVALID project path \''+proj_path+'\': Path does not lead to a Ren\'Py project\'s game directory!')
         new_row = self._default_proj(proj_name, proj_path)
         self._add_row(new_row)
 
     def delete_proj(self, proj_name : str):
         if not self.find_project(proj_name):
-            raise Exception('Project \''+proj_name+'\' DOESN\'T EXIST. Try a different name instead.')
+            raise Warning('POTETNIAL REDUNDANT TASK: Project \''+proj_name+'\' doesn\'t exist')
         else:
             self._delete_row('name', proj_name)
     
@@ -79,7 +79,7 @@ class Projects_DH(Data_Handler):
 
     def rename_proj(self, proj_name : str, new_name : str):
         if not self.find_project(proj_name):
-            raise Exception('Project \''+proj_name+'\' DOESN\'T EXIST. Try a different name instead.')
+            raise Exception('PROJECT \''+proj_name+'\' DOESN\'T EXIST: Try a different name or search data instead')
         else:
             self._update_row('name', proj_name, new_name)
         
