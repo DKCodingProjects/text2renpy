@@ -13,7 +13,11 @@ import os
 
 def main():
     print('starting program...')
-    argv = argv_parse.Argv_Parser()
+    class Settings():
+        def __init__(self):
+            self.show_more = False
+    settings = Settings()
+    argv = argv_parse.Argv_Parser(settings)
     args = argv.parser.parse_args()
     print(args._get_args)
     '''
