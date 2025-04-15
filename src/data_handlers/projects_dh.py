@@ -7,7 +7,7 @@ class Projects_DH(Data_Handler):
         self.id_index = self.headers.index('project_id')
         self.limit = 25
 
-    def upgrade_content(self):
+    def upgrade_projects(self):
         const_headers =  ['project_id','name','path','description']
         default_values = [ None       , None , None , ''          ] # if a value requires user input, set value to None
         self._upgrade_content(const_headers, default_values)

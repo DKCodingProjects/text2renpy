@@ -6,7 +6,7 @@ class Characters_DH(Data_Handler):
         super().__init__(os.path.join('data', 'characters.csv'))
         self.limit = 1000
     
-    def upgrade_content(self):
+    def upgrade_characters(self):
         if self.content:
             const_headers =  ['project_id','abbrev_name','full_name','first_label']
             default_values = [ None       , None        , None      , None        ] # if a value requires user input, set value to None

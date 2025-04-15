@@ -7,7 +7,7 @@ class History_DH(Data_Handler):
         super().__init__(os.path.join('data', 'history.csv'))
         self.limit = 100
     
-    def upgrade_content(self):
+    def upgrade_history(self):
         const_headers =  ['project_id','run_date','write_file','read_file']
         default_values = [ None       , None     , None       , None      ] # if a value requires user input, set value to None
         self._upgrade_content(const_headers, default_values)

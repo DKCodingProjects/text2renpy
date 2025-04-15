@@ -53,22 +53,35 @@ class Argv_Parser:
         self.run_parser.add_argument(w_flag, write_flag, dest=write_dest, metavar=write_metavars, help=write_help)
         self.run_parser.add_argument(m_flag, mode_flag, default=mode_default, dest=mode_dest, metavar=mode_metavars, help=mode_help)
         self.run_parser.add_argument(t_flag, test_flag, dest=test_dest, action=test_action, help=test_help)
-        if settings.show_more:
+        if settings.more_by_default():
             self.run_parser.add_argument(label_flag, dest=label_dest, metavar=label_metavars, help=label_help)
             self.run_parser.add_argument(log_flag, dest=log_dest, metavar=log_metavars, help=log_help)
             self.run_parser.add_argument(report_flag, dest=report_dest, metavar=report_metavars, help=report_help)
             self.run_parser.add_argument(reset_flag, dest=reset_dest, action=reset_action, help=reset_help)
             self.run_parser.add_argument(noreport_flag, dest=noreport_dest, action=noreport_action, help=noreport_help)
         
-        # # PROJECT FLAGS
-        # self.projects_parser = self.subparsers.add_parser('project', help='access/configure ' + prog_name + '\'s project settings data', formatter_class=fmt)
-        # self.projects_parser.add_argument('--create', dest='SETPROJ', nargs=2, metavar=('project_name', 'project_directory'), help='create a ' + prog_name + ' project; provide a unique project name and supply the full/realtive path to a Ren\'Py project\'s \'game\' directory')
-        # self.projects_parser.add_argument('--delete', dest='DELPROJ', metavar=('project_name'), help='delete a ' + prog_name + ' project via name; this action deletes all data relating to the project stored in other csv files too')
-        # self.projects_parser.add_argument('--delete-all', dest='DELALL', action='store_true', help='CAUTION: this action deletes ALL ' + prog_name + ' data')
-        # self.projects_parser.add_argument('--get', dest='GETPROJ', metavar=('project_name'), help='search for a ' + prog_name + ' project by name')
-        # self.projects_parser.add_argument('--get-all', dest='GETALL',action='store_true', help='returns all project names currently stored')
-        # self.projects_parser.add_argument('--rename', dest='SETNAME', nargs=2, metavar=('project_name', 'new_name'), help='rename a ' + prog_name + ' project that already exists')
-        # self.projects_parser.add_argument('--set-directory', dest='SETDIR', nargs=2, metavar=('project_name', 'new_directory'),help='set a ' + prog_name + ' project\'s \'game\' directory')
+        # PROJECT FLAGS
+        create_flag, create_dest, create_nargs, create_metavars, create_help = '--create', 'SETPROJ', 2, ('project_name', 'renpy_game'), 'create a ' + prog_name + ' project; provide a unique project name and supply the full/realtive path to a Ren\'Py project\'s \'game\' directory'
+        delete_flag, delete_dest, delete_metavars, delete_help = '--delete', 'DELPROJ', ('project_name'), 'delete a ' + prog_name + ' project via name; this action deletes all data relating to the project stored in other csv files too'
+        deleteall_flag, deleteall_dest, deleteall_action, deleteall_help = '--delete-all', 'DELALL', 'store_true', 'CAUTION: this action deletes ALL ' + prog_name + ' data'
+        get_flag, get_dest, get_metavars, get_help = '--get', 'GETPROJ', ('project_name'), 'search for a ' + prog_name + ' project by name'
+        getall_flag, getall_dest, getall_action, getall_help = '--get-all', 'GETALL', 'store_true', 'returns all project names currently stored'
+        rename_flag, rename_dest, rename_nargs, rename_metavars, rename_help = '--rename', 'SETNAME', 2, ('project_name', 'new_name'), 'rename a ' + prog_name + ' project that already exists'
+        setdir_flag, setdir_dest, setdir_nargs, setdir_metavars, setdir_help = '--set-game-directory', 'SETDIR', 2, ('project_name', 'new_game'), 'set a ' + prog_name + ' project\'s path to a Ren\'py project\'s \'game\' directory'
+        desc_flag, desc_dest, desc_nargs, desc_metavars, desc_help = '--set-description', 'DESC', 2, ('project_name', '"description"'), 'set a '+ prog_name + ' project\'s description (MAX 100 characters)'
+        # MORE PROJECT FLAGS
+        
+        # PROJECT ARGS
+        self.projects_parser = self.subparsers.add_parser('project', help='access/configure ' + prog_name + '\'s project settings data', formatter_class=fmt)
+        self.projects_parser.add_argument(create_flag, dest=create_dest, nargs=create_nargs, metavar=create_metavars, help=create_help)
+        self.projects_parser.add_argument(delete_flag, dest=delete_dest, metavar=delete_metavars, help=delete_help)
+        self.projects_parser.add_argument(deleteall_flag, dest=deleteall_dest, action=deleteall_action, help=deleteall_help)
+        self.projects_parser.add_argument(get_flag, dest=get_dest, metavar=get_metavars, help=get_help)
+        self.projects_parser.add_argument(getall_flag, dest=getall_dest, action=getall_action, help=getall_help)
+        self.projects_parser.add_argument(rename_flag, dest=rename_dest, nargs=rename_nargs, metavar=rename_metavars, help=rename_help)
+        self.projects_parser.add_argument(setdir_flag, dest=setdir_dest, nargs=setdir_nargs, metavar=setdir_metavars, help=setdir_help)
+        if settings.more_by_default():
+            self.projects_parser.add_argument(desc_flag, dest=desc_dest, nargs=desc_nargs, metavar=desc_metavars, help=desc_help)
         
         # # HISTORY FLAGS
         # self.history_parser = self.subparsers.add_parser('history', help='access ' + prog_name + '\'s run history data', formatter_class=fmt)
@@ -85,7 +98,7 @@ class Argv_Parser:
 
         self.more_parser = self.subparsers.add_parser('more', help='(recommended for experienced users) access/configure more ' + prog_name + ' functionality', formatter_class=fmt)
         self.more_subparsers = self.more_parser.add_subparsers(title='more_subcommands')
-        if not settings.show_more:
+        if not settings.more_by_default():
             # MORE RUN ARGS
             self.more_run = self.more_subparsers.add_parser('run', help='run the ' + prog_name + ' program with more options', formatter_class=fmt)
             self.more_run.add_argument(p_flag, project_flag, dest=proj_dest, metavar=project_metavars, help=project_help, required=project_required)
@@ -100,8 +113,19 @@ class Argv_Parser:
             self.more_run.add_argument(noreport_flag, dest=noreport_dest, action=noreport_action, help=noreport_help)
 
             # OTHER
+            self.more_project = self.more_subparsers.add_parser('project', help='access/configure ' + prog_name + '\'s project settings data with more options', formatter_class=fmt)
+            self.more_project.add_argument(create_flag, dest=create_dest, nargs=create_nargs, metavar=create_metavars, help=create_help)
+            self.more_project.add_argument(delete_flag, dest=delete_dest, metavar=delete_metavars, help=delete_help)
+            self.more_project.add_argument(deleteall_flag, dest=deleteall_dest, action=deleteall_action, help=deleteall_help)
+            self.more_project.add_argument(get_flag, dest=get_dest, metavar=get_metavars, help=get_help)
+            self.more_project.add_argument(getall_flag, dest=getall_dest, action=getall_action, help=getall_help)
+            self.more_project.add_argument(rename_flag, dest=rename_dest, nargs=rename_nargs, metavar=rename_metavars, help=rename_help)
+            self.more_project.add_argument(setdir_flag, dest=setdir_dest, nargs=setdir_nargs, metavar=setdir_metavars, help=setdir_help)
+            self.more_project.add_argument(desc_flag, dest=desc_dest, nargs=desc_nargs, metavar=desc_metavars, help=desc_help)
         else:
-            self.none_parser = self.more_subparsers.add_parser('None', help='there are no subcommands! use --more-by-default flag and set to true to see them!', formatter_class=fmt)
-        self.more_parser.add_argument('--more-by-default', dest='MOREBYDEFAULT', metavar=('(t,f)'), help='if true (t), all ' + prog_name + ' subcommands (run, project, history, etc) will access MORE options by default. if false (f), all subcommands will only contain essential flags and args (default behavior)')
+            self.none_parser = self.more_subparsers.add_parser('None', help='there are no subcommands! use --more-by-default flag and set to \'f\' (false) to see them!', usage='a mystery...', description='you have discovered the realm of forbidden functionality. what will you do?', formatter_class=fmt)
+            self.none_parser.add_argument('--throw-hand', dest='HAND', help='face an opponent, throw \'rock\', \'paper\', or \'scissors\'')
+            self.none_parser.add_argument('--the-abyss', dest='BUTTON', action='store_true', help='what have you done...')
+        self.more_parser.add_argument('--more-by-default', dest='MOREBYDEFAULT', metavar=('(t,f)'), help='if true (t), all ' + prog_name + ' subcommands (run, project, history, etc) will access MORE options by default. if false (f), only \'more\' subcommands will  contain all flags and args (default behavior)')
         
         

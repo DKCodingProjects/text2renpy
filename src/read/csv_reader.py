@@ -10,12 +10,11 @@ class Csv_Reader(Reader):
         return super()._open_except(err)
 
     def open(self, has_headers = True):
-        # open with dictreader instead?
         try:
             csvfile = open(self.file_name, newline='')
-            self.open_file : csv.DictReader = csv.DictReader(csvfile)
+            self.open_file = csv.reader(csvfile)
             if has_headers:
-                self.headers = self.open_file.fieldnames
+                self.headers = self.open_file.__next__()
         except Exception as err:
             self._open_except(err)
 
