@@ -1,9 +1,4 @@
-from src.general.text_chunk import Text_Chunk
-from src.read import *
 from src.args import *
-from src.translate import *
-from src.general import *
-from src.data_handlers import *
 ###############################
 import dev.sandbox as dev
 from test.tester import Tester
@@ -13,14 +8,7 @@ import os
 
 def main():
     print('starting program...')
-    
-    settings = settings_dh.Settings_DH()
-    # settings.set_more_by_default(True)
-    argv = argv_parse.Argv_Parser(settings)
-    args = argv.parser.parse_args()
-    print(args._get_args)
-    
-    
+    argv_processor.Argv_Processor.run_commandline()
     # with open('data\\projects.csv', 'w', newline='') as bad_project:
     #     writer = csv.writer(bad_project)
     #     writer.writerow(['project_id','name','path','description','bad_header'])

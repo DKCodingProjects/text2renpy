@@ -48,7 +48,7 @@ class Projects_DH(Data_Handler):
     def _default_proj(self, proj_name : str, proj_dir : str) -> list:
         return [str(self.create_id()), proj_name, proj_dir, '']
     
-    def find_project(self, proj_name : str) -> list:
+    def find_proj(self, proj_name : str) -> list:
         if not proj_name:
             raise Exception('EMPTY project name! All project names must be longer than 1 character!')
         row = self._find_row('name', proj_name)
@@ -57,7 +57,7 @@ class Projects_DH(Data_Handler):
     def create_proj(self, proj_name : str, proj_path : str):
         if not proj_name:
             raise Exception('EMPTY project name: All project names must be longer than 1 character!')
-        if self.find_project(proj_name):
+        if self.find_proj(proj_name):
             raise Exception('Project \''+proj_name+'\' ALREADY EXISTS: Choose a different name, or rename the old project')
         if not proj_path:
             raise Exception('EMPTY project path: All project paths must be longer than 1 character!')
@@ -69,7 +69,7 @@ class Projects_DH(Data_Handler):
         self._add_row(new_row)
 
     def delete_proj(self, proj_name : str):
-        if not self.find_project(proj_name):
+        if not self.find_proj(proj_name):
             raise Warning('POTETNIAL REDUNDANT TASK: Project \''+proj_name+'\' doesn\'t exist')
         else:
             self._delete_row('name', proj_name)
@@ -78,8 +78,19 @@ class Projects_DH(Data_Handler):
         self._remove_all()
 
     def rename_proj(self, proj_name : str, new_name : str):
-        if not self.find_project(proj_name):
+        if not self.find_proj(proj_name):
             raise Exception('PROJECT \''+proj_name+'\' DOESN\'T EXIST: Try a different name or search data instead')
         else:
             self._update_row('name', proj_name, new_name)
-        
+    
+    def update_path(self, proj_name : str, new_path : str):
+        if not self.find_proj(proj_name):
+            raise Exception('PROJECT \''+proj_name+'\' DOESN\'T EXIST: Try a different name or search data instead')
+        else:
+            self._update_row('path', self.find_proj(proj_name)[self.headers.index('path')], new_path)
+    
+    def set_desc(self, proj_name : str, desc : str):
+        if not self.find_proj(proj_name):
+            raise Exception('PROJECT \''+proj_name+'\' DOESN\'T EXIST: Try a different name or search data instead')
+        else:
+            self._update_row('path', self.find_proj(proj_name)[self.headers.index('path')], new_path)

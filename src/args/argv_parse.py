@@ -1,13 +1,6 @@
 import argparse
 import sys
 
-'''
-******************************************************************
-The Help_Formatter class changes the format of the 
-ArgumentParser's help menu (accessed via -h) to NOT show the 
-metavar instead of showing it after every flag. Useful for visual 
-clarity, and maintains metavar.
-'''
 class Help_Formatter(argparse.HelpFormatter):
     def _format_action_invocation(self, action):
         if not action.option_strings or action.nargs == 0:
@@ -15,13 +8,6 @@ class Help_Formatter(argparse.HelpFormatter):
         default = self._get_default_metavar_for_optional(action)
         return ', '.join(action.option_strings)
 
-'''
-******************************************************************
-The Argv_Parser class stores all of the flags used on the command 
-line by using an ArgumentParser. Also adds flag information which 
-can be accessed when entering the -h or --help flag on the command
-line.
-'''
 class Argv_Parser:
     def __init__(self, settings : object): # object is text2renpy.Settings
         # lambda for formatting help menu in argparser
@@ -43,7 +29,7 @@ class Argv_Parser:
         log_flag, log_dest, log_metavars, log_help = '--set-log', 'LOG', ('log_file'), 'set where logging output will be written to; log files are written to ' + prog_name + '\'s log directory by default'
         report_flag, report_dest, report_metavars, report_help = '--set-report', 'REPORT', ('report_file'), 'set where report output will be written to; report files are written to a project\'s game directory by default'
         reset_flag, reset_dest, reset_action, reset_help = '--reset-report', 'RESETREPORT', 'store_true', 'reset a project\'s report file before writing'
-        noreport_flag, noreport_dest, noreport_action, noreport_help = '--no-report', 'REPORT', 'store_true', 'prevent ' + prog_name + ' from updating or creating a project\'s report file'
+        noreport_flag, noreport_dest, noreport_action, noreport_help = '--no-report', 'NOREPORT', 'store_true', 'prevent ' + prog_name + ' from updating or creating a project\'s report file'
         # _flag, _flag, _dest, _help = 
 
         # RUN ARGS
@@ -68,7 +54,7 @@ class Argv_Parser:
         getall_flag, getall_dest, getall_action, getall_help = '--get-all', 'GETALL', 'store_true', 'returns all project names currently stored'
         rename_flag, rename_dest, rename_nargs, rename_metavars, rename_help = '--rename', 'SETNAME', 2, ('project_name', 'new_name'), 'rename a ' + prog_name + ' project that already exists'
         setdir_flag, setdir_dest, setdir_nargs, setdir_metavars, setdir_help = '--set-game-directory', 'SETDIR', 2, ('project_name', 'new_game'), 'set a ' + prog_name + ' project\'s path to a Ren\'py project\'s \'game\' directory'
-        desc_flag, desc_dest, desc_nargs, desc_metavars, desc_help = '--set-description', 'DESC', 2, ('project_name', '"description"'), 'set a '+ prog_name + ' project\'s description (MAX 100 characters)'
+        desc_flag, desc_dest, desc_nargs, desc_metavars, desc_help = '--set-description', 'SETDESC', 2, ('project_name', '"description"'), 'set a '+ prog_name + ' project\'s description (MAX 100 characters)'
         # MORE PROJECT FLAGS
         
         # PROJECT ARGS
