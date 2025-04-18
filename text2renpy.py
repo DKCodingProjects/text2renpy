@@ -2,12 +2,18 @@ from src.args import *
 ###############################
 import dev.sandbox as dev
 from test.tester import Tester
-import csv
-import sys
-import os
+from argparse import HelpFormatter, RawTextHelpFormatter, RawDescriptionHelpFormatter
+import inspect
 
 def main():
-    print('starting program...')
+    # print('starting program...')
+    # members = vars(HelpFormatter)
+    # print(members)
+    # print(members['_fill_text'])
+    # members = vars(RawTextHelpFormatter)
+    # print(members)
+    # members = vars(RawDescriptionHelpFormatter)
+    # print(members)
     argv_processor.Argv_Processor.run_commandline()
     # with open('data\\projects.csv', 'w', newline='') as bad_project:
     #     writer = csv.writer(bad_project)

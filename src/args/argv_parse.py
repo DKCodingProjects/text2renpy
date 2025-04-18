@@ -2,6 +2,10 @@ import argparse
 import sys
 
 class Help_Formatter(argparse.HelpFormatter):
+    def _fill_text(self, text, width, indent):
+        raw = argparse.RawDescriptionHelpFormatter(self._prog)
+        return raw._fill_text(text, width, indent)
+    
     def _format_action_invocation(self, action):
         if not action.option_strings or action.nargs == 0:
             return super()._format_action_invocation(action)
@@ -13,8 +17,8 @@ class Argv_Parser:
         # lambda for formatting help menu in argparser
         fmt = lambda prog: Help_Formatter(prog)
         prog_name = sys.argv[0].removesuffix('.py')
-        self.parser = argparse.ArgumentParser(description='A collection of flags used by ' + prog_name + ' for the command line interface.', formatter_class=fmt)
-        self.parser._optionals.title = 'arguments' # risky line of code, can break ArgumentParser in a future update
+        self.parser = argparse.ArgumentParser(description=f'a collection of flags used by ' + prog_name + f' for the command line interface.\n\ncurrent program settings:\n  - more options by default = ' + str(settings.more_by_default()), formatter_class=fmt)
+        self.parser.add_argument('--more-by-default', dest='MOREBYDEFAULT', metavar=('(t,f)'), help='if true (t), all ' + prog_name + ' subcommands (run, project, history, etc) will access MORE options by default. if false (f), only \'more\' subcommands will  contain all flags and args (default behavior)')
         self.subparsers = self.parser.add_subparsers()
         
         # flags for file arguments, stored as string values
@@ -33,7 +37,7 @@ class Argv_Parser:
         # _flag, _flag, _dest, _help = 
 
         # RUN ARGS
-        self.run_parser = self.subparsers.add_parser('run', help='run the ' + prog_name + ' program', formatter_class=fmt)
+        self.run_parser = self.subparsers.add_parser('run', help='run the ' + prog_name + ' program'+(' with MORE options' if settings.more_by_default() else ''), formatter_class=fmt)
         self.run_parser.add_argument(p_flag, project_flag, dest=proj_dest, metavar=project_metavars, help=project_help, required=project_required)
         self.run_parser.add_argument(r_flag, read_flag, dest=read_dest, metavar=read_metavars, help=read_help, required=read_required)
         self.run_parser.add_argument(w_flag, write_flag, dest=write_dest, metavar=write_metavars, help=write_help)
@@ -58,7 +62,7 @@ class Argv_Parser:
         # MORE PROJECT FLAGS
         
         # PROJECT ARGS
-        self.projects_parser = self.subparsers.add_parser('project', help='access/configure ' + prog_name + '\'s project settings data', formatter_class=fmt)
+        self.projects_parser = self.subparsers.add_parser('project', help='access/configure ' + prog_name + '\'s project settings data'+(' with MORE options' if settings.more_by_default() else ''), formatter_class=fmt)
         self.projects_parser.add_argument(create_flag, dest=create_dest, nargs=create_nargs, metavar=create_metavars, help=create_help)
         self.projects_parser.add_argument(delete_flag, dest=delete_dest, metavar=delete_metavars, help=delete_help)
         self.projects_parser.add_argument(deleteall_flag, dest=deleteall_dest, action=deleteall_action, help=deleteall_help)
@@ -82,8 +86,8 @@ class Argv_Parser:
         # self.characters_parser.add_argument('--delete', dest='DELCHRCTR', nargs=2, metavar=('project_name', 'character_name'), help='delete a character in ' + prog_name + '\'s characters data')
         # self.characters_parser.add_argument('--delete-all', dest='DELALLCHRCTR', action='store_true', help='delete all data stored in ' + prog_name + '\'s characters data')
 
-        self.more_parser = self.subparsers.add_parser('more', help='(recommended for experienced users) access/configure more ' + prog_name + ' functionality', formatter_class=fmt)
-        self.more_subparsers = self.more_parser.add_subparsers(title='more_subcommands')
+        self.more_parser = self.subparsers.add_parser('more', help=('(recommended for experienced users) access/configure more ' + prog_name + ' functionality' if not settings.more_by_default() else '*not available'), formatter_class=fmt)
+        self.more_subparsers = self.more_parser.add_subparsers()
         if not settings.more_by_default():
             # MORE RUN ARGS
             self.more_run = self.more_subparsers.add_parser('run', help='run the ' + prog_name + ' program with more options', formatter_class=fmt)
@@ -112,6 +116,5 @@ class Argv_Parser:
             self.none_parser = self.more_subparsers.add_parser('None', help='there are no subcommands! use --more-by-default flag and set to \'f\' (false) to see them!', usage='a mystery...', description='you have discovered the realm of forbidden functionality. what will you do?', formatter_class=fmt)
             self.none_parser.add_argument('--throw-hand', dest='HAND', help='face an opponent, throw \'rock\', \'paper\', or \'scissors\'')
             self.none_parser.add_argument('--the-abyss', dest='BUTTON', action='store_true', help='what have you done...')
-        self.more_parser.add_argument('--more-by-default', dest='MOREBYDEFAULT', metavar=('(t,f)'), help='if true (t), all ' + prog_name + ' subcommands (run, project, history, etc) will access MORE options by default. if false (f), only \'more\' subcommands will  contain all flags and args (default behavior)')
         
         

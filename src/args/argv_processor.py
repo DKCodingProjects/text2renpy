@@ -59,8 +59,6 @@ class Argv_Processor():
         elif Argv_Processor.is_project(args):
             proj_namespace = Project_Namespace()
             args = argv.parser.parse_args(namespace=proj_namespace)
-            # ['SETPROJ', 'DELPROJ', 'DELALL', 'GETPROJ', 'GETALL', 'SETNAME', 'SETDIR', 'SETDESC']
-            # Add try and catch as well as logging!
             proj_data = projects_dh.Projects_DH()
             if args.SETPROJ:
                 proj_data.create_proj(proj_name=args.SETPROJ[0], proj_path=args.SETPROJ[1])
@@ -81,11 +79,10 @@ class Argv_Processor():
                             return 2
                         else:
                             print(f'INVALID ANSWER: type \'y\' (Yes) or \'n\' (No) as your answer.\nTry again...')
-                proj_data.set_desc(proj_name=args.SETDESC[0], desc=args.SETDESC[1][:desc_limit])
+                proj_data.set_desc(proj_name=args.SETDESC[0], desc=(args.SETDESC[1] if len(args.SETDESC[1]) <= desc_limit else args.SETDESC[1][:desc_limit]))
             if args.DELPROJ:
                 proj_data.delete_proj(proj_name=args.DELPROJ)
             if args.DELALL:
-                print('- Deleting all projects...')
                 proj_data.remove_all()
             if args.GETPROJ:
                 project = proj_data.find_proj(proj_name=args.GETPROJ)
