@@ -45,8 +45,8 @@ class Argv_Processor():
         return Argv_Processor.has_attrb(args, Argv_Processor._remove_mangling(Settings_Namespace))
     
     def is_run(args):
-        run_attrbs = ['PROJECT', 'READ']
-        return Argv_Processor.all_attrbs(args, run_attrbs)
+        required_attrbs = ['PROJECT', 'READ']
+        return Argv_Processor.all_attrbs(args, required_attrbs)
     
     def is_project(args):
         return Argv_Processor.has_attrb(args, Argv_Processor._remove_mangling(Project_Namespace))
