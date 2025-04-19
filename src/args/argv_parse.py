@@ -88,9 +88,10 @@ class Argv_Parser:
         # self.characters_parser.add_argument('--delete', dest='DELCHRCTR', nargs=2, metavar=('project_name', 'character_name'), help='delete a character in ' + prog_name + '\'s characters data')
         # self.characters_parser.add_argument('--delete-all', dest='DELALLCHRCTR', action='store_true', help='delete all data stored in ' + prog_name + '\'s characters data')
 
-        self.more_parser = self.subparsers.add_parser('more', help=('(recommended for experienced users) access/configure more ' + prog_name + ' functionality' if not settings.more_by_default() else '*not available'), formatter_class=fmt)
-        self.more_subparsers = self.more_parser.add_subparsers()
         if not settings.more_by_default():
+            self.more_parser = self.subparsers.add_parser('more', help='(recommended for experienced users) access/configure more ' + prog_name + ' functionality', formatter_class=fmt)
+            self.more_subparsers = self.more_parser.add_subparsers()
+
             # MORE RUN ARGS
             self.more_run = self.more_subparsers.add_parser('run', help='run the ' + prog_name + ' program with more options', formatter_class=fmt)
             self.more_run.add_argument(p_flag, project_flag, dest=proj_dest, metavar=project_metavars, help=project_help, required=project_required)
@@ -114,9 +115,5 @@ class Argv_Parser:
             self.more_project.add_argument(rename_flag, dest=rename_dest, nargs=rename_nargs, metavar=rename_metavars, help=rename_help)
             self.more_project.add_argument(setdir_flag, dest=setdir_dest, nargs=setdir_nargs, metavar=setdir_metavars, help=setdir_help)
             self.more_project.add_argument(desc_flag, dest=desc_dest, nargs=desc_nargs, metavar=desc_metavars, help=desc_help)
-        else:
-            self.none_parser = self.more_subparsers.add_parser('None', help='there are no subcommands! use --more-by-default flag and set to \'f\' (false) to see them!', usage='a mystery...', description='you have discovered the realm of forbidden functionality. what will you do?', formatter_class=fmt)
-            self.none_parser.add_argument('--throw-hand', dest='HAND', help='face an opponent, throw \'rock\', \'paper\', or \'scissors\'')
-            self.none_parser.add_argument('--the-abyss', dest='BUTTON', action='store_true', help='what have you done...')
         
         
