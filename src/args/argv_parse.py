@@ -17,8 +17,10 @@ class Argv_Parser:
         # lambda for formatting help menu in argparser
         fmt = lambda prog: Help_Formatter(prog)
         prog_name = sys.argv[0].removesuffix('.py')
-        self.parser = argparse.ArgumentParser(description=f'a collection of flags used by ' + prog_name + f' for the command line interface.\n\ncurrent program settings:\n  - more options by default = ' + str(settings.more_by_default()), formatter_class=fmt)
-        self.parser.add_argument('--more-by-default', dest='MOREBYDEFAULT', metavar=('(t,f)'), help='if true (t), all ' + prog_name + ' subcommands (run, project, history, etc) will access MORE options by default. if false (f), only \'more\' subcommands will  contain all flags and args (default behavior)')
+        settings_desc = (f'\n\nprogram settings:\n  - more options by default = ' + str(settings.more_by_default()) if settings.show_settings() else '')
+        self.parser = argparse.ArgumentParser(description=f'a collection of flags used by ' + prog_name + f' for the command line interface.'+settings_desc, formatter_class=fmt)
+        self.parser.add_argument('--show-settings', dest='SHOWSETTINGS', metavar=('(t,f)'), help='if true (t), ' + prog_name + '\'s setting\'s values will be displayed in this help menu. if false (f), ' + prog_name + '\'s setting\'s value will be hidden')
+        self.parser.add_argument('--more-by-default', dest='MOREBYDEFAULT', metavar=('(t,f)'), help='if true (t), all ' + prog_name + ' subcommands (run, project, etc) will access MORE options by default. if false (f), only the \'more\' [run, project, etc] subcommands will contain all flags and args')
         self.subparsers = self.parser.add_subparsers()
         
         # flags for file arguments, stored as string values
