@@ -74,7 +74,7 @@ class Argv_Processor():
                 elif value == 'f':
                     return False
                 else:
-                    raise Exception('INVALID BOOLEAN: boolean value must be provided as \'t\' (True) or \'f\' (False)')
+                    raise Exception('INVALID BOOLEAN: boolean values must be provided as \'t\' (True) or \'f\' (False)')
             if args.SHOWSETTINGS:
                 sett_data.set_show_settings(_handle_bool(args.SHOWSETTINGS))
                 print(sett_data.settings['show_settings'])

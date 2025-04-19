@@ -17,10 +17,11 @@ class Argv_Parser:
         # lambda for formatting help menu in argparser
         fmt = lambda prog: Help_Formatter(prog)
         prog_name = sys.argv[0].removesuffix('.py')
-        settings_desc = (f'\n\nprogram settings:\n    more options by default = ' + str(settings.more_by_default()) if settings.show_settings() else '')
+        settings_desc = (f'\n\current settings:\n    more options by default = ' + str(settings.more_by_default()) if settings.show_settings() else '')
         self.parser = argparse.ArgumentParser(description=f'a collection of flags used by ' + prog_name + f' for the command line interface.'+settings_desc, formatter_class=fmt)
-        self.parser.add_argument('--show-settings', dest='SHOWSETTINGS', metavar=('(t,f)'), help='if true (t), ' + prog_name + '\'s setting\'s values will be displayed in this help menu. if false (f), ' + prog_name + '\'s setting\'s value will be hidden')
-        self.parser.add_argument('--more-by-default', dest='MOREBYDEFAULT', metavar=('(t,f)'), help='if true (t), all ' + prog_name + ' subcommands (run, project, etc) will access MORE options by default. if false (f), only the \'more\' [run, project, etc] subcommands will contain all flags and args')
+        self.parser._optionals.title = 'settings'
+        self.parser.add_argument('--show-settings', dest='SHOWSETTINGS', metavar=('(t,f)'), help='if true (t), ' + prog_name + '\'s setting\'s values will be displayed in this help menu. if false (f), these values will be hidden')
+        self.parser.add_argument('--more-by-default', dest='MOREBYDEFAULT', metavar=('(t,f)'), help='(recommended for experienced users) if true (t), all subcommands (run, project, etc) will access more options by default. if false (f), only the \'more\' subcommands will contain more options')
         self.subparsers = self.parser.add_subparsers()
         
         # flags for file arguments, stored as string values
@@ -39,7 +40,7 @@ class Argv_Parser:
         # _flag, _flag, _dest, _help = 
 
         # RUN ARGS
-        self.run_parser = self.subparsers.add_parser('run', help='run the ' + prog_name + ' program'+(' with MORE options' if settings.more_by_default() else ''), formatter_class=fmt)
+        self.run_parser = self.subparsers.add_parser('run', help='run the ' + prog_name + ' program', formatter_class=fmt)
         self.run_parser.add_argument(p_flag, project_flag, dest=proj_dest, metavar=project_metavars, help=project_help, required=project_required)
         self.run_parser.add_argument(r_flag, read_flag, dest=read_dest, metavar=read_metavars, help=read_help, required=read_required)
         self.run_parser.add_argument(w_flag, write_flag, dest=write_dest, metavar=write_metavars, help=write_help)
@@ -64,7 +65,7 @@ class Argv_Parser:
         # MORE PROJECT FLAGS
         
         # PROJECT ARGS
-        self.projects_parser = self.subparsers.add_parser('project', help='access/configure ' + prog_name + '\'s project settings data'+(' with MORE options' if settings.more_by_default() else ''), formatter_class=fmt)
+        self.projects_parser = self.subparsers.add_parser('project', help='access/configure ' + prog_name + '\'s project settings data', formatter_class=fmt)
         self.projects_parser.add_argument(create_flag, dest=create_dest, nargs=create_nargs, metavar=create_metavars, help=create_help)
         self.projects_parser.add_argument(delete_flag, dest=delete_dest, metavar=delete_metavars, help=delete_help)
         self.projects_parser.add_argument(deleteall_flag, dest=deleteall_dest, action=deleteall_action, help=deleteall_help)
