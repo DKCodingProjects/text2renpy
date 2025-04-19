@@ -1,7 +1,7 @@
 from src.general.text_chunk import Text_Chunk
 from src.read import *
 from src.args.argv_parse import Argv_Parser
-from src.args.argv_namespaces import Run_Namespace, Project_Namespace
+from src.args.argv_namespaces import Settings_Namespace, Run_Namespace, Project_Namespace
 from src.translate import *
 from src.general import *
 from src.data_handlers import *
@@ -27,12 +27,29 @@ class Argv_Processor():
                 return True
         return False
     
+    def _remove_mangling(static_class : object):
+        keys = list(vars(static_class).keys())
+        pop_index = []
+        pop_offset = 0
+        for i in range(0,len(keys)):
+            key = keys[i]
+            if '__' in key:
+                pop_index.append(i)
+        for pop in pop_index:
+            keys.pop(pop - pop_offset)
+            pop_offset += 1
+        return keys
+
+    def is_settings(args):
+        print()
+        return Argv_Processor.has_attrb(args, Argv_Processor._remove_mangling(Settings_Namespace))
+    
     def is_run(args):
         run_attrbs = ['PROJECT', 'READ']
         return Argv_Processor.all_attrbs(args, run_attrbs)
     
     def is_project(args):
-        return Argv_Processor.has_attrb(args, vars(Project_Namespace()).keys())
+        return Argv_Processor.has_attrb(args, Argv_Processor._remove_mangling(Project_Namespace))
 
     def is_history(args):
         project_attrbs = []
@@ -47,7 +64,24 @@ class Argv_Processor():
         # settings.set_more_by_default(True)
         argv = Argv_Parser(settings)
         args = argv.parser.parse_args()
-        if Argv_Processor.is_run(args):
+        if Argv_Processor.is_settings(args):
+            sett_namespace = Settings_Namespace()
+            args = argv.parser.parse_args(namespace=sett_namespace)
+            sett_data = settings_dh.Settings_DH()
+            def _handle_bool(value : str = 'f'):
+                if value == 't':
+                    return True
+                elif value == 'f':
+                    return False
+                else:
+                    raise Exception('INVALID BOOLEAN: boolean value must be provided as \'t\' (True) or \'f\' (False)')
+            if args.SHOWSETTINGS:
+                sett_data.set_show_settings(_handle_bool(args.SHOWSETTINGS))
+                print(sett_data.settings['show_settings'])
+            if args.MOREBYDEFAULT:
+                sett_data.set_more_by_default(_handle_bool(args.MOREBYDEFAULT))
+            sett_data.write_settings()
+        elif Argv_Processor.is_run(args):
             run_namespace = Run_Namespace()
             args = argv.parser.parse_args(namespace=run_namespace)
             proj_data = projects_dh.Projects_DH()

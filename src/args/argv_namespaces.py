@@ -1,3 +1,7 @@
+class Settings_Namespace():
+    SHOWSETTINGS = None
+    MOREBYDEFAULT = None
+
 class Run_Namespace():
     PROJECT = None
     READ = None
