@@ -8,7 +8,7 @@ class Characters_DH(Data_Handler):
     
     def upgrade_characters(self):
         if self.content:
-            const_headers =  ['project_id','abbrev_name','full_name','first_label']
+            const_headers =  ['project_id','abbrev_name','full_name','first_file']
             default_values = [ None       , None        , None      , None        ] # if a value requires user input, set value to None
             self._upgrade_content(const_headers, default_values)
     

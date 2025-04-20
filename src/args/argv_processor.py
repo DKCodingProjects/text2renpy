@@ -5,6 +5,7 @@ from src.args.argv_namespaces import Settings_Namespace, Run_Namespace, Project_
 from src.translate import *
 from src.general import *
 from src.data_handlers import *
+import program_run
 
 class Argv_Processor():
     def __init__(self):
@@ -81,15 +82,14 @@ class Argv_Processor():
             if args.MOREBYDEFAULT:
                 sett_data.set_more_by_default(_handle_bool(args.MOREBYDEFAULT))
             sett_data.write_settings()
+
         elif Argv_Processor.is_run(args):
             run_namespace = Run_Namespace()
             args = argv.parser.parse_args(namespace=run_namespace)
             proj_data = projects_dh.Projects_DH()
-            project = proj_data.find_proj(args.PROJECT)
+            project = program_run.Program_Run(args)
             print(project)
-            # get path to project and send readfile to run process
-            # update history
-            # update characters
+
         elif Argv_Processor.is_project(args):
             proj_namespace = Project_Namespace()
             args = argv.parser.parse_args(namespace=proj_namespace)
@@ -125,6 +125,7 @@ class Argv_Processor():
                 all_projects = proj_data.content
                 print(all_projects)
             proj_data.write_projects()
+
         elif Argv_Processor.is_history(args):
             pass
             # proj_data = projects_dh.Projects_DH()
@@ -135,6 +136,7 @@ class Argv_Processor():
             # if project_id:
             #     hist_data = history_dh.History_DH()
             #     # handle history data changes
+
         elif Argv_Processor.is_character(args):
             pass
             # proj_data = projects_dh.Projects_DH()
@@ -145,6 +147,7 @@ class Argv_Processor():
             # if project_id:
             #     char_data = characters_dh.Characters_DH()
             #     # handle character data changes
+
         else:
             return 1
 
