@@ -5,7 +5,7 @@ from src.args.argv_namespaces import Settings_Namespace, Run_Namespace, Project_
 from src.translate import *
 from src.general import *
 from src.data_handlers import *
-import src.program_run
+from src import program_run
 
 class Argv_Processor():
     def __init__(self):

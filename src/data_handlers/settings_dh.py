@@ -13,7 +13,6 @@ class Default_Settings():
         names.append(row[default_headers.index('setting_name')])
     default_names = set(names)
     del names
-            
 
 class Settings_DH(Data_Handler):
     def __init__(self):
@@ -24,7 +23,6 @@ class Settings_DH(Data_Handler):
             value = row[self.headers.index('value')]
             self.settings[name] = value
     
-    ### TEST THIS!
     def upgrade_settings(self):
         const_headers = Default_Settings.default_headers
         self._upgrade_content(const_headers, [None for _ in range(len(const_headers))])

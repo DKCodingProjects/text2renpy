@@ -17,12 +17,12 @@ def main():
     # print(members)
     # members = vars(RawDescriptionHelpFormatter)
     # print(members)
-    # argv_processor.Argv_Processor.run_commandline()
-    print(settings_dh.Default_Settings.default_names)
-    sett_data = settings_dh.Settings_DH()
-    sett_data.content = [['show_settings', 'boolean', 'False', "If True, the program's settings will be displayed in text2renpy's core help menu (python text2renpy.py -h)"], ['more_by_default', 'boolean', 'False', "A toggle which determines if more subcommand (run, project, etc) arguments are available without the 'more' subcommand prefix (True), or are only available with the 'more' subcommand prefix (False)"],['bad_setting',  'boolean','False',"If True, the program's settings will be displayed in text2renpy's core help menu (python text2renpy.py -h)"]]
-    sett_data.upgrade_settings()
-    print(sett_data.content)
+    argv_processor.Argv_Processor.run_commandline()
+    # print(settings_dh.Default_Settings.default_names)
+    # sett_data = settings_dh.Settings_DH()
+    # sett_data.content = [['show_settings', 'boolean', 'False', "If True, the program's settings will be displayed in text2renpy's core help menu (python text2renpy.py -h)"], ['more_by_default', 'boolean', 'False', "A toggle which determines if more subcommand (run, project, etc) arguments are available without the 'more' subcommand prefix (True), or are only available with the 'more' subcommand prefix (False)"],['bad_setting',  'boolean','False',"If True, the program's settings will be displayed in text2renpy's core help menu (python text2renpy.py -h)"]]
+    # sett_data.upgrade_settings()
+    # print(sett_data.content)
     # with open('data\\projects.csv', 'w', newline='') as bad_project:
     #     writer = csv.writer(bad_project)
     #     writer.writerow(['project_id','name','path','description','bad_header'])
