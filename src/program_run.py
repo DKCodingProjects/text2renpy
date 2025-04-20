@@ -1,6 +1,6 @@
-from args.argv_namespaces import Run_Namespace
+from .args.argv_namespaces import Run_Namespace
 from datetime import datetime
-from data_handlers import *
+from .data_handlers import *
 import os
 
 import logging

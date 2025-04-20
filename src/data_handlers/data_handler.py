@@ -6,8 +6,8 @@ class Data_Handler():
         self.path = path
         data = Csv_Reader(path)
         data.open()
-        self.headers = data.headers
-        self.content = []
+        self.headers : list = data.headers
+        self.content : list[list] = []
         while not data.is_eof:
             row = data.readpart()
             if row:
@@ -19,7 +19,7 @@ class Data_Handler():
                 if not row[i]:
                     row[i] = default_values[i]
             elif not row[i]:
-                    raise Exception('INVALID ROW! Column \''+const_headers[i]+'\' on row \''+str(row_number)+'\' should be set by the user! ')
+                raise Exception('INVALID ROW! Column \''+const_headers[i]+'\' on row \''+str(row_number)+'\' should be set! ')
         return row
     
     def _upgrade_content(self, const_headers : list, default_values : list):
