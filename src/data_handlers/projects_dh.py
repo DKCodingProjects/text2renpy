@@ -93,4 +93,4 @@ class Projects_DH(Data_Handler):
         if not self.find_proj(proj_name):
             raise Exception('PROJECT \''+proj_name+'\' DOESN\'T EXIST: Try a different name or search data instead')
         else:
-            self._update_row('path', self.find_proj(proj_name)[self.headers.index('path')], new_path)
+            self._update_row('path', self.find_proj(proj_name)[self.headers.index('path')], desc)

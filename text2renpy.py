@@ -1,12 +1,11 @@
+from src.args.argv_namespaces import Run_Namespace
 from src.args import *
 ###############################
 import dev.sandbox as dev
 from test.tester import Tester
-from argparse import HelpFormatter, RawTextHelpFormatter, RawDescriptionHelpFormatter
 from src.data_handlers import *
-import inspect
-import csv
-import os
+from src.program_run import Program_Run
+import re
 
 def main():
     # print('starting program...')
@@ -17,7 +16,15 @@ def main():
     # print(members)
     # members = vars(RawDescriptionHelpFormatter)
     # print(members)
+    
     argv_processor.Argv_Processor.run_commandline()
+    # proj_data = projects_dh.Projects_DH()
+    # proj_data.content = [['1','project1','C:\\Users\\Dependent User\\OneDrive\\Documents\\Ren\'Py Projects\\Ren\'Py Games\\check\\game','']]
+    # run = Run_Namespace()
+    # run.PROJECT = 'project1'
+    # run.READ = 'C:\\Users\\Dependent User\\OneDrive\\Documents\\Ren\'Py Projects\\text2renpy\\test\\test_documents\\test_script.docx'
+    # prog = Program_Run(args=run, proj_data=proj_data)
+
     # print(settings_dh.Default_Settings.default_names)
     # sett_data = settings_dh.Settings_DH()
     # sett_data.content = [['show_settings', 'boolean', 'False', "If True, the program's settings will be displayed in text2renpy's core help menu (python text2renpy.py -h)"], ['more_by_default', 'boolean', 'False', "A toggle which determines if more subcommand (run, project, etc) arguments are available without the 'more' subcommand prefix (True), or are only available with the 'more' subcommand prefix (False)"],['bad_setting',  'boolean','False',"If True, the program's settings will be displayed in text2renpy's core help menu (python text2renpy.py -h)"]]
