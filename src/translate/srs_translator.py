@@ -12,25 +12,28 @@ class SRS_Types(Enum):
     BLKSET_LITERAL_ROW = 5
 
     SAY = 6
-    SCENE = 7
-    SHOW = 8
-    SHOW_SPKR = 9
-    HIDE = 10
-    HIDE_SPKR = 11
-    COMMENT = 12
-    BLKCOMMENT = 13
-    BLKCOMMENT_ROW = 14
-    EMPTY = 15
+    SAY_LITERAL = 7
+    SCENE = 8
+    SHOW = 9
+    SHOW_SPKR = 10
+    HIDE = 11
+    HIDE_SPKR = 12
+    COMMENT = 13
+    BLKCOMMENT = 14
+    BLKCOMMENT_ROW = 15
+    EMPTY = 16
 
-    MENU = 16
-    CHOICE = 17
-    CODE = 18
+    MENU = 17
+    MENU_CHOICE = 18
+    MENU_END = 19
+    CODE = 20
 
 class SRS_Blocks(Enum):
     SAY = 1
     SET = 2
     COMMENT = 3
-    CHOICE = 4
+    MENU = 4
+    CHOICE = 5
 
 class SRS_Expressions():
     special_chars = r'[^=:+>\-<]+?' # <-- TEST THIS!
@@ -41,7 +44,8 @@ class SRS_Expressions():
     BLKSET_LITERAL = re.compile(r'^\s*('+special_chars+r')?\s*(?:==|\:\:)\s*\"(.+?)\"\s*$')
     BLKSET_LITERAL_ROW = re.compile(r'^\s*\"(.+?)\"\s*$')
 
-    SAY = re.compile(r'^.+$') # normal text
+    SAY = re.compile(r'^\s*(.+)$')
+    SAY_LITERAL = re.compile(r'^\s*\"(.+)\"\s*$')
     SCENE = re.compile(r'^\s*(?:\+\+|>>)\s*('+special_chars+r')\s*$')
     SHOW = re.compile(r'^\s*(?:\+|>)\s*('+special_chars+r')\s*$')
     SHOW_SPKR = re.compile(r'^\s*(?:=\+|\:>)\s*('+special_chars+r')\s*$')
@@ -52,7 +56,8 @@ class SRS_Expressions():
     EMPTY = re.compile(r'^\s*$')
 
     MENU = re.compile(r'^\s*\?\?\s*('+special_chars+r')\s*$')
-    ADD_CHOICE = re.compile(r'^\s*\?(?:\+|>)\s*('+special_chars+r')\s*$')
+    MENU_CHOICE = re.compile(r'^\s*\?(?:\+|>)\s*('+special_chars+r')\s*$')
+    MENU_END = re.compile(r'^\s*\?(?:\-|<)\s*('+special_chars+r')\s*$')
     CODE = re.compile(r'^\s*\/\s*('+special_chars+r')\s*$')
 
     del special_chars
@@ -68,18 +73,18 @@ class SRS_Translator(Translator):
     def _consolidate_chunks(self, text_chunks):
         return super()._consolidate_chunks(text_chunks)
     
-    def convert_unicode_quotes(text):
+    def convert_double_quotes(text):
         unicode_to_ascii = {
-            '“': '"', '”': '"',  # Double quotes
-            '‘': "'", '’': "'",  # Single quotes
-            '«': '"', '»': '"',  # Angle quotes
-            '‹': "'", '›': "'"   # Single angle quotes
+            '“': '"', '”': '"',
+            '«': '"', '»': '"',
+            '❝': '"', '❞': '"',
+            '‟': '"', '„': '"'
         }
         pattern = re.compile('|'.join(re.escape(key) for key in unicode_to_ascii.keys()))
         converted_text = pattern.sub(lambda x: unicode_to_ascii[x.group()], text)
         return converted_text
     
-    def get_type(self, chunks: list[Text_Chunk], block_type : SRS_Types) -> SRS_Types:
+    def interpret_text(self, chunks: list[Text_Chunk], block_type : SRS_Types) -> tuple[list[Text_Chunk], SRS_Types]:
         trans = SRS_Translator
         expr = SRS_Expressions
         type = SRS_Types
@@ -87,30 +92,49 @@ class SRS_Translator(Translator):
 
         chunk = self._consolidate_chunks(chunks)
 
-        if expr.EMPTY.match(chunk):
-            return type.EMPTY
-        elif expr.BLKCOMMENT.match(chunk):
-            return type.BLKCOMMENT
+        if match := expr.EMPTY.match(chunk):
+            return match, type.EMPTY
+        elif match := expr.BLKCOMMENT.match(chunk):
+            return match, type.BLKCOMMENT
         elif block_type == blck.COMMENT:
-            return type.BLKCOMMENT_ROW
-        elif expr.COMMENT.match(chunk):
-            return type.COMMENT
-        elif expr.CODE.match(chunk):
-            return type.CODE
-        elif expr.BLKSET.match(chunk):
-            if expr.BLKSET_LITERAL.match(trans.convert_unicode_quotes(chunk)):
-                return type.BLKSET_LITERAL
+            return match, type.BLKCOMMENT_ROW
+        elif match := expr.COMMENT.match(chunk):
+            return match, type.COMMENT
+        elif match := expr.BLKSET.match(chunk):
+            if match := expr.BLKSET_LITERAL.match(trans.convert_double_quotes(chunk)):
+                return match, type.BLKSET_LITERAL
             else:
-                return type.BLKSET
+                return match, type.BLKSET
         elif block_type == blck.SET:
-            if expr.BLKSET_LITERAL_ROW.match(trans.convert_unicode_quotes(chunk)):
-                return type.BLKSET_LITERAL_ROW
+            if match := expr.BLKSET_LITERAL_ROW.match(trans.convert_double_quotes(chunk)):
+                return match, type.BLKSET_LITERAL_ROW
             else:
-                return type.BLKSET_ROW
-        elif expr.SET.match(chunk):
-            if expr.SET_LITERAL.match(trans.convert_unicode_quotes(chunk)):
-                return type.SET_LITERAL
+                return match, type.BLKSET_ROW
+        elif match := expr.SET.match(chunk):
+            if match := expr.SET_LITERAL.match(trans.convert_double_quotes(chunk)):
+                return match, type.SET_LITERAL
             else:
-                return type.SET
+                return match, type.SET
+        elif match := expr.CODE.match(chunk):
+            return match, type.CODE
+        elif match := expr.SCENE.match(chunk):
+            return match, type.SCENE
+        elif match := expr.SHOW_SPKR(chunk):
+            return match, type.SHOW_SPKR
+        elif match := expr.SHOW.match(chunk):
+            return match, type.SHOW
+        elif match := expr.HIDE_SPKR.match(chunk):
+            return match, type.HIDE_SPKR
+        elif match := expr.HIDE.match:
+            return match, type.HIDE
+        elif expr.MENU.match(chunk):
+            return None, type.MENU
+        elif match := expr.MENU_CHOICE.match(chunk):
+            return None, type.MENU_CHOICE
+        elif match := expr.MENU_END.match(chunk):
+            return match, type.MENU_END
         else:
-            return type.SAY
+            if expr.SAY_LITERAL.match(trans.convert_double_quotes(chunk)):
+                return None, type.SAY_LITERAL
+            else:
+                return None, type.SAY
