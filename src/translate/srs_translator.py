@@ -29,7 +29,7 @@ class SRS_Types(Enum):
     CODE = 20
 
 class SRS_Blocks(Enum):
-    SAY = 1
+    NONE = 1
     SET = 2
     COMMENT = 3
     MENU = 4
@@ -67,6 +67,11 @@ class SRS_Translator(Translator):
     expr = SRS_Expressions()
     def __init__(self, script_characters: object):
         self.curr_speaker = ''
+        self.vars_dict = {
+            "speaker" : '',
+            "label" : '',
+            "_block_type" : SRS_Blocks.NONE
+        }
         self.script_characters = script_characters
         self.script_images = {}
     
@@ -92,8 +97,8 @@ class SRS_Translator(Translator):
 
         chunk = self._consolidate_chunks(chunks)
 
-        if match := expr.EMPTY.match(chunk):
-            return match, type.EMPTY
+        if expr.EMPTY.match(chunk):
+            return None, type.EMPTY
         elif match := expr.BLKCOMMENT.match(chunk):
             return match, type.BLKCOMMENT
         elif block_type == blck.COMMENT:
@@ -138,3 +143,6 @@ class SRS_Translator(Translator):
                 return None, type.SAY_LITERAL
             else:
                 return None, type.SAY
+    
+    def translate(self, chunks : list[Text_Chunk]):
+        match, type = self.interpret_text(chunks, self.vars_dict['_block_type'])
