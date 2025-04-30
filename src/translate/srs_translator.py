@@ -144,5 +144,5 @@ class SRS_Translator(Translator):
             else:
                 return None, type.SAY
     
-    def translate(self, chunks : list[Text_Chunk]):
+    def translate(self, chunks : list[Text_Chunk]) -> str:
         match, type = self.interpret_text(chunks, self.vars_dict['_block_type'])
