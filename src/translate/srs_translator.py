@@ -180,9 +180,9 @@ class SRS_Translator(Translator):
     def translate(self, chunks : list[Text_Chunk]) -> str:
         line_str = ''
         expr_match, line_type = self.interpret_text(chunks, self.vars_dict['_block_type'])
-        if expr_match is None: # chunks need individual changing
+        if expr_match is None: # chunks require in-depth handeling
             if line_type == SRS_Types.EMPTY:
                 return line_str
         else:
             pass
-        return line_str
+        return line_str, line_type
