@@ -4,6 +4,8 @@ from src.args import *
 import dev.sandbox as dev
 from test.tester import Tester
 from src.data_handlers import *
+from src.translate import *
+from src.general import *
 from src.program_run import Program_Run
 import re
 
@@ -17,7 +19,14 @@ def main():
     # members = vars(RawDescriptionHelpFormatter)
     # print(members)
     
-    argv_processor.Argv_Processor.run_commandline()
+    # argv_processor.Argv_Processor.run_commandline()
+
+    chunk1 = text_chunk.Text_Chunk('!!')
+    chunk2 = text_chunk.Text_Chunk('<<,')
+    chunk3 = text_chunk.Text_Chunk(';@@ the rest of')
+    chunk4 = text_chunk.Text_Chunk(' the text')
+    new_chunks = srs_translator.SRS_Translator.remove_srs_prefix('!!<<,;@@', [chunk1,chunk2,chunk3,chunk4])
+    print(new_chunks[0].text+new_chunks[1].text+new_chunks[2].text+new_chunks[3].text)
     # proj_data = projects_dh.Projects_DH()
     # proj_data.content = [['1','project1','C:\\Users\\Dependent User\\OneDrive\\Documents\\Ren\'Py Projects\\Ren\'Py Games\\check\\game','']]
     # run = Run_Namespace()

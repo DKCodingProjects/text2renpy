@@ -1,1 +1,1 @@
-__all__ = ['translator']
+__all__ = ['srs_translator', 'translator']
