@@ -78,6 +78,7 @@ class SRS_Translator(Translator):
     def _consolidate_chunks(self, text_chunks):
         return super()._consolidate_chunks(text_chunks)
     
+    
     def convert_double_quotes(text):
         unicode_to_ascii = {
             '“': '"', '”': '"',
@@ -143,6 +144,45 @@ class SRS_Translator(Translator):
                 return None, type.SAY_LITERAL
             else:
                 return None, type.SAY
+
+    def escape_chars(self, chunk: Text_Chunk) -> str:
+        chunk.text = re.sub(r'(?<!\\)\\(?!\\)', r'\\\\', chunk.text) # escape slash
+        chunk.text = re.sub(r'(?<!\\)[\"]', '\\"', chunk.text)       # escape double quote
+        chunk.text = re.sub(r'(?<!\\)[\']', "\\'", chunk.text)       # escape single quote
+        chunk.text = re.sub(r'(?<!{){(?!{)', r'{{', chunk.text)      # escape opening curly brace
+        chunk.text = re.sub(r'(?<!\[)\[(?!\[)', r'[[', chunk.text)   # escape opening square braket
+        chunk.text = re.sub(r'(?<!%|\\)%(?!%)', r'\\%', chunk.text)  # escape percent sign
+        chunk.text = re.sub(r'(?<!【)【(?!【)', '【【', chunk.text)   # escape opening Lenticular braket
+        return chunk.text
     
+    def append_tag(tag : str, chunk : Text_Chunk): return chunk.text+'{'+tag+'}'
+    
+    def prepend_tag(tag : str, chunk : Text_Chunk): return '{'+tag+'}'+chunk.text
+
+    def remove_srs_prefix(prefix : str, chunks : list [Text_Chunk]) -> list[Text_Chunk]:
+        chunks_index = 0
+        for char in prefix:
+            curr_chunk = chunks[chunks_index]
+            while True:
+                if found := curr_chunk.text.find(char):
+                    if found + 1 < len(curr_chunk.text):
+                        curr_chunk.text = curr_chunk.text[found+1:-1]
+                    else:
+                        curr_chunk.text = ''
+                    chunks[chunks_index] = curr_chunk
+                    break
+                elif chunks_index >= len(chunks):
+                        break
+                else:
+                    chunks_index += 1
+        return chunks
+
     def translate(self, chunks : list[Text_Chunk]) -> str:
-        match, type = self.interpret_text(chunks, self.vars_dict['_block_type'])
+        line_str = ''
+        expr_match, line_type = self.interpret_text(chunks, self.vars_dict['_block_type'])
+        if expr_match is None: # chunks need individual changing
+            if line_type == SRS_Types.EMPTY:
+                return line_str
+        else:
+            pass
+        return line_str
