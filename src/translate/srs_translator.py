@@ -70,7 +70,7 @@ class SRS_Translator(Translator):
         self.vars_dict = {
             "speaker" : '',
             "label" : '',
-            "_block_type" : SRS_Blocks.NONE
+            "_block" : SRS_Blocks.NONE
         }
         self.script_characters = script_characters
         self.script_images = {}
@@ -176,14 +176,32 @@ class SRS_Translator(Translator):
                     curr_chunk.text = ''
                 chunks[chunks_index] = curr_chunk
                 break
-        return chunks
+        new_chunks = list()
+        first_chunk = True
+        for chunk in chunks:
+            if chunk.text:
+                if first_chunk:
+                    first_chunk = False
+                    chunk.text = chunk.text.lstrip()
+                new_chunks.append(chunk)
+        return new_chunks
 
     def translate(self, chunks : list[Text_Chunk]) -> str:
+        type = SRS_Types
+        blck = SRS_Blocks
+
         line_str = ''
-        expr_match, line_type = self.interpret_text(chunks, self.vars_dict['_block_type'])
-        if expr_match is None: # chunks require in-depth handeling
-            if line_type == SRS_Types.EMPTY:
-                return line_str
+        expr_match, line_type = self.interpret_text(chunks, self.vars_dict['_block'])
+        if expr_match is None: # chunks require renpy tag formatting
+            if line_type == type.EMPTY:
+                pass
+            elif line_type == type.MENU:
+                self.vars_dict['_block'] = blck.MENU
+            elif line_type == type.MENU_CHOICE:
+                pass
+            elif line_type == type.SAY_LITERAL:
+                pass
+            # format text
         else:
             pass
         return line_str, line_type

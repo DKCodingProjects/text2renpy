@@ -23,10 +23,13 @@ def main():
 
     chunk1 = text_chunk.Text_Chunk('!!')
     chunk2 = text_chunk.Text_Chunk('<<,')
-    chunk3 = text_chunk.Text_Chunk(';@@ the rest of')
-    chunk4 = text_chunk.Text_Chunk(' the text')
+    chunk3 = text_chunk.Text_Chunk(';@@          the rest of')
+    chunk4 = text_chunk.Text_Chunk(' the text!!')
     new_chunks = srs_translator.SRS_Translator.remove_srs_prefix('!!<<,;@@', [chunk1,chunk2,chunk3,chunk4])
-    print(new_chunks[0].text+new_chunks[1].text+new_chunks[2].text+new_chunks[3].text)
+    final_string = ''
+    for chunk in new_chunks:
+        final_string = final_string + chunk.text
+    print(final_string)
     # proj_data = projects_dh.Projects_DH()
     # proj_data.content = [['1','project1','C:\\Users\\Dependent User\\OneDrive\\Documents\\Ren\'Py Projects\\Ren\'Py Games\\check\\game','']]
     # run = Run_Namespace()
