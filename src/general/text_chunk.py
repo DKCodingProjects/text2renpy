@@ -1,85 +1,98 @@
 import re
+from typing import Optional
 
-class Text_Chunk():
+class TextChunk:
     def __init__(self, text: str):
-        self.text = text
-        self.bold: bool = None
-        self.italic: bool = None
-        self.underline: bool = None
-        self.strike: bool = None
-        self.color: str = None
-        self.size: float = 0.0
-        self.has_style = False # set when any other class variable is set to a truthful value
+        self._text = text
+        self._has_style = False
+        self._bold: Optional[bool] = None
+        self._italic: Optional[bool] = None
+        self._underline: Optional[bool] = None
+        self._strike: Optional[bool] = None
+        self._color: Optional[str] = None
+        self._size: Optional[float] = None
 
-    def set_text(self, text: str):
-        self.text = text
-    
-    def get_text(self):
-        return self.text
-    
-    def _test_bool(self, method: str, value):
-        if type(value) is not bool and value is not None:
-            raise TypeError('value \"{0}\" passed to the {1} method in {2} isn\'t of type \'{4}\''.format(value, method, self.__class__.__name__, bool.__name__))
-        else:
-            pass # do nothing
-    
-    def set_style(self, value: bool):
-        self._test_bool('set_style', value)
-        self.has_style = value
-    
-    def set_bold(self, value: bool):
-        self._test_bool('set_bold', value)
-        if value: self.set_style(True)
-        self.bold = value
-    
-    def is_bold(self) -> bool:
-        return self.bold
-    
-    def set_italic(self, value: bool):
-        self._test_bool('set_italic', value)
-        if value: self.set_style(True)
-        self.italic = value
-    
-    def is_italic(self) -> bool:
-        return self.italic
-    
-    def set_underline(self, value: bool):
-        self._test_bool('set_underline', value)
-        if value: self.set_style(True)
-        self.underline = value
-    
-    def is_underline(self) -> bool:
-        return self.underline
-    
-    def set_strike(self, value: bool):
-        self._test_bool('set_strike', value)
-        if value: self.set_style(True)
-        self.strike = value
-    
-    def is_strike(self) -> bool:
-        return self.strike
-    
-    def set_color(self, value: str):
-        if value is None:
-            pass
-        elif type(value) is not str:
-            raise TypeError('Value {0} passed to Text_Chunk method \'set_color\' is not of type \'str\''.format(value))
-        elif not re.match(r'^[0-9A-Fa-f]{3,8}$', value):
-            raise TypeError('String \"{0}\" passed to Text_Chunk method \'set_color\' does not match desired hexadecimal format'.format(value))
-        if value: self.set_style(True)
-        self.color = value
-    
-    def get_color(self) -> str:
-        return self.color
-    
-    def set_size(self, value):
-        if value is None:
-            pass
-        elif type(value) is float:
-            self.size = value
-            if value > 1.0: self.set_style(True)
-        else:
-            raise TypeError('Value {0} passed to Text_Chunk method \'set_size\' is not of type \'float\''.format(value))
-    
-    def get_size(self) -> float:
-        return self.size
+    @property
+    def text(self) -> str:
+        return self._text
+
+    @text.setter
+    def text(self, value: str) -> None:
+        self._text = value
+
+    @property
+    def has_style(self) -> bool:
+        return self._has_style
+
+    @property
+    def bold(self) -> Optional[bool]:
+        return self._bold
+
+    @bold.setter
+    def bold(self, value: Optional[bool]) -> None:
+        self._validate_bool(value)
+        self._bold = value
+        self._update_style()
+
+    @property
+    def italic(self) -> Optional[bool]:
+        return self._italic
+
+    @italic.setter
+    def italic(self, value: Optional[bool]) -> None:
+        self._validate_bool(value)
+        self._italic = value
+        self._update_style()
+
+    @property
+    def underline(self) -> Optional[bool]:
+        return self._underline
+
+    @underline.setter
+    def underline(self, value: Optional[bool]) -> None:
+        self._validate_bool(value)
+        self._underline = value
+        self._update_style()
+
+    @property
+    def strike(self) -> Optional[bool]:
+        return self._strike
+
+    @strike.setter
+    def strike(self, value: Optional[bool]) -> None:
+        self._validate_bool(value)
+        self._strike = value
+        self._update_style()
+
+    @property
+    def color(self) -> Optional[str]:
+        return self._color
+
+    @color.setter
+    def color(self, value: Optional[str]) -> None:
+        if value is not None:
+            self._validate_hex_color(value)
+        self._color = value
+        self._update_style()
+
+    @property
+    def size(self) -> Optional[float]:
+        return self._size
+
+    @size.setter
+    def size(self, value: Optional[float]) -> None:
+        if value is not None and not isinstance(value, (int, float)):
+            raise TypeError(f"Expected float or int for size, got {type(value).__name__}")
+        self._size = value
+        self._update_style()
+
+    def _validate_bool(self, value: Optional[bool]) -> None:
+        if value is not None and not isinstance(value, bool):
+            raise TypeError(f"Expected bool or None, got {type(value).__name__}")
+
+    def _validate_hex_color(self, value: str) -> None:
+        if not re.match(r'^[0-9A-Fa-f]{3,8}$', value):
+            raise ValueError(f"Invalid hex color format: {value}")
+
+    def _update_style(self) -> None:
+        self._has_style = any(v is not None for v in [self._bold, self._italic, self._underline, self._strike, self._color, self._size])
